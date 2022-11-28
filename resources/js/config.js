@@ -1,0 +1,1 @@
+  window['publicUrl'] ='http://' +window.location.hostname + '/' + window.location.pathname.split('/')[1]+ '/public' 
