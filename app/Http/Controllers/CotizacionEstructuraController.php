@@ -22,8 +22,8 @@ class CotizacionEstructuraController extends Controller
      */
     public function index()
     {
-        $cotizacionEstructuras=CotizacionEstructuras::all();
-        return view('Ingenieria.CotizacionesEstructura.index',compact('cotizacionEstructuras'));
+        $cotizacionEstructuras = CotizacionEstructuras::all();
+        return view('Ingenieria.CotizacionesEstructura.index', compact('cotizacionEstructuras'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CotizacionEstructuraController extends Controller
     public function create()
     {
         $cotizacionEstructuras = new CotizacionEstructuras();
-        return view('Ingenieria.CotizacionesEstructura.create',compact('cotizacionEstructuras'));
+        return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras'));
     }
 
     /**
@@ -45,7 +45,7 @@ class CotizacionEstructuraController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $request->validate([
             'Numero_Obra' => 'required | numeric',
             'Empresa_Cliente' => 'required',
@@ -55,11 +55,11 @@ class CotizacionEstructuraController extends Controller
             'Estado' => 'required',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Contacto'  => 'required',
+            'Contacto' => 'required',
             'AreaM2' => 'required | numeric',
             'm2' => 'required | numeric',
-            'Incluye_Montaje'=> 'required',
-           
+            'Incluye_Montaje' => 'required',
+
         ]);
 
         $cotizacionEstructuras = new CotizacionEstructuras();
@@ -75,11 +75,11 @@ class CotizacionEstructuraController extends Controller
         $cotizacionEstructuras->AreaM2 = $request->AreaM2;
         $cotizacionEstructuras->m2 = $request->m2;
         $cotizacionEstructuras->Incluye_Montaje = $request->Incluye_Montaje;
-        
+
         $cotizacionEstructuras->save();
-        return redirect()->route('cotizacion.index');
-    
-       
+        // return redirect()->route('cotizacion.index');
+
+
     }
 
     /**
@@ -101,10 +101,10 @@ class CotizacionEstructuraController extends Controller
      */
     public function edit($id)
     {
-         //sirve para editar la tabla
-         $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
-        
-         return view('Ingenieria.CotizacionesEstructura.edit', compact('cotizacionEstructuras'));
+        //sirve para editar la tabla
+        $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
+
+        return view('Ingenieria.CotizacionesEstructura.edit', compact('cotizacionEstructuras'));
     }
 
     /**
@@ -116,7 +116,7 @@ class CotizacionEstructuraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cotizacionEstructuras=CotizacionEstructuras::findOrFail($id);
+        $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
         $cotizacionEstructuras->Numero_Obra = $request->Numero_Obra;
         $cotizacionEstructuras->Empresa_Cliente = $request->Empresa_Cliente;
         $cotizacionEstructuras->Fecha_Recibido = $request->Fecha_Recibido;
@@ -129,8 +129,8 @@ class CotizacionEstructuraController extends Controller
         $cotizacionEstructuras->AreaM2 = $request->AreaM2;
         $cotizacionEstructuras->m2 = $request->m2;
         $cotizacionEstructuras->Incluye_Montaje = $request->Incluye_Montaje;
-        
-        
+
+
         $cotizacionEstructuras->save();
         return redirect()->route('cotizacion.index')
             ->with('eliminar', 'actual');
@@ -168,20 +168,19 @@ class CotizacionEstructuraController extends Controller
 
     public function importStore(Request $request)
     {
-        
-      $request->validate([
-        
+
+        $request->validate([
             'file' => 'required|mimes:csv,xlsx'
-      ]);
+        ]);
 
-
-      $file = $request->file('file');
-       
-     Excel::import(new  CotizacionImport, $file );
-    //    return  Excel::toCollection(new  CotizacionImport, $file );
         
-    return 'exitoso';
-     }
+        $file = $request->file('file')->getRealPath();
 
-     
+        Excel::import(new CotizacionImport, $file);
+        //    return  Excel::toCollection(new  CotizacionImport, $file );
+
+        return 'exitoso';
+    }
+
+
 }
