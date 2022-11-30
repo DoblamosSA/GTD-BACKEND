@@ -99,10 +99,10 @@ Seguimiento Cotizaciones Estructura
                             </td>
                             <td>{{$row->Fecha_Cotizada}}</td>
                             </td>
-                            <td>{{$row->Valor_Antes_Iva}} </td>
+                            <td>{{number_format($row->Valor_Antes_Iva)}} </td>
                             <td>{{$row->Contacto}}</td>
                             <td>{{$row->AreaM2}}</td>
-                            <td>{{$row->m2}}</td>
+                            <td>{{number_format($row->m2)}}</td>
                             <td>{{$row->Incluye_Montaje}}</td>
                            
 
