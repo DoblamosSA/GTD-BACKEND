@@ -7,6 +7,7 @@ use App\Models\CotizacionEstructuras;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class CotizacionImport implements ToModel, WithHeadingRow
 {
@@ -27,10 +28,10 @@ class CotizacionImport implements ToModel, WithHeadingRow
             'Nombre_Obra' => $row['nombre_de_la_obra'],
             'Numero_Obra' => $row['obra'],
             'Empresa_Cliente' => $row['empresa_o_cliente'],
-            'Fecha_Recibido' => $row['fecha_de_recibo'],
+            'Fecha_Recibido' => Date::excelToDateTimeObject($row['fecha_de_recibo']),
             'Descripcion' => $row['descripcion'],
             'Estado' => $row['estado'],
-            'Fecha_Cotizada' => $row['fecha_cotizada'],
+            'Fecha_Cotizada' => Date::excelToDateTimeObject($row['fecha_cotizada']),
             'Valor_Antes_Iva' => $row['valor_antes_iva'],
             'Contacto' => $row['contacto'],
             'AreaM2' => $row['aream2'],
