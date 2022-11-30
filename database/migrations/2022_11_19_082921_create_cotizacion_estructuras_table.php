@@ -15,18 +15,18 @@ class CreateCotizacionEstructurasTable extends Migration
     {
         Schema::create('cotizacion_estructuras', function (Blueprint $table) {
             $table->id();
-            $table->integer('Numero_Obra');
+            $table->string('Numero_Obra')->nullable();
             $table->string('Empresa_Cliente');
             $table->date('Fecha_Recibido')->nullable();
-            $table->string('Nombre_Obra');
-            $table->string('Descripcion');
-            $table->string('Estado');
+            $table->string('Nombre_Obra')->nullable();
+            $table->string('Descripcion')->nullable();
+            $table->string('Estado')->nullable();
             $table->date('Fecha_Cotizada')->nullable();
-            $table->float('Valor_Antes_Iva');
-            $table->string('Contacto');
-            $table->integer('AreaM2');
-            $table->integer('m2');
-            $table->string('Incluye_Montaje');
+            $table->float('Valor_Antes_Iva')->nullable();
+            $table->string('Contacto')->nullable();
+            $table->integer('AreaM2')->nullable();
+            $table->integer('m2')->nullable();
+            $table->string('Incluye_Montaje')->nullable();
             $table->timestamps();
         });
     }

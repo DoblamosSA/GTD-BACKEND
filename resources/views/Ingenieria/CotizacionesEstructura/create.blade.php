@@ -32,7 +32,7 @@ Nueva cotizacion
 
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="number" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
 
                         </div>
                         <div class="col">
