@@ -77,7 +77,7 @@ class CotizacionEstructuraController extends Controller
         $cotizacionEstructuras->Incluye_Montaje = $request->Incluye_Montaje;
 
         $cotizacionEstructuras->save();
-        // return redirect()->route('cotizacion.index');
+        return redirect()->route('cotizacion.index');
 
 
     }

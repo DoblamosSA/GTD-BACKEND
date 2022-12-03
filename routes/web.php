@@ -5,6 +5,7 @@ use App\Http\Controllers\EstructuraMetalicaController;
 use App\Http\Controllers\VorteController;
 use App\Http\Controllers\FachadaController;
 use App\Models\CotizacionEstructura;
+use App\Http\Controllers\Clientescontroller;
 use App\Utils\RolesNames;
 use App\Http\Controllers\VortexController;
 use Illuminate\Support\Facades\Auth;
@@ -94,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', 'PageController@create')->name('create');
             Route::post('/store', 'PageController@store')->name('store');
             Route::patch('/update/{id}', 'PageController@update')->name('update');
-            Route::post('/destroy/{id}', 'PageController@destroy')->name('destroy');
+            Route::put('/destroy/{id}', 'PageController@destroy')->name('destroy');
         });
 
     Route::namespace('App\Http\Controllers\JuntasInformeLiquidosPenetrante')->prefix('juntas-informe-liquidos-penetrantes')
@@ -259,6 +260,17 @@ Route::middleware(['auth'])->group(function () {
     //     });
 
 
+
+
+    //rutas cliente
+
+    Route::get('/clientes',[Clientescontroller::class,'index'])->name('clientes.index');
+    Route::get('/clientes/create',[Clientescontroller::class,'create'])->name('clientes.create');
+    Route::post('clientes/store',[Clientescontroller::class,'store'])->name('clientes.store');
+    Route::get('/clientes/edit/{id}',[Clientescontroller::class,'edit'])->name('clientes.edit');
+    route::patch('/clientes/update/{id}',[Clientescontroller::class,'update'])->name('clientes.update');
+    Route::put('/clientes/{id}',[Clientescontroller::class,'destroy'])->name('clientes.destroy');
+    
     //Rutas ingenieria estructuras metalicas
         Route::get('/index',[CotizacionEstructuraController::class,'index'])->name('cotizacion.index');
         Route::get('/cotizacion/create',[CotizacionEstructuraController::class,'create'])->name('cotizacion.create');
@@ -270,8 +282,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('cotizacion',[CotizacionEstructuraController::class,'importStore'])->name('cotizacion.importStore');
         Route::get('/export', [CotizacionEstructuraController::class, 'exportExcel'])->name('export.export');
 
-
- 
     // Rutas vortex
 
     Route::get('/vortexDoblamos', [VorteController::class, 'index'])->name('vortexDoblamos.index');

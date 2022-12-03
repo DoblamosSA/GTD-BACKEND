@@ -27,6 +27,8 @@ class CreateEstructuraMelalicasTable extends Migration
             $table->integer('AreaM2');
             $table->integer('m2');
             $table->string('Incluye_Montaje');
+         
+
             $table->timestamps();
         });
     }

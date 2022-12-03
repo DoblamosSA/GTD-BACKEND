@@ -228,6 +228,17 @@
                                     @endcan
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('clientes.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+
+                                <p>
+                                   Clientes
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                           
+                        </li>
                         <li class="nav-item" class="nav nav-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>

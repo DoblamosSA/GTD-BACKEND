@@ -32,7 +32,7 @@
 
                             <div class="row col-12 mb-3">
                                 <!-- <form   action="{{ route('informe-liquidos-penetrante.index') }}" method="GET"> -->
-                                <div class="d-md-flex justify-content-md-end">
+                                <!-- <div class="d-md-flex justify-content-md-end">
                                     <form action="{{route('informe-liquidos-penetrante.index')}}" method="GET">
                                         <div class="btn-group">
 
@@ -45,13 +45,13 @@
                                     </form>
 
 
-                                </div>
+                                </div> -->
                                     
                                 </form>
                             </div>
 
 
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover" id="datatableinfo">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>                                        
@@ -75,12 +75,12 @@
 											<td>{{ $liquidosPenetrante->proceso_soldadura }}</td>
                                             
                                             <td>
-                                                <form action="{{ route('informe-liquidos-penetrante.destroy',$liquidosPenetrante->id) }}" method="POST">
+                                                <form action="{{ route('informe-liquidos-penetrante.destroy',$liquidosPenetrante->id) }}" method="POST" class="formulario-eliminar">
                                                     <a class="btn btn-sm btn-primary" href="{{ route('reportes-pdf.liquidos-penetrante',$liquidosPenetrante->id) }}" target="_blank"><i class="fas fa-file-pdf"></i> </a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('informe-liquidos-penetrante.edit',$liquidosPenetrante->id) }}"><i class="{{ App\Models\User::find(Auth::user()->id)->getRol()=="ADMINISTRADOR" ? "fa fa-fw fa-edit" : "fa fa-fw fa-eye" }}"></i> </a>
                                                     @csrf
                                                     {{-- @method('DELETE') --}}
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash" onclick="return confirm('Desea eliminar el registro?');"></i> </button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash" ></i> </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -95,3 +95,43 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<!-- CSS only -->
+
+@if (session('eliminar') == 'ok')
+<script>
+swal.fire(
+    'Eliminado!',
+    'Seguimiento de la cotización eliminado Correctamente!',
+    'success'
+)
+</script>
+@endif
+
+<script>
+$('.formulario-eliminar').submit(function(e) {
+    e.preventDefault();
+
+    swal.fire({
+        title: 'Estas seguro que deseas eliminar el informe?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '3085d6',
+        CancelButtonColor: '#d33',
+        CancelButtonText: 'yes, delete it!'
+
+    }).then((result) => {
+        if (result.value) {
+            this.submit();
+        }
+
+    })
+});
+</script>
+@endsection
+

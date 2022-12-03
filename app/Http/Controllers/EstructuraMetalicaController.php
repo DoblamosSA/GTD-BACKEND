@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\EstructuraMelalica;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EstructmetalicaExport;
 use App\Imports\EstruMetalicasImport;
-
+use App\Http\Controllers\Clientescontroller;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Concerns\ToCollection;
 class EstructuraMetalicaController extends Controller
 {
     /**
@@ -166,15 +169,15 @@ class EstructuraMetalicaController extends Controller
     {
 
         $request->validate([
-            'file' =>'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:csv,xlsx'
         ]);
-        Excel::import(new EstruMetalicasImport, $request->file('file')->store('temp'));
-        return back();
- 
-//         $file = $request->file('file');
-//         //  Excel::import(new EstruMetalicasImport, $file );
-//            return  Excel::toCollection(new  EstruMetalicasImport, $file );
-            
-// return view('EstructrasMetalicas.index');
+
+        
+        $file = $request->file('file')->getRealPath();
+
+        Excel::import(new EstruMetalicasImport, $file);
+        //    return  Excel::toCollection(new  CotizacionImport, $file );
+
+        return 'exitoso';
     }
 }

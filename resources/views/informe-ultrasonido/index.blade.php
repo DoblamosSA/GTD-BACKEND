@@ -83,7 +83,7 @@
                                             
 											
 
-                                            <td style="width: 150px">
+                                            <td style="width: 150px" class="formulario-eliminar">
                                                 <form action="{{ route('informe-ultrasonido.destroy',$informeUltrasonido->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary" href="{{ route('reportes-pdf.ultrasonido',$informeUltrasonido->id) }}" target="_blank"><i class="fas fa-file-pdf"></i> </a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('informe-ultrasonido.edit',$informeUltrasonido->id) }}"><i class="{{ App\Models\User::find(Auth::user()->id)->getRol()=="ADMINISTRADOR" ? "fa fa-fw fa-edit" : "fa fa-fw fa-eye" }}"></i></a>
@@ -106,3 +106,43 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<!-- CSS only -->
+
+@if (session('eliminar') == 'ok')
+<script>
+swal.fire(
+    'Eliminado!',
+    'Seguimiento de la cotización eliminado Correctamente!',
+    'success'
+)
+</script>
+@endif
+
+<script>
+$('.formulario-eliminar').submit(function(e) {
+    e.preventDefault();
+
+    swal.fire({
+        title: 'Estas seguro que deseas eliminar el informe?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '3085d6',
+        CancelButtonColor: '#d33',
+        CancelButtonText: 'yes, delete it!'
+
+    }).then((result) => {
+        if (result.value) {
+            this.submit();
+        }
+
+    })
+});
+</script>
+@endsection
+
