@@ -20,27 +20,27 @@ Editar Seguimiento
                     @csrf
                     @method('PATCH')
 
+                    
                     <div class="form-row">
 
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="number" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{ $estructuraMelalica->Numero_Obra}}">
-                           
-                        </div>
-                        <div class="col">
-                            <label>Empresa Cliente</label>
-                            <input type="text" class="form-control" placeholder="Empresa Cliente "
-                                name="Empresa_Cliente" value="{{ $estructuraMelalica->Empresa_Cliente}}">
-
-                        </div>
-                        <div class="col">
-                            <label>Fecha Recibido</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido" value="{{ $estructuraMelalica->Fecha_Recibido}}">
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$estructuraMelalica->Numero_Obra}}">
 
                         </div>
                         <div class="col">
                             <label>Nombre Obra</label>
-                            <input type="text" class="form-control" placeholder="Nombre Obra " name="Nombre_Obra" value="{{$estructuraMelalica->Nombre_Obra}}">
+                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra" value="{{$estructuraMelalica->Nombre_Obra}}">
+
+                        </div>
+                        <div class="col">
+                            <label>Lugar Obra</label>
+                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra" value="{{$estructuraMelalica->Lugar_Obra}}">
+
+                        </div>
+                        <div class="col">
+                            <label>Fecha Recibido</label>
+                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido" value="{{$estructuraMelalica->Fecha_Recibido}}">
 
                         </div>
 
@@ -48,37 +48,48 @@ Editar Seguimiento
                     </div>
 
                     <br>
-                     <div class="form-row">
+                    <div class="form-row">
 
                         <div class="col">
-                            <label>Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Descripción " name="Descripcion" value="{{ $estructuraMelalica->Descripcion}}">
+                            <label>Fecha Cotizada</label>
+                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada" value="{{$estructuraMelalica->Fecha_Cotizada}}">
 
                         </div>
+
                         <div class="col">
-                            <label>Estado</label>
-                            <select name="Estado" class="form-control" placeholder="Estado" style="background-color:#6dbafd;"> 
-                                <option class="form-control" >{{ $estructuraMelalica->Estado}}</option>
-                                <option class="form-control" value="Perdida">Perdida</option>
-                                <option class="form-control" value="Seguimiento">Seguimiento</option>
-                                <option class="form-control" value="Vendida">Vendida</option>
+                            <label>Valor Antes Iva</label>
+                            <input type="float" class="form-control" placeholder="Valor antes iva "
+                                name="Valor_Antes_Iva" value="{{$estructuraMelalica->Valor_Antes_Iva}}">
 
+                        </div>
 
+                        <div class="col">
+                            <label>Valor Adjudicado</label>
+                            <input type="float" class="form-control" placeholder="Valor Adjudicado "
+                                name="Valor_Adjudicado" value="{{$estructuraMelalica->Valor_Adjudicado}}">
+
+                        </div>
+
+                        <div class="col">
+                            <label>Tipologia</label>
+                            <select name="Tipologia" class="form-control" placeholder="Tipologia">
+                                <option class="form-control">{{$estructuraMelalica->Tipologia}}</option>
+                                <option class="form-control" value="Bodegas">Bodegas</option>
+                                <option class="form-control" value="Edificio">Edificio</option>
+                                <option class="form-control" value="Entrepisos">Entrepisos</option>
+                                <option class="form-control" value="Servicios y suministros">Servicios y suministros</option>
+                                <option class="form-control" value="Proyectos Especiales">Proyectos Especiales</option>
+                                <option class="form-control" value="Cubiertas">Cubiertas</option>
+                                <option class="form-control" value="Paneles">Paneles</option>
+                                <option class="form-control" value="Casas">Casas</option>
                             </select>
 
                         </div>
 
-                        <div class="col">
-                            <label>Fecha Cotizada</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Cotizada" value="{{$estructuraMelalica->Fecha_Cotizada}}">
-                        </div>
-                        <div class="col">
-                            <label>Valor Antes Iva</label>
-                            <input type="number" class="form-control" placeholder="Valor antes iva "
-                                name="Valor_Antes_Iva" value="{{ $estructuraMelalica->Valor_Antes_Iva}}">
 
-                        </div>
 
+
+                        
 
                     </div>
 
@@ -86,38 +97,40 @@ Editar Seguimiento
                     <br>
                     <div class="form-row">
 
-                        <div class="col">
-                            <label>Contacto</label>
-                            <input type="text" class="form-control" placeholder="Contacto " name="Contacto" value="{{ $estructuraMelalica->Contacto}}">
+                       
 
-                        </div>
-
-
-                       <div class="col">
-                            <label>AreaM2</label>
-                            <input type="number" class="form-control" placeholder="AreaM2 " name="AreaM2" value="{{ $estructuraMelalica->AreaM2}}">
-
-                        </div>
-                        <div class="col">
-                            <label>/m2</label>
-                            <input type="number" class="form-control" placeholder="/m2 " name="m2" value="{{ $estructuraMelalica->m2}}">
-
-                        </div>
-                        <div class="col">
-                            <label>Incluye Montaje</label>
-                            <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
-                                <option class="form-control">{{ $estructuraMelalica->Incluye_Montaje}}</option>
-                                <option class="form-control" value="No inluye">No incluye</option>
-                                <option class="form-control" value="Si Incluye">Si Incluye</option>
-
+                    <div class="col">
+                            <label>Estado</label>
+                            <select name="Estado" class="form-control" placeholder="Estado">
+                                <option class="form-control">{{$estructuraMelalica->Estado}}</option>
+                                <option class="form-control" value="Perdida">Perdida</option>
+                                <option class="form-control" value="Seguimiento">Seguimiento</option>
+                                <option class="form-control" value="Vendida">Vendida</option>
+                                <option class="form-control" value="Vendida">Pendiente</option>
+                                <option class="form-control" value="Vendida">Cerrada</option>
+                                <option class="form-control" value="Vendida">Adjudicada</option>
+                                <option class="form-control" value="Vendida">No cotizada</option>
 
 
                             </select>
 
-                        </div> 
+                        </div>
 
 
-                    </div> 
+                        <div class="col">
+                            <label>Peso Cotizado</label>
+                            <input type="number" class="form-control" placeholder="Peso Cotizado " name="Peso_Cotizado" value="{{$estructuraMelalica->Peso_Cotizado}}">
+
+                        </div>
+                        <div class="col">
+                            <label>Area</label>
+                            <input type="number" class="form-control" placeholder="Area" name="Area_Cotizada" value="{{$estructuraMelalica->Area_Cotizada}}">
+
+                        </div>
+                       
+
+
+                    </div>
                     <br>
 
                     <div class="box-footer mt20">

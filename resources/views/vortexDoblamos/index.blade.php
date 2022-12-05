@@ -56,39 +56,48 @@ Seguimiento Cotizaciones Estructura
 
 
 
- <!-- el data tableinfo viene del layout -->
+                <!-- el data tableinfo viene del layout -->
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
-                            <th>#Obra</th>
                             <th>Empresa o Cliente</th>
-                            <th>Fecha de Recibo</th>
-                            <th>Nombre de la Obra</th>
-                            <th>Descripcion</th>
-                            <th>Estado</th>
-                            <th>Fecha Cotizada</th>
-                            <th>Valor Antes Iva</th>
                             <th>Contacto</th>
-                            <th>Area(m/2)</th>
-                            <th>$/m2</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Nit</th>
+                            <th>#Obra</th>
+                            <th>Nombre Obra</th>
+                            <th>Lugar Obra</th>
+                            <th>Fecha Recibido</th>
+                            <th>Fecha Cotizada</th>
+                            <th>Valor A.Iva</th>
+                            <th>Valor Adjudicado</th>
+                            <th>Tipologia</th>
+                            <th>Estado</th>
+                            <th>$M2</th>
                             <th>Incluye Montaje</th>
+                            <th>Origen</th>
                             <th>Acciones</th>
 
                         </tr>
                     </thead>
-
+                    @foreach($vorte as $row)
                     <tbody>
 
-                        @foreach($vorte as $row)
-                        <tr>
-
-
-                            <td>{{$row->Numero_Obra}}</td>
-                            <td>{{$row->Empresa_Cliente}}</td>
-                            <td>{{$row->Fecha_Recibido}}</td>
-                            <td>{{$row->Nombre_Obra}}</td>
-                            <td>{{$row->Descripcion}}</td>
-                            <td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{$row->Numero_Obra}}</td>
+                        <td>{{$row->Nombre_Obra}}</td>
+                        <td>{{$row->Lugar_Obra}}</td>
+                        <td>{{$row->Fecha_Recibido}}</td>
+                        <td>{{$row->Fecha_Cotizada}}</td>
+                        <td>{{$row->Valor_Antes_Iva}}</td>
+                        <td>{{$row->Valor_Adjudicado}}</td>
+                        <td>{{$row->Tipologia}}</td>
+                        <td>
                             @if($row->Estado == 'Perdida')
                             <span style="color:red;">{{$row->Estado}}</span>
                             @elseif($row->Estado == 'Seguimiento')
@@ -97,46 +106,39 @@ Seguimiento Cotizaciones Estructura
                             <span style="color:green;">{{$row->Estado}}</span>
                             @endif
 
-                            </td>
-                            <td>{{$row->Fecha_Cotizada}}</td>
-                            </td>
-                            <td>${{$row->Valor_Antes_Iva}} </td>
-                            <td>{{$row->Contacto}}</td>
-                            <td>{{$row->AreaM2}}</td>
-                            <td>{{$row->m2}}</td>
-                            <td>{{$row->Incluye_Montaje}}</td>
-                           
+                        </td>
 
-                            <td>
-                                <form action="{{route('vortexDoblamos.destroy',$row->id)}}" method="POST"
-                                    class="formulario-eliminar" class="formulario-eliminar">
+                        <td>{{$row->m2}}</td>
+                        <td>{{$row->Incluye_Montaje}}</td>
+                        <td>{{$row->Origen}}</td>
+                        <td>
+                            <form action="{{route('vortex.destroy',$row->id)}}" method="POST"
+                                class="formulario-eliminar" class="formulario-eliminar">
 
-                                    @csrf
-                                    @method('PUT')
+                                @csrf
+                                @method('PUT')
 
-                                    <a class="btn btn-sm btn-success" href="{{route('vortexDoblamos.edit',$row->id)}}"><i
-                                            class="fa fa-fw fa-edit"></i>
-                                    </a>
+                                <a class="btn btn-sm btn-success"
+                                    href="{{route('vortexDoblamos.edit',$row->id)}}"><i
+                                        class="fa fa-fw fa-edit"></i>
+                                </a>
 
-                                    <button type="submit" class="btn btn-danger btn-sm "><i
-                                            class="fa fa-fw fa-trash"></i></button>
+                                <button type="submit" class="btn btn-danger btn-sm "><i
+                                        class="fa fa-fw fa-trash"></i></button>
 
-                                </form>
+                            </form>
 
-                            </td>
-                           
-
-                        </tr>
-
-                        @endforeach
+                        </td>
 
                     </tbody>
+
+                    @endforeach
                 </table>
             </div>
         </div>
 
     </div>
-   
+
 
 </div>
 </div>

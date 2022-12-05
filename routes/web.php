@@ -289,8 +289,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/vortexDoblamos/store',[VorteController::class, 'store'])->name('vortexDoblamos.store');
     Route::get('/vortexDoblamos/edit/{id}',[VorteController::class,'edit'])->name('vortexDoblamos.edit');
     Route::PATCH('/vortexDoblamos/update/{id}',[Vortecontroller::class,'update'])->name('vortexDoblamos.update');
-    Route::put('/destroy/{id}', [Vortecontroller::class, 'destroy'])->name('vortexDoblamos.destroy');
     Route::get('/vortex', [Vortecontroller::class, 'exportExcelvortex'])->name('vortex.export');
+    Route::put('/vortex/destroy/{id}',[Vortecontroller::class,'destroy'])->name('vortex.destroy');
 
 
 //Estructuras Metalicas

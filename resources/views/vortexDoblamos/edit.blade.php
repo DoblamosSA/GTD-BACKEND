@@ -15,7 +15,7 @@ Editar Seguimiento
                 <div class="card-header">
                     <span class="card-title">Editar seguimiento cotización</span>
                 </div> <br>
-              
+
                 <form action="{{route('vortexDoblamos.update',$vorte->id)}}" method="POST" class="formulario-editar">
                     @csrf
                     @method('PATCH')
@@ -24,13 +24,17 @@ Editar Seguimiento
 
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="number" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$vorte->Numero_Obra}}">
-                           
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$vorte->Numero_Obra}}">
+
                         </div>
                         <div class="col">
-                            <label>Empresa Cliente</label>
-                            <input type="text" class="form-control" placeholder="Empresa Cliente "
-                                name="Empresa_Cliente" value="{{$vorte->Empresa_Cliente}}">
+                            <label>Nombre Obra</label>
+                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra" value="{{$vorte->Nombre_Obra}}">
+
+                        </div>
+                        <div class="col">
+                            <label>Lugar Obra</label>
+                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra" value="{{$vorte->Lugar_Obra}} ">
 
                         </div>
                         <div class="col">
@@ -38,47 +42,55 @@ Editar Seguimiento
                             <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido" value="{{$vorte->Fecha_Recibido}}">
 
                         </div>
-                        <div class="col">
-                            <label>Nombre Obra</label>
-                            <input type="text" class="form-control" placeholder="Nombre Obra " name="Nombre_Obra" value="{{$vorte->Nombre_Obra}}">
-
-                        </div>
 
 
                     </div>
 
                     <br>
-                     <div class="form-row">
+                    <div class="form-row">
 
                         <div class="col">
-                            <label>Descripcion</label>
-                            <input type="text" class="form-control" placeholder="Descripción " name="Descripcion" value="{{$vorte->Descripcion}}">
+                            <label>Fecha Cotizada</label>
+                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada" value="{{$vorte->Fecha_Cotizada}}">
 
                         </div>
+
                         <div class="col">
-                            <label>Estado</label>
-                            <select name="Estado" class="form-control" placeholder="Estado" style="background-color:#6dbafd;"> 
-                                <option class="form-control" >{{$vorte->Estado}}</option>
-                                <option class="form-control" value="Perdida">Perdida</option>
-                                <option class="form-control" value="Seguimiento">Seguimiento</option>
-                                <option class="form-control" value="Vendida">Vendida</option>
+                            <label>Valor Antes Iva</label>
+                            <input type="float" class="form-control" placeholder="Valor antes iva "
+                                name="Valor_Antes_Iva" value="{{$vorte->Valor_Antes_Iva}}">
 
+                        </div>
 
+                        <div class="col">
+                            <label>Valor Adjudicado</label>
+                            <input type="float" class="form-control" placeholder="Valor Adjudicado "
+                                name="Valor_Adjudicado" value="{{$vorte->Valor_Adjudicado}}">
+
+                        </div>
+
+                        <div class="col">
+                            <label>Tipologia</label>
+                            <select name="Tipologia" class="form-control" placeholder="Tipologia">
+                                <option class="form-control">{{$vorte->Tipologia}}</option>
+                                <option class="form-control" value="Fachadas 3D">Fachadas 3D</option>
+                                <option class="form-control" value="Fachadas 2D">Fachadas 2D</option>
+                                <option class="form-control" value="Cerramientos">Cerramientos</option>
+                                <option class="form-control" value="Puertas">Puertas</option>
+                                <option class="form-control" value="Lamina Perforada">Lamina Perforada</option>
+                                <option class="form-control" value="Paneles">Paneles</option>
+                                <option class="form-control" value="Cielos">Cielos</option>
+                                <option class="form-control" value="Corta Soles">Corta Soles</option>
+                                <option class="form-control" value="Avisos">Avisos</option>
+                                <option class="form-control" value="Pasamanos">Pasamanos</option>
+                                <option class="form-control" value="Otros">Otros</option>
                             </select>
 
                         </div>
 
-                        <div class="col">
-                            <label>Fecha Cotizada</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Cotizada" value="{{$vorte->Fecha_Cotizada}}">
 
-                        </div>
-                        <div class="col">
-                            <label>Valor Antes Iva</label>
-                            <input type="number" class="form-control" placeholder="Valor antes iva "
-                                name="Valor_Antes_Iva" value="{{$vorte->Valor_Antes_Iva}}">
 
-                        </div>
+
 
 
                     </div>
@@ -87,42 +99,57 @@ Editar Seguimiento
                     <br>
                     <div class="form-row">
 
+
+
                         <div class="col">
-                            <label>Contacto</label>
-                            <input type="text" class="form-control" placeholder="Contacto " name="Contacto" value="{{$vorte->Contacto}}">
+                            <label>Estado</label>
+                            <select name="Estado" class="form-control" placeholder="Estado">
+                                <option class="form-control">{{$vorte->Estado}}</option>
+                                <option class="form-control" value="Perdida">Perdida</option>
+                                <option class="form-control" value="Seguimiento">Seguimiento</option>
+                                <option class="form-control" value="Vendida">Vendida</option>
+                                <option class="form-control" value="Vendida">Pendiente</option>
+                                <option class="form-control" value="Cerrada">Cerrada</option>
+                                <option class="form-control" value="Adjudicada">Adjudicada</option>
+                                <option class="form-control" value="No cotizada">No cotizada</option>
+
+
+
+                            </select>
 
                         </div>
 
 
-                       <div class="col">
-                            <label>AreaM2</label>
-                            <input type="number" class="form-control" placeholder="AreaM2 " name="AreaM2" value="{{$vorte->AreaM2}}">
-
-                        </div>
                         <div class="col">
-                            <label>/m2</label>
-                            <input type="number" class="form-control" placeholder="/m2 " name="m2" value="{{$vorte->m2}}">
+                            <label>$M2</label>
+                            <input type="number" class="form-control" placeholder="$m2 " name="m2" value="{{$vorte->m2}}">
 
                         </div>
                         <div class="col">
                             <label>Incluye Montaje</label>
                             <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
                                 <option class="form-control">{{$vorte->Incluye_Montaje}}</option>
-                                <option class="form-control" value="No inluye">No incluye</option>
                                 <option class="form-control" value="Si Incluye">Si Incluye</option>
-
-
+                                <option class="form-control" value="No Incluye">No Incluye</option>
 
                             </select>
+                        </div>
 
-                        </div> 
+                        <div class="col">
+                            <label>Origen</label>
+                            <input type="text" class="form-control" placeholder="Origen " name="Origen" value="{{$vorte->Origen}}">
+
+                        </div>
 
 
-                    </div> 
+                    </div>
                     <br>
 
+
+
+
                     <div class="box-footer mt20">
-                        <button type="submit" class="btn btn-primary">Editar Registro</button>
+                        <button type="submit" class="btn btn-primary">Guardar Registro</button>
                     </div>
                 </form>
 
@@ -139,40 +166,40 @@ Editar Seguimiento
 @endsection
 
 @section('scripts')
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <!-- CSS only -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<!-- CSS only -->
 
-    @if (session('eliminar') == 'actual')
-        <script>
-            swal.fire(
-                'editado Correctamente!',
-                'Seguimiento de la cotización Modificado!',
-                'success'
-            )
-        </script>
-    @endif
+@if (session('eliminar') == 'actual')
+<script>
+swal.fire(
+    'editado Correctamente!',
+    'Seguimiento de la cotización Modificado!',
+    'success'
+)
+</script>
+@endif
 
-    <script>
-        $('.formulario-editar').submit(function(e) {
-            e.preventDefault();
+<script>
+$('.formulario-editar').submit(function(e) {
+    e.preventDefault();
 
-            swal.fire({
-                title: 'Estas seguro que deseas editar el seguimiento?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '3085d6',
-                CancelButtonColor: '#d33',
-                CancelButtonText: 'yes, delete it!'
+    swal.fire({
+        title: 'Estas seguro que deseas editar el seguimiento?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '3085d6',
+        CancelButtonColor: '#d33',
+        CancelButtonText: 'yes, delete it!'
 
-            }).then((result) => {
-                if (result.value) {
-                    this.submit();
-                }
+    }).then((result) => {
+        if (result.value) {
+            this.submit();
+        }
 
-            })
-        });
-    </script>
+    })
+});
+</script>
 @endsection

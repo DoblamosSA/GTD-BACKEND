@@ -16,17 +16,17 @@ class CreateVortesTable extends Migration
         Schema::create('vortes', function (Blueprint $table) {
             $table->id();
             $table->integer('Numero_Obra');
-            $table->string('Empresa_Cliente');
-            $table->date('Fecha_Recibido');
             $table->string('Nombre_Obra');
-            $table->string('Descripcion');
-            $table->string('Estado');
-            $table->date('Fecha_Cotizada');
+            $table->string('Lugar_Obra');
+            $table->date('Fecha_Recibido')->nullable();
+            $table->date('Fecha_Cotizada')->nullable();
             $table->float('Valor_Antes_Iva');
-            $table->string('Contacto');
-            $table->integer('AreaM2');
+            $table->float('Valor_Adjudicado');
+            $table->string('Tipologia');
+            $table->string('Estado');
             $table->integer('m2');
             $table->string('Incluye_Montaje');
+            $table->string('Origen');
             $table->timestamps();
         });
     }

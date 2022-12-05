@@ -16,19 +16,17 @@ class CreateEstructuraMelalicasTable extends Migration
         Schema::create('estructura_melalicas', function (Blueprint $table) {
             $table->id();
             $table->integer('Numero_Obra');
-            $table->string('Empresa_Cliente');
-            $table->date('Fecha_Recibido')->nullable();
             $table->string('Nombre_Obra');
-            $table->string('Descripcion');
-            $table->string('Estado');
+            $table->string('Lugar_Obra');
+            $table->date('Fecha_Recibido')->nullable();
             $table->date('Fecha_Cotizada')->nullable();
             $table->float('Valor_Antes_Iva');
-            $table->string('Contacto');
-            $table->integer('AreaM2');
-            $table->integer('m2');
-            $table->string('Incluye_Montaje');
-         
-
+            $table->float('Valor_Adjudicado');
+            $table->string('Tipologia');
+            $table->string('Estado');
+            $table->integer('Peso_Cotizado');
+            $table->integer('Area_Cotizada');
+          
             $table->timestamps();
         });
     }

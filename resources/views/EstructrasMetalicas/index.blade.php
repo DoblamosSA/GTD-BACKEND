@@ -58,17 +58,17 @@ Seguimiento Cotizaciones Estructura
                 </div>
                 <br>
                 @if ($errors->any())
-                            <div class="alert alert-danger">
+                <div class="alert alert-danger">
 
-                            <p>Corrige los siguientes errores: El cliente no se guardo correctamente</p>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                   
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
+                    <p>Corrige los siguientes errores: El cliente no se guardo correctamente</p>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -153,18 +153,23 @@ Seguimiento Cotizaciones Estructura
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
-                            <th>#Obra</th>
+
                             <th>Empresa o Cliente</th>
-                            <th>Fecha de Recibo</th>
-                            <th>Nombre de la Obra</th>
-                            <th>Descripcion</th>
-                            <th>Estado</th>
-                            <th>Fecha Cotizada</th>
-                            <th>Valor Antes Iva</th>
                             <th>Contacto</th>
-                            <th>Area(m/2)</th>
-                            <th>$/m2</th>
-                            <th>Incluye Montaje</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Nit</th>
+                            <th>#Obra</th>
+                            <th>Nombre Obra</th>
+                            <th>Lugar Obra</th>
+                            <th>Fecha Recibido</th>
+                            <th>Fecha Cotizada</th>
+                            <th>Valor A.Iva</th>
+                            <th>Valor Adjudicado</th>
+                            <th>Tipologia</th>
+                            <th>Estado</th>
+                            <th>Peso Cotizado</th>
+                            <th>Area Cotizada</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -175,12 +180,19 @@ Seguimiento Cotizaciones Estructura
                         @foreach($estructuraMelalica as $row)
                         <tr>
 
-
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>{{$row->Numero_Obra}}</td>
-                            <td>{{$row->Empresa_Cliente}}</td>
-                            <td>{{$row->Fecha_Recibido}}</td>
                             <td>{{$row->Nombre_Obra}}</td>
-                            <td>{{$row->Descripcion}}</td>
+                            <td>{{$row->Lugar_Obra}}</td>
+                            <td>{{$row->Fecha_Recibido}}</td>
+                            <td>{{$row->Fecha_Cotizada}}</td>
+                            <td>${{number_format($row->Valor_Antes_Iva)}} </td>
+                            <td>${{number_format($row->Valor_Adjudicado)}}</td>
+                            <td>{{$row->Tipologia}}</td>
                             <td>
                                 @if($row->Estado == 'Perdida')
                                 <span style="color:red;">{{$row->Estado}}</span>
@@ -191,13 +203,11 @@ Seguimiento Cotizaciones Estructura
                                 @endif
 
                             </td>
-                            <td>{{$row->Fecha_Cotizada}}</td>
+
+                            <td>{{$row->Peso_Cotizado}}</td>
+                            <td>{{$row->Area_Cotizada}}</td>
                             </td>
-                            <td>${{number_format($row->Valor_Antes_Iva)}} </td>
-                            <td>{{$row->Contacto}}</td>
-                            <td>{{$row->AreaM2}}</td>
-                            <td>{{$row->m2}}</td>
-                            <td>{{$row->Incluye_Montaje}}</td>
+                        
 
 
                             <td>

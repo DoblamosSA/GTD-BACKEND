@@ -43,37 +43,36 @@ class VorteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Numero_Obra' => 'required | numeric',
-            'Empresa_Cliente' => 'required',
-            'Fecha_Recibido' => 'nullable|date',
+            'Numero_Obra' => 'required',
             'Nombre_Obra' => 'required',
-            'Descripcion' => 'required',
-            'Estado' => 'required',
+            'Lugar_Obra' =>'required',
+            'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Contacto'  => 'required',
-            'AreaM2' => 'required | numeric',
-            'm2' => 'required | numeric',
-            'Incluye_Montaje'=> 'required',
-           
+            'Valor_Adjudicado' => 'required',
+            'Tipologia' => 'required',
+            'Estado' => 'required',
+            'm2'  => 'required',
+            'Incluye_Montaje' => 'required ', 
+            'Origen' => 'required ', 
         ]);
 
         $vorte = new Vorte();
         $vorte->Numero_Obra = $request->Numero_Obra;
-        $vorte->Empresa_Cliente = $request->Empresa_Cliente;
-        $vorte->Fecha_Recibido = $request->Fecha_Recibido;
         $vorte->Nombre_Obra = $request->Nombre_Obra;
-        $vorte->Descripcion = $request->Descripcion;
-        $vorte->Estado = $request->Estado;
+        $vorte->Lugar_Obra = $request->Lugar_Obra;
+        $vorte->Fecha_Recibido = $request->Fecha_Recibido;
         $vorte->Fecha_Cotizada = $request->Fecha_Cotizada;
         $vorte->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $vorte->Contacto = $request->Contacto;
-        $vorte->AreaM2 = $request->AreaM2;
-        $vorte->m2 = $request->m2;
+        $vorte->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $vorte->Tipologia = $request->Tipologia;
+        $vorte->Estado = $request->Estado;
+        $vorte->m2= $request->m2;
         $vorte->Incluye_Montaje = $request->Incluye_Montaje;
+        $vorte->Origen = $request->Origen;
         
         $vorte->save();
-        return redirect()->route('vortexDoblamos.index');
+   
     
        
     }
@@ -114,18 +113,17 @@ class VorteController extends Controller
     {
         $vorte=Vorte::findOrFail($id);
         $vorte->Numero_Obra = $request->Numero_Obra;
-        $vorte->Empresa_Cliente = $request->Empresa_Cliente;
-        $vorte->Fecha_Recibido = $request->Fecha_Recibido;
         $vorte->Nombre_Obra = $request->Nombre_Obra;
-        $vorte->Descripcion = $request->Descripcion;
-        $vorte->Estado = $request->Estado;
+        $vorte->Lugar_Obra = $request->Lugar_Obra;
+        $vorte->Fecha_Recibido = $request->Fecha_Recibido;
         $vorte->Fecha_Cotizada = $request->Fecha_Cotizada;
         $vorte->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $vorte->Contacto = $request->Contacto;
-        $vorte->AreaM2 = $request->AreaM2;
-        $vorte->m2 = $request->m2;
+        $vorte->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $vorte->Tipologia = $request->Tipologia;
+        $vorte->Estado = $request->Estado;
+        $vorte->m2= $request->m2;
         $vorte->Incluye_Montaje = $request->Incluye_Montaje;
-        
+        $vorte->Origen = $request->Origen;
         
         $vorte->save();
         return redirect()->route('vortexDoblamos.index')

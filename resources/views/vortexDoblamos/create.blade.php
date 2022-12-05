@@ -32,13 +32,17 @@ Nueva cotizacion
 
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="number" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
 
                         </div>
                         <div class="col">
-                            <label>Empresa Cliente</label>
-                            <input type="text" class="form-control" placeholder="Empresa Cliente "
-                                name="Empresa_Cliente">
+                            <label>Nombre Obra</label>
+                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra">
+
+                        </div>
+                        <div class="col">
+                            <label>Lugar Obra</label>
+                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra">
 
                         </div>
                         <div class="col">
@@ -46,11 +50,6 @@ Nueva cotizacion
                             <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido">
 
                         </div>
-                        <div class="col">
-                            <label>Nombre Obra</label>
-                            <input type="text" class="form-control" placeholder="Nombre Obra " name="Nombre_Obra">
-
-                        </div>
 
 
                     </div>
@@ -59,32 +58,11 @@ Nueva cotizacion
                     <div class="form-row">
 
                         <div class="col">
-                            <label>Descripcion</label>
-                            <select name="Descripcion" class="form-control" placeholder="Area">
-                                <option class="form-control" value="{{ Auth::user()->Area }}">{{ Auth::user()->Area }}
-                                </option>
-
-                            </select>
-
-                        </div>
-                        <div class="col">
-                            <label>Estado</label>
-                            <select name="Estado" class="form-control" placeholder="Estado">
-                                <option class="form-control"></option>
-                                <option class="form-control" value="Perdida">Perdida</option>
-                                <option class="form-control" value="Seguimiento">Seguimiento</option>
-                                <option class="form-control" value="Vendida">Vendida</option>
-
-
-                            </select>
-
-                        </div>
-
-                        <div class="col">
                             <label>Fecha Cotizada</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Cotizada">
+                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada">
 
                         </div>
+
                         <div class="col">
                             <label>Valor Antes Iva</label>
                             <input type="float" class="form-control" placeholder="Valor antes iva "
@@ -92,6 +70,36 @@ Nueva cotizacion
 
                         </div>
 
+                        <div class="col">
+                            <label>Valor Adjudicado</label>
+                            <input type="float" class="form-control" placeholder="Valor Adjudicado "
+                                name="Valor_Adjudicado">
+
+                        </div>
+
+                        <div class="col">
+                            <label>Tipologia</label>
+                            <select name="Tipologia" class="form-control" placeholder="Tipologia">
+                                <option class="form-control"></option>
+                                <option class="form-control" value="Fachadas 3D">Fachadas 3D</option>
+                                <option class="form-control" value="Fachadas 2D">Fachadas 2D</option>
+                                <option class="form-control" value="Cerramientos">Cerramientos</option>
+                                <option class="form-control" value="Puertas">Puertas</option>
+                                <option class="form-control" value="Lamina Perforada">Lamina Perforada</option>
+                                <option class="form-control" value="Paneles">Paneles</option>
+                                <option class="form-control" value="Cielos">Cielos</option>
+                                <option class="form-control" value="Corta Soles">Corta Soles</option>
+                                <option class="form-control" value="Avisos">Avisos</option>
+                                <option class="form-control" value="Pasamanos">Pasamanos</option>
+                                <option class="form-control" value="Otros">Otros</option>
+                            </select>
+
+                        </div>
+
+
+
+
+
 
                     </div>
 
@@ -99,29 +107,19 @@ Nueva cotizacion
                     <br>
                     <div class="form-row">
 
-                        <div class="col">
-                            <label>Contacto</label>
-                            <input type="text" class="form-control" placeholder="Contacto " name="Contacto">
-
-                        </div>
 
 
                         <div class="col">
-                            <label>AreaM2</label>
-                            <input type="number" class="form-control" placeholder="AreaM2 " name="AreaM2">
-
-                        </div>
-                        <div class="col">
-                            <label>/m2</label>
-                            <input type="number" class="form-control" placeholder="/m2 " name="m2">
-
-                        </div>
-                        <div class="col">
-                            <label>Incluye Montaje</label>
-                            <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
+                            <label>Estado</label>
+                            <select name="Estado" class="form-control" placeholder="Estado">
                                 <option class="form-control"></option>
-                                <option class="form-control" value="No inluye">No incluye</option>
-                                <option class="form-control" value="Si Incluye">Si Incluye</option>
+                                <option class="form-control" value="Perdida">Perdida</option>
+                                <option class="form-control" value="Seguimiento">Seguimiento</option>
+                                <option class="form-control" value="Vendida">Vendida</option>
+                                <option class="form-control" value="Vendida">Pendiente</option>
+                                <option class="form-control" value="Cerrada">Cerrada</option>
+                                <option class="form-control" value="Adjudicada">Adjudicada</option>
+                                <option class="form-control" value="No cotizada">No cotizada</option>
 
 
 
@@ -130,8 +128,34 @@ Nueva cotizacion
                         </div>
 
 
+                        <div class="col">
+                            <label>$M2</label>
+                            <input type="number" class="form-control" placeholder="$m2 " name="m2">
+
+                        </div>
+                        <div class="col">
+                        <label>Incluye Montaje</label>
+                            <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
+                                <option class="form-control"></option>
+                                <option class="form-control" value="Si Incluye">Si Incluye</option>
+                                <option class="form-control" value="No Incluye">No Incluye</option>
+                    
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label>Origen</label>
+                            <input type="text" class="form-control" placeholder="Origen "
+                                name="Origen">
+
+                        </div>
+
+
                     </div>
                     <br>
+
+
+
 
                     <div class="box-footer mt20">
                         <button type="submit" class="btn btn-primary">Guardar Registro</button>

@@ -46,34 +46,31 @@ class EstructuraMetalicaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Numero_Obra' => 'required | numeric',
-            'Empresa_Cliente' => 'required',
-            'Fecha_Recibido' => 'nullable|date',
+            'Numero_Obra' => 'required',
             'Nombre_Obra' => 'required',
-            'Descripcion' => 'required',
-            'Estado' => 'required',
+            'Lugar_Obra' =>'required',
+            'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Contacto'  => 'required',
-            'AreaM2' => 'required | numeric',
-            'm2' => 'required | numeric',
-            'Incluye_Montaje'=> 'required',
-           
+            'Valor_Adjudicado' => 'required',
+            'Tipologia' => 'required',
+            'Estado' => 'required',
+            'Peso_Cotizado'  => 'required',
+            'Area_Cotizada' => 'required ', 
         ]);
         $estructuraMelalica = new EstructuraMelalica();
         $estructuraMelalica->Numero_Obra = $request->Numero_Obra;
-        $estructuraMelalica->Empresa_Cliente = $request->Empresa_Cliente;
-        $estructuraMelalica->Fecha_Recibido = $request->Fecha_Recibido;
         $estructuraMelalica->Nombre_Obra = $request->Nombre_Obra;
-        $estructuraMelalica->Descripcion = $request->Descripcion;
-        $estructuraMelalica->Estado = $request->Estado;
+        $estructuraMelalica->Lugar_Obra = $request->Lugar_Obra;
+        $estructuraMelalica->Fecha_Recibido = $request->Fecha_Recibido;
         $estructuraMelalica->Fecha_Cotizada = $request->Fecha_Cotizada;
         $estructuraMelalica->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $estructuraMelalica->Contacto = $request->Contacto;
-        $estructuraMelalica->AreaM2 = $request->AreaM2;
-        $estructuraMelalica->m2 = $request->m2;
-        $estructuraMelalica->Incluye_Montaje = $request->Incluye_Montaje;
-        
+        $estructuraMelalica->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $estructuraMelalica->Tipologia = $request->Tipologia;
+        $estructuraMelalica->Estado = $request->Estado;
+        $estructuraMelalica->Peso_Cotizado = $request->Peso_Cotizado;
+        $estructuraMelalica->Area_Cotizada = $request->Area_Cotizada;
+      
         $estructuraMelalica->save();
         return redirect()->route('estructurasMetalicas.index');
 
@@ -119,19 +116,20 @@ class EstructuraMetalicaController extends Controller
     public function update(Request $request, $id)
     {
         
+     
+
         $estructuraMelalica=EstructuraMelalica::findOrFail($id);
         $estructuraMelalica->Numero_Obra = $request->Numero_Obra;
-        $estructuraMelalica->Empresa_Cliente = $request->Empresa_Cliente;
-        $estructuraMelalica->Fecha_Recibido = $request->Fecha_Recibido;
         $estructuraMelalica->Nombre_Obra = $request->Nombre_Obra;
-        $estructuraMelalica->Descripcion = $request->Descripcion;
-        $estructuraMelalica->Estado = $request->Estado;
+        $estructuraMelalica->Lugar_Obra = $request->Lugar_Obra;
+        $estructuraMelalica->Fecha_Recibido = $request->Fecha_Recibido;
         $estructuraMelalica->Fecha_Cotizada = $request->Fecha_Cotizada;
         $estructuraMelalica->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $estructuraMelalica->Contacto = $request->Contacto;
-        $estructuraMelalica->AreaM2 = $request->AreaM2;
-        $estructuraMelalica->m2 = $request->m2;
-        $estructuraMelalica->Incluye_Montaje = $request->Incluye_Montaje;
+        $estructuraMelalica->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $estructuraMelalica->Tipologia = $request->Tipologia;
+        $estructuraMelalica->Estado = $request->Estado;
+        $estructuraMelalica->Peso_Cotizado = $request->Peso_Cotizado;
+        $estructuraMelalica->Area_Cotizada = $request->Area_Cotizada;
         
         
         $estructuraMelalica->save();
