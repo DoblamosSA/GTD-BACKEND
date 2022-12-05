@@ -26,7 +26,9 @@ class CreateEstructuraMelalicasTable extends Migration
             $table->string('Estado');
             $table->integer('Peso_Cotizado');
             $table->integer('Area_Cotizada');
-          
+            $table->unsignedBigInteger('clientes_id')->unsigned()->index();
+            $table->foreign('clientes_id')->references('id')->on('clientes')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -17,4 +17,9 @@ class Cliente extends Model
     protected $fillable =[
         'Empresa','Nit','Contacto','Correo','Telefono'
     ];
+
+    public function EstructuraMelalica()
+    {
+        return $this->hasMany(EstructuraMelalica::class);
+    }
 }

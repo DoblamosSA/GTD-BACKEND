@@ -84,7 +84,8 @@ Nueva cotizacion
                                 <option class="form-control" value="Bodegas">Bodegas</option>
                                 <option class="form-control" value="Edificio">Edificio</option>
                                 <option class="form-control" value="Entrepisos">Entrepisos</option>
-                                <option class="form-control" value="Servicios y suministros">Servicios y suministros</option>
+                                <option class="form-control" value="Servicios y suministros">Servicios y suministros
+                                </option>
                                 <option class="form-control" value="Proyectos Especiales">Proyectos Especiales</option>
                                 <option class="form-control" value="Cubiertas">Cubiertas</option>
                                 <option class="form-control" value="Paneles">Paneles</option>
@@ -96,7 +97,7 @@ Nueva cotizacion
 
 
 
-                        
+
 
                     </div>
 
@@ -104,9 +105,9 @@ Nueva cotizacion
                     <br>
                     <div class="form-row">
 
-                       
 
-                    <div class="col">
+
+                        <div class="col">
                             <label>Estado</label>
                             <select name="Estado" class="form-control" placeholder="Estado">
                                 <option class="form-control"></option>
@@ -135,8 +136,27 @@ Nueva cotizacion
                             <input type="number" class="form-control" placeholder="Area" name="Area_Cotizada">
 
                         </div>
-                       
 
+                        <!-- <div class="col">
+                            <label>Cliente</label>
+                            <select name="clientes_id" class="form-control">
+
+
+                                <option class="form-control">Cliente</option>
+                                @foreach ($clientes as $row)
+                                <option class="form-control" value="{{ $row->id }}">
+                                    {{ $row->Nit}}    {{ $row->Empresa }}
+                                </option>
+                                @endforeach
+
+                            </select>
+
+                        </div> -->
+                        <div class="col">
+                            <label>cliente</label>
+                            <input type="number" class="form-control" placeholder="Area" name="clientes_id">
+
+                        </div>
 
                     </div>
                     <br>

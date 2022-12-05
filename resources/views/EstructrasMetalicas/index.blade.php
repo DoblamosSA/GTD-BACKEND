@@ -180,11 +180,11 @@ Seguimiento Cotizaciones Estructura
                         @foreach($estructuraMelalica as $row)
                         <tr>
 
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{$row->clientes->Empresa}}</td>
+                            <td>{{$row->clientes->Contacto}}</td>
+                            <td>{{$row->clientes->Correo}}</td>
+                            <td>{{$row->clientes->Telefono}}</td>
+                            <td>{{$row->clientes->Nit}}</td>
                             <td>{{$row->Numero_Obra}}</td>
                             <td>{{$row->Nombre_Obra}}</td>
                             <td>{{$row->Lugar_Obra}}</td>

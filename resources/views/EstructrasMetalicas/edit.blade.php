@@ -106,10 +106,10 @@ Editar Seguimiento
                                 <option class="form-control" value="Perdida">Perdida</option>
                                 <option class="form-control" value="Seguimiento">Seguimiento</option>
                                 <option class="form-control" value="Vendida">Vendida</option>
-                                <option class="form-control" value="Vendida">Pendiente</option>
-                                <option class="form-control" value="Vendida">Cerrada</option>
-                                <option class="form-control" value="Vendida">Adjudicada</option>
-                                <option class="form-control" value="Vendida">No cotizada</option>
+                                <option class="form-control" value="Pendiente">Pendiente</option>
+                                <option class="form-control" value="Cerrada">Cerrada</option>
+                                <option class="form-control" value="Adjudicada">Adjudicada</option>
+                                <option class="form-control" value="No cotizada">No cotizada</option>
 
 
                             </select>

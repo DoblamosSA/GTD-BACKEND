@@ -23,7 +23,9 @@ class EstructuraMetalicaController extends Controller
     {
 
        $estructuraMelalica = EstructuraMelalica::all();
-        return view('EstructrasMetalicas.index',compact('estructuraMelalica'));
+       $clientes = Cliente::all();
+       
+        return view('EstructrasMetalicas.index',compact('estructuraMelalica','clientes'));
     }
 
     /**
@@ -34,7 +36,8 @@ class EstructuraMetalicaController extends Controller
     public function create()
     {
         $estructuraMelalica = new EstructuraMelalica();
-        return view('EstructrasMetalicas.create',compact('estructuraMelalica'));
+        $clientes = Cliente::all();
+        return view('EstructrasMetalicas.create',compact('estructuraMelalica','clientes'));
     }
 
     /**
@@ -57,6 +60,7 @@ class EstructuraMetalicaController extends Controller
             'Estado' => 'required',
             'Peso_Cotizado'  => 'required',
             'Area_Cotizada' => 'required ', 
+            'clientes_id' =>'required'
         ]);
         $estructuraMelalica = new EstructuraMelalica();
         $estructuraMelalica->Numero_Obra = $request->Numero_Obra;
@@ -70,6 +74,7 @@ class EstructuraMetalicaController extends Controller
         $estructuraMelalica->Estado = $request->Estado;
         $estructuraMelalica->Peso_Cotizado = $request->Peso_Cotizado;
         $estructuraMelalica->Area_Cotizada = $request->Area_Cotizada;
+        $estructuraMelalica->clientes_id =$request->clientes_id;
       
         $estructuraMelalica->save();
         return redirect()->route('estructurasMetalicas.index');
