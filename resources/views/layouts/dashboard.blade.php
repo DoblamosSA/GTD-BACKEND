@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
     var currentRol = '{{ App\Models\User::find(Auth::user()->id)->getRol() }}';
     var accion = "";
@@ -233,11 +234,11 @@
                                 <i class="nav-icon fas fa-book"></i>
 
                                 <p>
-                                   Clientes
+                                    Clientes
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                           
+
                         </li>
                         <li class="nav-item" class="nav nav-treeview">
                             <a href="#" class="nav-link">
@@ -359,23 +360,23 @@
                 </ul>
 
             </li>
-            
+
             <li class="nav-item" class="nav nav-treeview">
-            @can('estructurasMetalicas.index',Model::class)
+                @can('estructurasMetalicas.index',Model::class)
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                     <p>
-                       EstructurasMetalicas
+                        EstructurasMetalicas
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
-            @endcan
+                @endcan
                 <ul class="nav nav-treeview">
                     <div class="modulosst">
                         <li class="nav-item">
                         <li class="nav-item">
 
-                          
+
                             <a href="{{route('estructurasMetalicas.index')}}" class="nav-link">
                                 </i>
                                 <p>
@@ -383,7 +384,7 @@
                                     </i>
                                 </p>
                             </a>
-                          
+
 
 
 
@@ -451,6 +452,8 @@
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ asset('js/utilidades.js') }}"></script>
     <script src="{{ asset('js/control-roles-js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
     $(function() {
         $('#datatableinfo').DataTable({
@@ -465,12 +468,20 @@
     });
     </script>
 
+<script>
+    $(document).ready(function() {
+    $('#clientes_id').select2();
+});
+</script>
+
     @yield('scripts')
     <script src="{{ asset('js/utilidadesAggrid.js') }}"></script>
     <script src="{{ asset('js/drawing.js') }}"></script>
     <script src="{{ asset('js/drawinglipenetrantes.js.js') }}"></script>
     <script src="{{ asset('js/utilidadesAggrid.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

@@ -42,6 +42,7 @@ Seguimiento Cotizaciones Estructura
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
+                            <th>Id cliente</th>
                             <th>Empresa</th>
                             <th>Nit</th>
                             <th>Contacto</th>
@@ -56,6 +57,7 @@ Seguimiento Cotizaciones Estructura
 
                         @foreach($cliente as $Row)
                        
+                        <td>{{$Row->id}}</td>
                         <td>{{$Row->Empresa}}</td>
                         <td>{{$Row->Nit}}</td>
                         <td>{{$Row->Contacto}}</td>

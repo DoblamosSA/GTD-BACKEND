@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Vorte;
+use App\Models\Cliente;
 use Illuminate\View\ViewServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,7 +22,8 @@ class VorteController extends Controller
     {
      
         $vorte = Vorte::all();
-        return view('vortexDoblamos.index',compact('vorte'));
+        $clientes = Cliente::all();
+        return view('vortexDoblamos.index',compact('vorte','clientes'));
     }
 
     /**
@@ -31,7 +33,9 @@ class VorteController extends Controller
      */
     public function create()
     {
-       return view('vortexDoblamos.create');
+        $vorte = new Vorte();
+        $client = Cliente::all();
+       return view('vortexDoblamos.create',compact('vorte','client'));
     }
 
     /**
@@ -55,6 +59,8 @@ class VorteController extends Controller
             'm2'  => 'required',
             'Incluye_Montaje' => 'required ', 
             'Origen' => 'required ', 
+            
+           
         ]);
 
         $vorte = new Vorte();
@@ -70,9 +76,11 @@ class VorteController extends Controller
         $vorte->m2= $request->m2;
         $vorte->Incluye_Montaje = $request->Incluye_Montaje;
         $vorte->Origen = $request->Origen;
-        
+        $vorte->clientes_id = $request->clientes_id;
+
         $vorte->save();
    
+        return redirect()->route('vortexDoblamos.index');
     
        
     }

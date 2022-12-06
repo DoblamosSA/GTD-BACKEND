@@ -74,7 +74,7 @@ Seguimiento Cotizaciones Estructura
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Clientes Doblamos</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -142,6 +142,8 @@ Seguimiento Cotizaciones Estructura
                                     </fieldset>
                                 </form>
 
+                                
+
                             </div>
 
                         </div>
@@ -195,16 +197,16 @@ Seguimiento Cotizaciones Estructura
                             <td>{{$row->Tipologia}}</td>
                             <td>
                                 @if($row->Estado == 'Perdida')
-                                <span style="color:red;">{{$row->Estado}}</span>
+                               <b> <span style="color:red;">{{$row->Estado}}</span></b>
                                 @elseif($row->Estado == 'Seguimiento')
-                                <span style="color:#ff7514;">{{$row->Estado}}</span>
+                                <b>  <span style="color:#ff7514;">{{$row->Estado}}</span></b>
                                 @elseif($row->Estado == 'Vendida')
-                                <span style="color:green;">{{$row->Estado}}</span>
+                                <b>  <span style="color:green;">{{$row->Estado}}</span></b>
                                 @endif
 
                             </td>
 
-                            <td>{{$row->Peso_Cotizado}}</td>
+                            <td>Kg {{$row->Peso_Cotizado}}</td>
                             <td>{{$row->Area_Cotizada}}</td>
                             </td>
                         

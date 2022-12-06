@@ -29,7 +29,7 @@ Nueva cotizacion
                     @method('post')
 
                     <div class="form-row">
-
+                      
                         <div class="col">
                             <label>Numero Obra</label>
                             <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
@@ -134,19 +134,38 @@ Nueva cotizacion
 
                         </div>
                         <div class="col">
-                        <label>Incluye Montaje</label>
+                            <label>Incluye Montaje</label>
                             <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
                                 <option class="form-control"></option>
                                 <option class="form-control" value="Si Incluye">Si Incluye</option>
                                 <option class="form-control" value="No Incluye">No Incluye</option>
-                    
+
                             </select>
                         </div>
 
                         <div class="col">
                             <label>Origen</label>
-                            <input type="text" class="form-control" placeholder="Origen "
-                                name="Origen">
+                            <input type="text" class="form-control" placeholder="Origen " name="Origen">
+
+                        </div>
+                        <!-- <div class="col">
+                            <label>Cliente</label>
+                            <input type="text" class="form-control" placeholder="cliente " name="clientes_id">
+
+                        </div> -->
+                        <div class="col">
+                            <label>Cliente</label>
+                            <select name="clientes_id" class="form-control" id="clientes_id">
+
+
+                                <option class="form-control">Cliente</option>
+                                @foreach ($client as $row)
+                                <option class="form-control" value="{{ $row->id }}">
+                                    {{ $row->Nit}} {{ $row->Empresa }}
+                                </option>
+                                @endforeach
+
+                            </select>
 
                         </div>
 
@@ -155,7 +174,7 @@ Nueva cotizacion
                     <br>
 
 
-
+                    <br>
 
                     <div class="box-footer mt20">
                         <button type="submit" class="btn btn-primary">Guardar Registro</button>

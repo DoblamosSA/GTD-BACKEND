@@ -27,6 +27,9 @@ class CreateVortesTable extends Migration
             $table->integer('m2');
             $table->string('Incluye_Montaje');
             $table->string('Origen');
+            $table->unsignedBigInteger('clientes_id')->unsigned()->index();
+            $table->foreign('clientes_id')->references('id')->on('clientes')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

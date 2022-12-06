@@ -22,4 +22,10 @@ class Cliente extends Model
     {
         return $this->hasMany(EstructuraMelalica::class);
     }
+
+    public function Vorte()
+    {
+        return $this->hasMany(Vorte::class);
+    }
+
 }
