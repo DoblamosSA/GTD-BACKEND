@@ -16,7 +16,7 @@ Seguimiento Cotizaciones Estructura
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
                         <span id="card_title">
-                            {{ __('Seguimiento Cotizaciones Estructura') }}
+                            {{ __('Seguimiento Cotizaciones Formaletas') }}
                         </span>
 
                         <div class="float-right">
@@ -34,6 +34,8 @@ Seguimiento Cotizaciones Estructura
                 <br>
                 <div class="d-md-flex justify-content-md-end">
                     <div class="col">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@mdo">Registro Clientes</button>
                         <a class="btn btn-sm btn-primary" href="" target="_blank"><i
                                 class="fas fa-file-pdf"></i>Exportar PDF </a>
                         <a href="{{route('export.export')}}" class="btn btn-sm btn-success"><i
@@ -41,7 +43,8 @@ Seguimiento Cotizaciones Estructura
 
                         </a>
 
-                        <a href="{{route('cotizacion.import')}}" class="btn btn-sm btn-success" ><i class="fas fa-file-import"></i>
+                        <a href="{{route('cotizacion.import')}}" class="btn btn-sm btn-success"><i
+                                class="fas fa-file-import"></i>
                             Importar
 
                         </a>
@@ -55,22 +58,118 @@ Seguimiento Cotizaciones Estructura
 
 
 
+                @if ($errors->any())
+                <div class="alert alert-danger">
+
+                    <p>Corrige los siguientes errores: El cliente no se guardo correctamente</p>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Clientes Doblamos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <div class="modal-body">
+
+                                <form action="{{route('clientes.store')}}" method="post">
+
+                                    @csrf
+                                    <fieldset>
+                                        <legend class="text-center header"> Registro Clientes</legend>
+
+                                        <div class="form-group">
+                                            <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                    class="fa fa-user bigicon"></i></span>
+                                            <div class="col-md-12">
+                                                <input name="Empresa" type="text" placeholder="Empresa"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Nit" type="text" placeholder="Nit" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Contacto" type="text" placeholder="Contacto"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                    class="fa fa-envelope-o bigicon"></i></span>
+                                            <div class="col-md-12">
+                                                <input name="Correo" type="text" placeholder="Correo"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Telefono" type="text" placeholder="Telefono"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="box-footer mt20">
+                                            <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                                        </div>
+                                        <br>
+                                    </fieldset>
+                                </form>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
 
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
-                            <th>#Obra</th>
+
                             <th>Empresa o Cliente</th>
-                            <th>Fecha de Recibo</th>
-                            <th>Nombre de la Obra</th>
-                            <th>Descripcion</th>
-                            <th>Estado</th>
-                            <th>Fecha Cotizada</th>
-                            <th>Valor Antes Iva</th>
                             <th>Contacto</th>
-                            <th>Area(m/2)</th>
-                            <th>$/m2</th>
-                            <th>Incluye Montaje</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Nit</th>
+                            <th>#Obra</th>
+                            <th>Nombre Obra</th>
+                            <th>Lugar Obra</th>
+                            <th>Fecha Recibido</th>
+                            <th>Fecha Cotizada</th>
+                            <th>Valor A.Iva</th>
+                            <th>Valor Adjudicado</th>
+                            <th>Tipologia</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
 
                         </tr>
@@ -82,29 +181,32 @@ Seguimiento Cotizaciones Estructura
                         <tr>
 
 
+                            <td>{{$row->clientes->Empresa}}</td>
+                            <td>{{$row->clientes->Contacto}}</td>
+                            <td>{{$row->clientes->Correo}}</td>
+                            <td>{{$row->clientes->Telefono}}</td>
+                            <td>{{$row->clientes->Nit}}</td>
                             <td>{{$row->Numero_Obra}}</td>
-                            <td>{{$row->Empresa_Cliente}}</td>
-                            <td>{{$row->Fecha_Recibido}}</td>
                             <td>{{$row->Nombre_Obra}}</td>
-                            <td>{{$row->Descripcion}}</td>
+                            <td>{{$row->Lugar_Obra}}</td>
+                            <td>{{$row->Fecha_Recibido}}</td>
+                            <td>{{$row->Fecha_Cotizada}}</td>
+                            <td>${{number_format($row->Valor_Antes_Iva)}}</td>
+                            <td>${{number_format($row->Valor_Adjudicado)}}</td>
+                            <td>{{$row->Tipologia}}</td>
+
                             <td>
-                            @if($row->Estado == 'Perdida')
-                            <span style="color:red;">{{$row->Estado}}</span>
-                            @elseif($row->Estado == 'Seguimiento')
-                            <span style="color:#ff7514;">{{$row->Estado}}</span>
-                            @elseif($row->Estado == 'Vendida')
-                            <span style="color:green;">{{$row->Estado}}</span>
-                            @endif
+                                @if($row->Estado == 'Perdida')
+                                <span style="color:red;">{{$row->Estado}}</span>
+                                @elseif($row->Estado == 'Seguimiento')
+                                <span style="color:#ff7514;">{{$row->Estado}}</span>
+                                @elseif($row->Estado == 'Vendida')
+                                <span style="color:green;">{{$row->Estado}}</span>
+                                @endif
 
                             </td>
-                            <td>{{$row->Fecha_Cotizada}}</td>
-                            </td>
-                            <td>{{number_format($row->Valor_Antes_Iva)}} </td>
-                            <td>{{$row->Contacto}}</td>
-                            <td>{{$row->AreaM2}}</td>
-                            <td>{{number_format($row->m2)}}</td>
-                            <td>{{$row->Incluye_Montaje}}</td>
-                           
+
+
 
                             <td>
                                 <form action="{{route('cotizacion.destroy',$row->id)}}" method="POST"
@@ -123,7 +225,7 @@ Seguimiento Cotizaciones Estructura
                                 </form>
 
                             </td>
-                           
+
 
                         </tr>
 
@@ -135,7 +237,7 @@ Seguimiento Cotizaciones Estructura
         </div>
 
     </div>
-    
+
 </div>
 </div>
 </div>

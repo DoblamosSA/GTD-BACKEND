@@ -1,19 +1,24 @@
 <table>
     <thead>
         <tr>
-            <th>#Obra</th>
             <th>Empresa o Cliente</th>
-            <th>Fecha de Recibo</th>
-            <th>Nombre de la Obra</th>
-            <th>Descripcion</th>
-            <th>Estado</th>
-            <th>Fecha Cotizada</th>
-            <th>Valor Antes Iva</th>
             <th>Contacto</th>
-            <th>Area(m/2)</th>
-            <th>$/m2</th>
+            <th>Correo</th>
+            <th>Telefono</th>
+            <th>Nit</th>
+            <th>#Obra</th>
+            <th>Nombre Obra</th>
+            <th>Lugar Obra</th>
+            <th>Fecha Recibido</th>
+            <th>Fecha Cotizada</th>
+            <th>Valor A.Iva</th>
+            <th>Valor Adjudicado</th>
+            <th>Tipologia</th>
+            <th>Estado</th>
+            <th>$M2</th>
             <th>Incluye Montaje</th>
-          
+            <th>Origen</th>
+
 
         </tr>
     </thead>
@@ -21,20 +26,23 @@
         @foreach($vorte as $row)
         <tr>
 
-
+            <td>{{$row->clientes->Empresa}}</td>
+            <td>{{$row->clientes->Contacto}}</td>
+            <td>{{$row->clientes->Correo}}</td>
+            <td>{{$row->clientes->Telefono}}</td>
+            <td>{{$row->clientes->Nit}}</td>
             <td>{{$row->Numero_Obra}}</td>
-            <td>{{$row->Empresa_Cliente}}</td>
-            <td>{{$row->Fecha_Recibido}}</td>
             <td>{{$row->Nombre_Obra}}</td>
-            <td>{{$row->Descripcion}}</td>
-            <td >{{$row->Estado}}</td>
+            <td>{{$row->Lugar_Obra}}</td>
+            <td>{{$row->Fecha_Recibido}}</td>
             <td>{{$row->Fecha_Cotizada}}</td>
-            <td>{{$row->Valor_Antes_Iva}} </td>
-            <td>{{$row->Contacto}}</td>
-            <td>{{$row->AreaM2}}</td>
+            <td>${{number_format($row->Valor_Antes_Iva)}}</td>
+            <td>${{number_format($row->Valor_Adjudicado)}}</td>
+            <td>{{$row->Tipologia}}</td>
+            <td>{{$row->Estado}}</td>
             <td>{{$row->m2}}</td>
             <td>{{$row->Incluye_Montaje}}</td>
-
+            <td>{{$row->Origen}}</td>
 
 
 

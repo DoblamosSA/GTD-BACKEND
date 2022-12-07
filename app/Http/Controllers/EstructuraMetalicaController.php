@@ -76,9 +76,11 @@ class EstructuraMetalicaController extends Controller
         $estructuraMelalica->Area_Cotizada = $request->Area_Cotizada;
         $estructuraMelalica->clientes_id =$request->clientes_id;
       
+      
         $estructuraMelalica->save();
-        return redirect()->route('estructurasMetalicas.index');
-
+       
+        return redirect()->route('estructurasMetalicas.index')
+        ->with('eliminar', 'actual');
         
     }
 
@@ -105,7 +107,7 @@ class EstructuraMetalicaController extends Controller
       //sirve para editar la tabla
 
       $estructuraMelalica = EstructuraMelalica::findOrFail($id);
-        
+    
       return view('EstructrasMetalicas.edit', compact('estructuraMelalica'));
 
 

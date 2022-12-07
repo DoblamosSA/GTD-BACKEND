@@ -20,9 +20,6 @@ public function clientes()
 }
 
 
-public function Vortes()
-{
-    return $this->hasOne('App\Models\Vorte', 'id', 'clientes_id');
-}
+
 
 }

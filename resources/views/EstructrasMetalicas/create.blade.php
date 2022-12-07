@@ -29,21 +29,7 @@ Nueva cotizacion
 
 
                     <div class="form-row">
-                    <div class="col">
-                            <label>Cliente</label>
-                            <select name="clientes_id" class="form-control" id="clientes_id">
-
-
-                                <option class="form-control">Cliente</option>
-                                @foreach ($clientes as $row)
-                                <option class="form-control" value="{{ $row->id }}">
-                                    {{ $row->Nit}}    {{ $row->Empresa }}
-                                </option>
-                                @endforeach
-
-                            </select>
-
-                        </div>
+                      
                         <div class="col">
                             <label>Numero Obra</label>
                             <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
@@ -151,8 +137,25 @@ Nueva cotizacion
 
                         </div>
 
-                      
-                     
+
+                       
+
+
+                        <div class="col">
+                            <label>Cliente</label>
+                            <select name="clientes_id" class="form-control" id="clientes_id">
+
+
+                                <option class="form-control">Cliente</option>
+                                @foreach ($clientes as $row)
+                                <option class="form-control" value="{{ $row->id }}">
+                                    {{ $row->Nit}} {{ $row->Empresa }}
+                                </option>
+                                @endforeach
+
+                            </select>
+
+                        </div>
 
                     </div>
                     <br>
@@ -162,7 +165,7 @@ Nueva cotizacion
                     </div>
                 </form>
 
-                
+
 
 
 
@@ -174,4 +177,3 @@ Nueva cotizacion
 
 
 @endsection
-

@@ -148,11 +148,7 @@ Nueva cotizacion
                             <input type="text" class="form-control" placeholder="Origen " name="Origen">
 
                         </div>
-                        <!-- <div class="col">
-                            <label>Cliente</label>
-                            <input type="text" class="form-control" placeholder="cliente " name="clientes_id">
-
-                        </div> -->
+                       
                         <div class="col">
                             <label>Cliente</label>
                             <select name="clientes_id" class="form-control" id="clientes_id">

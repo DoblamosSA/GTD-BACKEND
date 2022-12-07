@@ -15,7 +15,7 @@ class CreateEstructuraMelalicasTable extends Migration
     {
         Schema::create('estructura_melalicas', function (Blueprint $table) {
             $table->id();
-            $table->integer('Numero_Obra');
+            $table->string('Numero_Obra');
             $table->string('Nombre_Obra');
             $table->string('Lugar_Obra');
             $table->date('Fecha_Recibido')->nullable();
@@ -43,3 +43,5 @@ class CreateEstructuraMelalicasTable extends Migration
         Schema::dropIfExists('estructura_melalicas');
     }
 }
+
+//pro

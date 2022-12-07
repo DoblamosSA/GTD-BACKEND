@@ -19,9 +19,9 @@ public function clientes()
 {
     return $this->belongsTo(Cliente::class, 'clientes_id');
 }
-public function EstructuraMelalica()
-{
-    return $this->hasOne('App\Models\Cliente', 'id', 'clientes_id');
-}
+// public function EstructuraMelalica()
+// {
+//     return $this->hasOne('App\Models\Cliente', 'id', 'clientes_id');
+// }
 
 }

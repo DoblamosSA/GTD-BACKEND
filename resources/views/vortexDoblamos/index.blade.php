@@ -9,7 +9,7 @@ Seguimiento Cotizaciones Estructura
 @section('content')
 <br>
 
-        
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -36,6 +36,8 @@ Seguimiento Cotizaciones Estructura
                 <br>
                 <div class="d-md-flex justify-content-md-end">
                     <div class="col">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@mdo">Registro Clientes</button>
                         <a class="btn btn-sm btn-primary" href="" target="_blank"><i
                                 class="fas fa-file-pdf"></i>Exportar PDF </a>
                         <a href="{{route('vortex.export')}}" class="btn btn-sm btn-success"><i
@@ -55,6 +57,100 @@ Seguimiento Cotizaciones Estructura
 
                 </div>
                 <br>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+
+                    <p>Corrige los siguientes errores: El cliente no se guardo correctamente</p>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Clientes Doblamos</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <div class="modal-body">
+
+                                <form action="{{route('clientes.store')}}" method="post">
+
+                                    @csrf
+                                    <fieldset>
+                                        <legend class="text-center header"> Registro Clientes</legend>
+
+                                        <div class="form-group">
+                                            <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                    class="fa fa-user bigicon"></i></span>
+                                            <div class="col-md-12">
+                                                <input name="Empresa" type="text" placeholder="Empresa"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Nit" type="text" placeholder="Nit" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Contacto" type="text" placeholder="Contacto"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span class="col-md-1 col-md-offset-2 text-center"><i
+                                                    class="fa fa-envelope-o bigicon"></i></span>
+                                            <div class="col-md-12">
+                                                <input name="Correo" type="text" placeholder="Correo"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <div class="col-md-12">
+                                                <input name="Telefono" type="text" placeholder="Telefono"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="box-footer mt20">
+                                            <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                                        </div>
+                                        <br>
+                                    </fieldset>
+                                </form>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
 
 
 
@@ -96,16 +192,16 @@ Seguimiento Cotizaciones Estructura
                         <td>{{$row->Lugar_Obra}}</td>
                         <td>{{$row->Fecha_Recibido}}</td>
                         <td>{{$row->Fecha_Cotizada}}</td>
-                        <td>{{$row->Valor_Antes_Iva}}</td>
-                        <td>{{$row->Valor_Adjudicado}}</td>
+                        <td>${{number_format($row->Valor_Antes_Iva)}}</td>
+                        <td>${{number_format($row->Valor_Adjudicado)}}</td>
                         <td>{{$row->Tipologia}}</td>
                         <td>
                             @if($row->Estado == 'Perdida')
-                            <span style="color:red;">{{$row->Estado}}</span>
+                           <b> <span style="color:red;">{{$row->Estado}}</span></b>
                             @elseif($row->Estado == 'Seguimiento')
-                            <span style="color:#ff7514;">{{$row->Estado}}</span>
+                           <b> <span style="color:#ff7514;">{{$row->Estado}}</span></b>
                             @elseif($row->Estado == 'Vendida')
-                            <span style="color:green;">{{$row->Estado}}</span>
+                           <b><span style="color:green;">{{$row->Estado}}</span></b> 
                             @endif
 
                         </td>
@@ -120,8 +216,7 @@ Seguimiento Cotizaciones Estructura
                                 @csrf
                                 @method('PUT')
 
-                                <a class="btn btn-sm btn-success"
-                                    href="{{route('vortexDoblamos.edit',$row->id)}}"><i
+                                <a class="btn btn-sm btn-success" href="{{route('vortexDoblamos.edit',$row->id)}}"><i
                                         class="fa fa-fw fa-edit"></i>
                                 </a>
 
@@ -167,7 +262,7 @@ $('.formulario-eliminar').submit(function(e) {
     e.preventDefault();
 
     swal.fire({
-        title: 'Estas seguro que deseas eliminar el seguimiento?',
+        title: 'Estas seguro que deseas eliminar el seguimiento? Esto eliminara a su vez el cliente',
         text: "¡No podrás revertir esto!",
         icon: 'warning',
         showCancelButton: true,

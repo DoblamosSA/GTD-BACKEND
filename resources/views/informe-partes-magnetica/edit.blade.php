@@ -44,7 +44,7 @@
                                         data-target="#modal-juntas"><i class="fa fa-fw fa-plus"
                                             onclick="clearForm()"></i>Agregar</a>
                    
-                                <table class="table table-striped table-hover" id="tabla_juntas">
+                                <table class="table table-striped table-hover" id="tabla_juntas" >
                                     <thead class="thead">
                                         <tr>
                                             <th>No</th>

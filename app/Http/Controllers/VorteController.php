@@ -59,7 +59,7 @@ class VorteController extends Controller
             'm2'  => 'required',
             'Incluye_Montaje' => 'required ', 
             'Origen' => 'required ', 
-            
+            'clientes_id'=>'required ', 
            
         ]);
 
@@ -77,7 +77,6 @@ class VorteController extends Controller
         $vorte->Incluye_Montaje = $request->Incluye_Montaje;
         $vorte->Origen = $request->Origen;
         $vorte->clientes_id = $request->clientes_id;
-
         $vorte->save();
    
         return redirect()->route('vortexDoblamos.index');

@@ -15,7 +15,7 @@ class CreateVortesTable extends Migration
     {
         Schema::create('vortes', function (Blueprint $table) {
             $table->id();
-            $table->integer('Numero_Obra');
+            $table->string('Numero_Obra');
             $table->string('Nombre_Obra');
             $table->string('Lugar_Obra');
             $table->date('Fecha_Recibido')->nullable();

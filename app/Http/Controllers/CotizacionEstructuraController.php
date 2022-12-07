@@ -9,7 +9,9 @@ use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CotizacionImport;
 use App\Exports\CotizacionSeguimientoExport;
+use App\Models\Cliente;
 use App\Models\CotizacionEstructuras;
+
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -23,7 +25,8 @@ class CotizacionEstructuraController extends Controller
     public function index()
     {
         $cotizacionEstructuras = CotizacionEstructuras::all();
-        return view('Ingenieria.CotizacionesEstructura.index', compact('cotizacionEstructuras'));
+        $clientes = Cliente::all();
+        return view('Ingenieria.CotizacionesEstructura.index', compact('cotizacionEstructuras','clientes'));
     }
 
     /**
@@ -34,7 +37,8 @@ class CotizacionEstructuraController extends Controller
     public function create()
     {
         $cotizacionEstructuras = new CotizacionEstructuras();
-        return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras'));
+     $clientes = Cliente::all();
+        return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras','clientes'));
     }
 
     /**
@@ -47,38 +51,33 @@ class CotizacionEstructuraController extends Controller
     {
 
         $request->validate([
-            'Numero_Obra' => 'required | numeric',
-            'Empresa_Cliente' => 'required',
-            'Fecha_Recibido' => 'nullable|date',
+            'Numero_Obra' => 'required',
             'Nombre_Obra' => 'required',
-            'Descripcion' => 'required',
-            'Estado' => 'required',
+            'Lugar_Obra' =>'required',
+            'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Contacto' => 'required',
-            'AreaM2' => 'required | numeric',
-            'm2' => 'required | numeric',
-            'Incluye_Montaje' => 'required',
-
+            'Valor_Adjudicado' => 'required',
+            'Tipologia' => 'required',
+            'Estado' => 'required',
+            'clientes_id'=>'required'
+          
         ]);
 
         $cotizacionEstructuras = new CotizacionEstructuras();
         $cotizacionEstructuras->Numero_Obra = $request->Numero_Obra;
-        $cotizacionEstructuras->Empresa_Cliente = $request->Empresa_Cliente;
-        $cotizacionEstructuras->Fecha_Recibido = $request->Fecha_Recibido;
         $cotizacionEstructuras->Nombre_Obra = $request->Nombre_Obra;
-        $cotizacionEstructuras->Descripcion = $request->Descripcion;
-        $cotizacionEstructuras->Estado = $request->Estado;
+        $cotizacionEstructuras->Lugar_Obra = $request->Lugar_Obra;
+        $cotizacionEstructuras->Fecha_Recibido = $request->Fecha_Recibido;
         $cotizacionEstructuras->Fecha_Cotizada = $request->Fecha_Cotizada;
         $cotizacionEstructuras->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $cotizacionEstructuras->Contacto = $request->Contacto;
-        $cotizacionEstructuras->AreaM2 = $request->AreaM2;
-        $cotizacionEstructuras->m2 = $request->m2;
-        $cotizacionEstructuras->Incluye_Montaje = $request->Incluye_Montaje;
-
+        $cotizacionEstructuras->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $cotizacionEstructuras->Tipologia = $request->Tipologia;
+        $cotizacionEstructuras->Estado = $request->Estado;
+        $cotizacionEstructuras->clientes_id = $request->clientes_id;
         $cotizacionEstructuras->save();
-        return redirect()->route('cotizacion.index');
-
+        return redirect()->route('cotizacion.index')
+        ->with('eliminar', 'actual');
 
     }
 
@@ -103,8 +102,8 @@ class CotizacionEstructuraController extends Controller
     {
         //sirve para editar la tabla
         $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
-
-        return view('Ingenieria.CotizacionesEstructura.edit', compact('cotizacionEstructuras'));
+        $clientes = Cliente::all();
+        return view('Ingenieria.CotizacionesEstructura.edit', compact('cotizacionEstructuras','clientes'));
     }
 
     /**
@@ -118,20 +117,18 @@ class CotizacionEstructuraController extends Controller
     {
         $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
         $cotizacionEstructuras->Numero_Obra = $request->Numero_Obra;
-        $cotizacionEstructuras->Empresa_Cliente = $request->Empresa_Cliente;
-        $cotizacionEstructuras->Fecha_Recibido = $request->Fecha_Recibido;
         $cotizacionEstructuras->Nombre_Obra = $request->Nombre_Obra;
-        $cotizacionEstructuras->Descripcion = $request->Descripcion;
-        $cotizacionEstructuras->Estado = $request->Estado;
+        $cotizacionEstructuras->Lugar_Obra = $request->Lugar_Obra;
+        $cotizacionEstructuras->Fecha_Recibido = $request->Fecha_Recibido;
         $cotizacionEstructuras->Fecha_Cotizada = $request->Fecha_Cotizada;
         $cotizacionEstructuras->Valor_Antes_Iva = $request->Valor_Antes_Iva;
-        $cotizacionEstructuras->Contacto = $request->Contacto;
-        $cotizacionEstructuras->AreaM2 = $request->AreaM2;
-        $cotizacionEstructuras->m2 = $request->m2;
-        $cotizacionEstructuras->Incluye_Montaje = $request->Incluye_Montaje;
-
+        $cotizacionEstructuras->Valor_Adjudicado = $request->Valor_Adjudicado;
+        $cotizacionEstructuras->Tipologia = $request->Tipologia;
+        $cotizacionEstructuras->Estado = $request->Estado;
 
         $cotizacionEstructuras->save();
+
+        
         return redirect()->route('cotizacion.index')
             ->with('eliminar', 'actual');
     }

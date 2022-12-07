@@ -9,22 +9,15 @@ class CotizacionEstructuras extends Model
 {
 
     protected $perPage = 20;
-    use HasFactory;
+    use  HasFactory;
+    protected $fillable=['Numero_Obra','Nombre_Obra','Lugar_Obra','Fecha_Recibido','Fecha_Cotizada', 'Valor_Antes_Iva','Valor_Adjudicado','Tipologia','Estado','clientes_id'
+];
 
 
 
-    protected $fillable = [
-        'Numero_Obra',
-        'Empresa_Cliente',
-        'Fecha_Recibido',
-        'Nombre_Obra',
-        'Descripcion',
-        'Estado',
-        'Fecha_Cotizada',
-        'Valor_Antes_Iva',
-        'Contacto',
-        'AreaM2',
-        'm2',
-        'Incluye_Montaje'
-    ];
+public function clientes()
+{
+    return $this->belongsTo(Cliente::class, 'clientes_id');
+}
+
 }

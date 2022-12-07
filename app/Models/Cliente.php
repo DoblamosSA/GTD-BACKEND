@@ -27,5 +27,10 @@ class Cliente extends Model
     {
         return $this->hasMany(Vorte::class);
     }
+    public function CotizacionEstructuras()
+    {
+        return $this->hasMany(CotizacionEstructuras::class);
+    }
+   
 
 }

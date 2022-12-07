@@ -268,7 +268,7 @@ $('.formulario-eliminar').submit(function(e) {
     e.preventDefault();
 
     swal.fire({
-        title: 'Estas seguro que deseas eliminar el seguimiento?',
+        title: 'Estas seguro que deseas eliminar el seguimiento? Esto eliminara a su vez el cliente',
         text: "¡No podrás revertir esto!",
         icon: 'warning',
         showCancelButton: true,
