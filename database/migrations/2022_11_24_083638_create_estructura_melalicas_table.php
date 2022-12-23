@@ -21,14 +21,13 @@ class CreateEstructuraMelalicasTable extends Migration
             $table->date('Fecha_Recibido')->nullable();
             $table->date('Fecha_Cotizada')->nullable();
             $table->float('Valor_Antes_Iva');
-            $table->float('Valor_Adjudicado');
+            $table->float('Valor_Adjudicado')->nullable();
             $table->string('Tipologia');
             $table->string('Estado');
             $table->integer('Peso_Cotizado');
             $table->integer('Area_Cotizada');
             $table->unsignedBigInteger('clientes_id')->unsigned()->index();
-            $table->foreign('clientes_id')->references('id')->on('clientes')
-            ->onDelete('cascade');
+            $table->foreign('clientes_id')->references('id')->on('clientes_s_a_p_s');
             $table->timestamps();
         });
     }

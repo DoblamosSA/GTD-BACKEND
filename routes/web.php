@@ -6,8 +6,11 @@ use App\Http\Controllers\VorteController;
 use App\Http\Controllers\FachadaController;
 use App\Models\CotizacionEstructura;
 use App\Http\Controllers\Clientescontroller;
+use App\Http\Controllers\ClientesSAPController;
+use App\Http\Controllers\ApiClientesSAP;
 use App\Utils\RolesNames;
 use App\Http\Controllers\VortexController;
+use App\Models\ClientesSAP;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -260,16 +263,6 @@ Route::middleware(['auth'])->group(function () {
     //     });
 
 
-
-
-    //rutas cliente
-
-    Route::get('/clientes',[Clientescontroller::class,'index'])->name('clientes.index');
-    Route::get('/clientes/create',[Clientescontroller::class,'create'])->name('clientes.create');
-    Route::post('clientes/store',[Clientescontroller::class,'store'])->name('clientes.store');
-    Route::get('/clientes/edit/{id}',[Clientescontroller::class,'edit'])->name('clientes.edit');
-    route::patch('/clientes/update/{id}',[Clientescontroller::class,'update'])->name('clientes.update');
-    Route::put('/clientes/{id}',[Clientescontroller::class,'destroy'])->name('clientes.destroy');
     
     //Rutas ingenieria estructuras metalicas
         Route::get('/index',[CotizacionEstructuraController::class,'index'])->name('cotizacion.index');
@@ -304,5 +297,16 @@ Route::put('/destroy/{id}',[EstructuraMetalicaController::class,'destroy'])->nam
 Route::get('/estructurasMetalicas/export',[EstructuraMetalicaController::class,'exportExcelEstr'])->name('estructurasMetalicas.export');
 Route::get('/estructurasMetalicas/import',[EstructuraMetalicaController::class,'importExcel'])->name('estructurasMetalicas.import');
 Route::post('/estructurasMetalicas-import',[EstructuraMetalicaController::class,'impStore'])->name('estructurasMetalicas-import.impStore');
+
+
+
+//Rutas Clientes SAP
+
+Route::get('/ClientesSap',[ClientesSAPController::class,'index'])->name('ClientesSap.index');
+Route::get('/ClientesSAP',[ClientesSAPController::class,'create'])->name('ClientesSap.create');
+Route::post('ClientesSAP/RegistroSAP',[ClientesSAPController::class,'RegistroClienteSAP'])->name('ClientesSAP.RegistroClienteSAP');
+Route::get('Clientes/sql',[ClientesSAPController::class,'RegistroClienteBD'])->name('Clientes.RegistroClienteBD');
+Route::get('/ClientesSAP/Manual',[ClientesSAPController::class,'ConsultaClientesManualSAP'])->name('ClientesSAP.ConsultaClientesManualSAP');
+
 });
 

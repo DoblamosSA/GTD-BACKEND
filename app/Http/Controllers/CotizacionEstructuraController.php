@@ -9,7 +9,8 @@ use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CotizacionImport;
 use App\Exports\CotizacionSeguimientoExport;
-use App\Models\Cliente;
+use App\Models\ClientesSAP;
+use App\Http\Controllers\ClientesSAPController;
 use App\Models\CotizacionEstructuras;
 
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class CotizacionEstructuraController extends Controller
     public function index()
     {
         $cotizacionEstructuras = CotizacionEstructuras::all();
-        $clientes = Cliente::all();
+        $clientes = ClientesSAP::all();
         return view('Ingenieria.CotizacionesEstructura.index', compact('cotizacionEstructuras','clientes'));
     }
 
@@ -37,7 +38,7 @@ class CotizacionEstructuraController extends Controller
     public function create()
     {
         $cotizacionEstructuras = new CotizacionEstructuras();
-     $clientes = Cliente::all();
+     $clientes = ClientesSAP::all();
         return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras','clientes'));
     }
 
@@ -57,10 +58,9 @@ class CotizacionEstructuraController extends Controller
             'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Valor_Adjudicado' => 'required',
             'Tipologia' => 'required',
             'Estado' => 'required',
-            'clientes_id'=>'required'
+            'clientes_id' => 'required|numeric',
           
         ]);
 
@@ -102,7 +102,7 @@ class CotizacionEstructuraController extends Controller
     {
         //sirve para editar la tabla
         $cotizacionEstructuras = CotizacionEstructuras::findOrFail($id);
-        $clientes = Cliente::all();
+        $clientes = ClientesSAP::all();
         return view('Ingenieria.CotizacionesEstructura.edit', compact('cotizacionEstructuras','clientes'));
     }
 

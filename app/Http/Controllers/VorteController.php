@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Vorte;
-use App\Models\Cliente;
+use App\Http\Controllers\ClientesSAPController;
 use Illuminate\View\ViewServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SeguimientosVortexExport;
+use App\Models\ClientesSAP;
 
 class VorteController extends Controller
 {
@@ -21,8 +22,10 @@ class VorteController extends Controller
     public function index()
     {
      
+       
+      
         $vorte = Vorte::all();
-        $clientes = Cliente::all();
+        $clientes = ClientesSAP::all();
         return view('vortexDoblamos.index',compact('vorte','clientes'));
     }
 
@@ -34,8 +37,10 @@ class VorteController extends Controller
     public function create()
     {
         $vorte = new Vorte();
-        $client = Cliente::all();
-       return view('vortexDoblamos.create',compact('vorte','client'));
+        $clientesSAP = ClientesSAP::all();
+
+    
+       return view('vortexDoblamos.create',compact('vorte','clientesSAP'));
     }
 
     /**
@@ -53,13 +58,12 @@ class VorteController extends Controller
             'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Valor_Adjudicado' => 'required',
             'Tipologia' => 'required',
             'Estado' => 'required',
             'm2'  => 'required',
             'Incluye_Montaje' => 'required ', 
             'Origen' => 'required ', 
-            'clientes_id'=>'required ', 
+            'clientes_id' => 'required|numeric',
            
         ]);
 

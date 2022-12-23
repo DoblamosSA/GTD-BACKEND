@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "datatables.net": "^1.13.1",
-        "fabric": "^5.2.1"
+        "fabric": "^5.2.1",
+        "sweetalert": "^2.1.2"
     }
 }

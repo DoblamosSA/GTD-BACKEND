@@ -32,22 +32,22 @@ Nueva cotizacion
                       
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra">
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{old('Numero_Obra')}}">
 
                         </div>
                         <div class="col">
                             <label>Nombre Obra</label>
-                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra">
+                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra" value="{{old('Nombre_Obra')}}">
 
                         </div>
                         <div class="col">
                             <label>Lugar Obra</label>
-                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra">
+                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra" value="{{old('Lugar_Obra')}}">
 
                         </div>
                         <div class="col">
                             <label>Fecha Recibido</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido">
+                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido" value="{{old('Fecha_Recibido')}}">
 
                         </div>
 
@@ -59,28 +59,28 @@ Nueva cotizacion
 
                         <div class="col">
                             <label>Fecha Cotizada</label>
-                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada">
+                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada" value="{{old('Fecha_Cotizada')}}">
 
                         </div>
 
                         <div class="col">
                             <label>Valor Antes Iva</label>
                             <input type="float" class="form-control" placeholder="Valor antes iva "
-                                name="Valor_Antes_Iva">
+                                name="Valor_Antes_Iva" value="{{old('Valor_Antes_Iva')}}">
 
                         </div>
 
                         <div class="col">
                             <label>Valor Adjudicado</label>
                             <input type="float" class="form-control" placeholder="Valor Adjudicado "
-                                name="Valor_Adjudicado">
+                                name="Valor_Adjudicado" value="{{old('Valor_Adjudicado')}}">
 
                         </div>
 
                         <div class="col">
                             <label>Tipologia</label>
                             <select name="Tipologia" class="form-control" placeholder="Tipologia">
-                                <option class="form-control"></option>
+                                <option class="form-control">{{old('Tipologia')}}</option>
                                 <option class="form-control" value="Fachadas 3D">Fachadas 3D</option>
                                 <option class="form-control" value="Fachadas 2D">Fachadas 2D</option>
                                 <option class="form-control" value="Cerramientos">Cerramientos</option>
@@ -112,11 +112,11 @@ Nueva cotizacion
                         <div class="col">
                             <label>Estado</label>
                             <select name="Estado" class="form-control" placeholder="Estado">
-                                <option class="form-control"></option>
+                                <option class="form-control">{{old('Estado')}}</option>
                                 <option class="form-control" value="Perdida">Perdida</option>
                                 <option class="form-control" value="Seguimiento">Seguimiento</option>
                                 <option class="form-control" value="Vendida">Vendida</option>
-                                <option class="form-control" value="Vendida">Pendiente</option>
+                                <option class="form-control" value="Pendiente">Pendiente</option>
                                 <option class="form-control" value="Cerrada">Cerrada</option>
                                 <option class="form-control" value="Adjudicada">Adjudicada</option>
                                 <option class="form-control" value="No cotizada">No cotizada</option>
@@ -130,13 +130,13 @@ Nueva cotizacion
 
                         <div class="col">
                             <label>$M2</label>
-                            <input type="number" class="form-control" placeholder="$m2 " name="m2">
+                            <input type="number" class="form-control" placeholder="$m2 " name="m2" value="{{old('m2')}}">
 
                         </div>
                         <div class="col">
                             <label>Incluye Montaje</label>
                             <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
-                                <option class="form-control"></option>
+                                <option class="form-control">{{old('Incluye_Montaje')}}</option>
                                 <option class="form-control" value="Si Incluye">Si Incluye</option>
                                 <option class="form-control" value="No Incluye">No Incluye</option>
 
@@ -145,7 +145,7 @@ Nueva cotizacion
 
                         <div class="col">
                             <label>Origen</label>
-                            <input type="text" class="form-control" placeholder="Origen " name="Origen">
+                            <input type="text" class="form-control" placeholder="Origen " name="Origen" value="{{old('Origen')}}">
 
                         </div>
                        
@@ -153,11 +153,12 @@ Nueva cotizacion
                             <label>Cliente</label>
                             <select name="clientes_id" class="form-control" id="clientes_id">
 
-
-                                <option class="form-control">Cliente</option>
-                                @foreach ($client as $row)
+                         
+                             
+                                @foreach ($clientesSAP as $row)
+                             <option></option>
                                 <option class="form-control" value="{{ $row->id }}">
-                                    {{ $row->Nit}} {{ $row->Empresa }}
+                                    {{ $row->CardCode}} {{ $row->CardName }}
                                 </option>
                                 @endforeach
 

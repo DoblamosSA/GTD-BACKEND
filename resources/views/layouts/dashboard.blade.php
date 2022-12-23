@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    @yield('css')
     <title>DOBLAMOS S.A</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -32,9 +32,9 @@
     </script>
 
     <!-- datatables -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
 
 </head>
@@ -229,12 +229,13 @@
                                     @endcan
                             </ul>
                         </li>
+                      
                         <li class="nav-item">
-                            <a href="{{route('clientes.index')}}" class="nav-link">
+                            <a href="{{route('ClientesSap.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
 
                                 <p>
-                                    Clientes
+                                    Clientes 
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -482,6 +483,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @yield('js')
 </body>
 
 </html>

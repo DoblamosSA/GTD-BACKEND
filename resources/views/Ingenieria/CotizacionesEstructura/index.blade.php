@@ -155,12 +155,9 @@ Seguimiento Cotizaciones Estructura
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
-
-                            <th>Empresa o Cliente</th>
-                            <th>Contacto</th>
-                            <th>Correo</th>
+                            <th>Cliente</th>
+                            <th>Nombres</th>
                             <th>Telefono</th>
-                            <th>Nit</th>
                             <th>#Obra</th>
                             <th>Nombre Obra</th>
                             <th>Lugar Obra</th>
@@ -180,12 +177,9 @@ Seguimiento Cotizaciones Estructura
                         @foreach($cotizacionEstructuras as $row)
                         <tr>
 
-
-                            <td>{{$row->clientes->Empresa}}</td>
-                            <td>{{$row->clientes->Contacto}}</td>
-                            <td>{{$row->clientes->Correo}}</td>
-                            <td>{{$row->clientes->Telefono}}</td>
-                            <td>{{$row->clientes->Nit}}</td>
+                            <td>{{$row->clientes->CardCode}}</td>
+                            <td>{{$row->clientes->CardName}}</td>
+                            <td>{{$row->clientes->Phone1}}</td>
                             <td>{{$row->Numero_Obra}}</td>
                             <td>{{$row->Nombre_Obra}}</td>
                             <td>{{$row->Lugar_Obra}}</td>
@@ -197,11 +191,19 @@ Seguimiento Cotizaciones Estructura
 
                             <td>
                                 @if($row->Estado == 'Perdida')
-                                <span style="color:red;">{{$row->Estado}}</span>
+                                <b> <span style="color:red;">{{$row->Estado}}</span></b>
                                 @elseif($row->Estado == 'Seguimiento')
-                                <span style="color:#ff7514;">{{$row->Estado}}</span>
+                                <b> <span style="color:#ff7514;">{{$row->Estado}}</span></b>
                                 @elseif($row->Estado == 'Vendida')
-                                <span style="color:green;">{{$row->Estado}}</span>
+                                <b> <span style="color:green;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Pendiente')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Cerrada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Adjudicada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'No cotizada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
                                 @endif
 
                             </td>

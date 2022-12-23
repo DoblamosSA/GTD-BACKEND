@@ -8,17 +8,15 @@ Seguimiento Cotizaciones Estructura
 
 @section('content')
 <br>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="card-header" >
+                    <div style="display: flex; justify-content: space-between; align-items: center; ">
 
-                        <span id="card_title">
-                            {{ __('Seguimiento Cotizaciones Vortex') }}
+                        <span id="card_title" style="margin-left:40%; font: size 92px; ">
+                            <b>{{ __('SEGUIMIENTO COTIZACIONES VORTEX') }}</b>
                         </span>
 
                         <div class="float-right">
@@ -36,10 +34,10 @@ Seguimiento Cotizaciones Estructura
                 <br>
                 <div class="d-md-flex justify-content-md-end">
                     <div class="col">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                            data-whatever="@mdo">Registro Clientes</button>
-                        <a class="btn btn-sm btn-primary" href="" target="_blank"><i
-                                class="fas fa-file-pdf"></i>Exportar PDF </a>
+                        <button type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"
+                            class="btn btn-dark">Registro Clientes</button>
+                        <a class="btn btn-sm btn-primary" href="" target="_blank"><i class="fas fa-file-pdf"
+                                class="btn btn-danger"></i>Exportar PDF </a>
                         <a href="{{route('vortex.export')}}" class="btn btn-sm btn-success"><i
                                 class="fas fa-file-export"></i> Exportar Excel
 
@@ -57,6 +55,9 @@ Seguimiento Cotizaciones Estructura
 
                 </div>
                 <br>
+
+
+
                 @if ($errors->any())
                 <div class="alert alert-danger">
 
@@ -151,18 +152,12 @@ Seguimiento Cotizaciones Estructura
                 </div>
 
 
-
-
-
-                <!-- el data tableinfo viene del layout -->
                 <table class="table table-striped" id="datatableinfo">
                     <thead>
                         <tr>
-                            <th>Empresa o Cliente</th>
-                            <th>Contacto</th>
-                            <th>Correo</th>
+                            <th>Cliente</th>
+                            <th>Nombres</th>
                             <th>Telefono</th>
-                            <th>Nit</th>
                             <th>#Obra</th>
                             <th>Nombre Obra</th>
                             <th>Lugar Obra</th>
@@ -179,37 +174,48 @@ Seguimiento Cotizaciones Estructura
 
                         </tr>
                     </thead>
-                    @foreach($vorte as $row)
+
                     <tbody>
 
-                        <td>{{$row->clientes->Empresa}}</td>
-                        <td>{{$row->clientes->Contacto}}</td>
-                        <td>{{$row->clientes->Correo}}</td>
-                        <td>{{$row->clientes->Telefono}}</td>
-                        <td>{{$row->clientes->Nit}}</td>
-                        <td>{{$row->Numero_Obra}}</td>
-                        <td>{{$row->Nombre_Obra}}</td>
-                        <td>{{$row->Lugar_Obra}}</td>
-                        <td>{{$row->Fecha_Recibido}}</td>
-                        <td>{{$row->Fecha_Cotizada}}</td>
-                        <td>${{number_format($row->Valor_Antes_Iva)}}</td>
-                        <td>${{number_format($row->Valor_Adjudicado)}}</td>
-                        <td>{{$row->Tipologia}}</td>
-                        <td>
-                            @if($row->Estado == 'Perdida')
-                           <b> <span style="color:red;">{{$row->Estado}}</span></b>
-                            @elseif($row->Estado == 'Seguimiento')
-                           <b> <span style="color:#ff7514;">{{$row->Estado}}</span></b>
-                            @elseif($row->Estado == 'Vendida')
-                           <b><span style="color:green;">{{$row->Estado}}</span></b> 
-                            @endif
+                        @foreach($vorte as $row)
+                        <tr>
 
-                        </td>
+                            <td>{{$row->clientes->CardCode}}</td>
+                            <td>{{$row->clientes->CardName}}</td>
+                            <td>{{$row->clientes->Phone1}}</td>
+                            <td>{{$row->Numero_Obra}}</td>
+                            <td>{{$row->Nombre_Obra}}</td>
+                            <td>{{$row->Lugar_Obra}}</td>
+                            <td>{{$row->Fecha_Recibido}}</td>
+                            <td>{{$row->Fecha_Cotizada}}</td>
+                            <td>${{number_format($row->Valor_Antes_Iva)}}</td>
+                            <td>${{number_format($row->Valor_Adjudicado)}}</td>
+                            <td>{{$row->Tipologia}}</td>
 
-                        <td>{{$row->m2}}</td>
-                        <td>{{$row->Incluye_Montaje}}</td>
-                        <td>{{$row->Origen}}</td>
-                        <td>
+                            <td>
+                                @if($row->Estado == 'Perdida')
+                                <b> <span style="color:red;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Seguimiento')
+                                <b> <span style="color:#ff7514;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Vendida')
+                                <b> <span style="color:green;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Pendiente')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Cerrada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'Adjudicada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @elseif($row->Estado == 'No cotizada')
+                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
+                                @endif
+
+                            </td>
+
+                            <td>{{$row->m2}}</td>
+                            <td>{{$row->Incluye_Montaje}}</td>
+                            <td>{{$row->Origen}}</td>
+                            
+                            <td>
                             <form action="{{route('vortex.destroy',$row->id)}}" method="POST"
                                 class="formulario-eliminar" class="formulario-eliminar">
 
@@ -225,17 +231,19 @@ Seguimiento Cotizaciones Estructura
 
                             </form>
 
-                        </td>
+                            </td>
+
+
+                        </tr>
+
+                        @endforeach
 
                     </tbody>
-
-                    @endforeach
                 </table>
             </div>
         </div>
 
     </div>
-
 
 </div>
 </div>
@@ -262,7 +270,7 @@ $('.formulario-eliminar').submit(function(e) {
     e.preventDefault();
 
     swal.fire({
-        title: 'Estas seguro que deseas eliminar el seguimiento? Esto eliminara a su vez el cliente',
+        title: 'Estas seguro que deseas eliminar el seguimiento?',
         text: "¡No podrás revertir esto!",
         icon: 'warning',
         showCancelButton: true,

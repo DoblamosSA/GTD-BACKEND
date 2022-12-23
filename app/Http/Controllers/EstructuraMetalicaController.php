@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\EstructuraMelalica;
-use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EstructmetalicaExport;
 use App\Imports\EstruMetalicasImport;
-use App\Http\Controllers\Clientescontroller;
+use App\Http\Controllers\ClientesSAPController;
+use App\Models\ClientesSAP;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToCollection;
 class EstructuraMetalicaController extends Controller
@@ -23,7 +23,7 @@ class EstructuraMetalicaController extends Controller
     {
 
        $estructuraMelalica = EstructuraMelalica::all();
-       $clientes = Cliente::all();
+       $clientes = ClientesSAP::all();
        
         return view('EstructrasMetalicas.index',compact('estructuraMelalica','clientes'));
     }
@@ -36,7 +36,7 @@ class EstructuraMetalicaController extends Controller
     public function create()
     {
         $estructuraMelalica = new EstructuraMelalica();
-        $clientes = Cliente::all();
+        $clientes = ClientesSAP::all();
         return view('EstructrasMetalicas.create',compact('estructuraMelalica','clientes'));
     }
 
@@ -55,12 +55,11 @@ class EstructuraMetalicaController extends Controller
             'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
             'Valor_Antes_Iva' => 'required | numeric',
-            'Valor_Adjudicado' => 'required',
             'Tipologia' => 'required',
             'Estado' => 'required',
             'Peso_Cotizado'  => 'required',
             'Area_Cotizada' => 'required ', 
-            'clientes_id' =>'required'
+            'clientes_id' => 'required|numeric',
         ]);
         $estructuraMelalica = new EstructuraMelalica();
         $estructuraMelalica->Numero_Obra = $request->Numero_Obra;

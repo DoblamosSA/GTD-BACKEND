@@ -17,7 +17,8 @@ class CotizacionEstructuras extends Model
 
 public function clientes()
 {
-    return $this->belongsTo(Cliente::class, 'clientes_id');
+    return $this->belongsTo(ClientesSAP::class, 'clientes_id');
 }
+
 
 }
