@@ -1,0 +1,231 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.bg-header {
+    color: grey;
+    text-align: center;
+    padding: 1em 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.inventory-section,
+.mrp-section {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.btn-asistente {
+    background-color: grey;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+
+.full-height {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+/* Estilos para el indicador de carga */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+}
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.loading-spinner i {
+    font-size: 40px;
+    color: #0056b3;
+}
+
+.loading-spinner span {
+    display: block;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.btn-asistente {
+    background-color: #0056b3;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+.bg-header {
+    background-color: #003366;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+
+h4 {
+    margin: 0;
+}
+
+.list-group-item {
+    border: none;
+    background-color: #8080802b;
+}
+
+.inventory-section {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#btnGenerarpromedioventa,
+#btnGenerarSolicitudCompra {
+    background-color: gray;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#btnGenerarpromedioventa:hover,
+#btnGenerarSolicitudCompra:hover {
+    background-color: #0056b3;
+}
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loading-spinner i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#datatable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#datatable th,
+#datatable td {
+    padding: 10px;
+    text-align: center;
+}
+
+#datatable th {
+    background-color: #1c2a48;
+    /* Azul oscuro */
+    color: #fff;
+    opacity: 0.9;
+ 
+    transition: background 0.3s;
+}
+
+#datatable th:hover {
+    background-color: #003366;
+  
+}
+
+
+#datatable td {
+    border: 1px solid #dee2e6;
+}
+
+#selectAll {
+    margin-top: 3px;
+}
+
+.btn-secondary {
+    background-color: gray;
+}
+
+
+
+
+.card-header {
+    background-color: #003366;
+    color: #fff;
+}
+
+.bg-header {
+    background-color: #003366;
+    color: #fff;
+    padding: 1rem;
+    margin-top: 1rem;
+}

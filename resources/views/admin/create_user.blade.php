@@ -86,17 +86,9 @@
                     <input type="password" class="form-control" value="" name="password" id="password" required>
                 </div>
                 <div class="form-group col-md-6 col-sm-12 col-xs-12">
-                    <label>Area del usuario</label>
-                    <select name="Area" id="Area"class="form-control" placeholder="Area">
-                        <option class="form-control"></option>
-                        <option class="form-control" value="Vortex">Vortex</option>
-                        <option class="form-control" value="Formaletas">Formaletas</option>
-                        <option class="form-control" value="EstructurasMetalicas">Estructuras Metalicas</option>
-                
-
-
-                    </select>
-
+                    <label for="Nombre Empleado">Nombre completo empleado</label>
+                    <input type="text" class="form-control" value="" name="Nombre_Empleado"
+                        required>
                 </div>
                 <div class="form-group col-md-6 col-sm-12 col-xs-12">
                     <label for="password_confirmation">Password Confirmacion</label>

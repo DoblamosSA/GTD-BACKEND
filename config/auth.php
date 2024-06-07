@@ -35,12 +35,18 @@ return [
     |
     */
 
+    
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'sanctum', // Cambiado de 'token' a 'sanctum'
+            'provider' => 'users',
+        ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------

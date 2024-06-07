@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
 @section('template_title')
 Editar Seguimiento
@@ -24,22 +24,26 @@ Editar Seguimiento
 
                         <div class="col">
                             <label>Numero Obra</label>
-                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$vorte->Numero_Obra}}">
+                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra"
+                                value="{{$vorte->Numero_Obra}}">
 
                         </div>
                         <div class="col">
                             <label>Nombre Obra</label>
-                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra" value="{{$vorte->Nombre_Obra}}">
+                            <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra"
+                                value="{{$vorte->Nombre_Obra}}">
 
                         </div>
                         <div class="col">
                             <label>Lugar Obra</label>
-                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra" value="{{$vorte->Lugar_Obra}} ">
+                            <input type="text" class="form-control" placeholder="Lugar_Obra " name="Lugar_Obra"
+                                value="{{$vorte->Lugar_Obra}} ">
 
                         </div>
                         <div class="col">
                             <label>Fecha Recibido</label>
-                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido" value="{{$vorte->Fecha_Recibido}}">
+                            <input type="date" class="form-control" placeholder="Fecha Recibido " name="Fecha_Recibido"
+                                value="{{$vorte->Fecha_Recibido}}">
 
                         </div>
 
@@ -51,7 +55,8 @@ Editar Seguimiento
 
                         <div class="col">
                             <label>Fecha Cotizada</label>
-                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada" value="{{$vorte->Fecha_Cotizada}}">
+                            <input type="date" class="form-control" placeholder="Fecha Cotizada " name="Fecha_Cotizada"
+                                value="{{$vorte->Fecha_Cotizada}}">
 
                         </div>
 
@@ -80,6 +85,7 @@ Editar Seguimiento
                                 <option class="form-control" value="Lamina Perforada">Lamina Perforada</option>
                                 <option class="form-control" value="Paneles">Paneles</option>
                                 <option class="form-control" value="Cielos">Cielos</option>
+    				<option class="form-control" value="Louvers">Louvers</option>
                                 <option class="form-control" value="Corta Soles">Corta Soles</option>
                                 <option class="form-control" value="Avisos">Avisos</option>
                                 <option class="form-control" value="Pasamanos">Pasamanos</option>
@@ -122,9 +128,16 @@ Editar Seguimiento
 
                         <div class="col">
                             <label>$M2</label>
-                            <input type="number" class="form-control" placeholder="$m2 " name="m2" value="{{$vorte->m2}}">
+                            <input type="number" class="form-control" placeholder="$m2 " name="m2"
+                                value="{{$vorte->m2}}">
 
                         </div>
+                        <div class="col-4">
+                            <label for="Fecha Recibido">Consecutivo</label>
+                            <input type="text" class="form-control" name="Total_Asesor"
+                                value="{{$vorte->Total_Asesor}}">
+                        </div>
+
                         <div class="col">
                             <label>Incluye Montaje</label>
                             <select name="Incluye_Montaje" class="form-control" placeholder="Incluye Montaje">
@@ -136,14 +149,86 @@ Editar Seguimiento
                         </div>
 
                         <div class="col">
-                            <label>Origen</label>
-                            <input type="text" class="form-control" placeholder="Origen " name="Origen" value="{{$vorte->Origen}}">
+                             <label>Origen</label>
+                            <select name="Origen" class="form-control" id="origen" id="origen" onchange="checkOrigen(this)">
+
+                                <option>{{$vorte->Origen}}</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Pagina web">Página web</option>
+                                <option value="Valla">Valla</option>
+                                <option value="Referido">Referido</option>
+                                <option value="Cliente actual">Cliente actual</option>
+                                <option value="Distribuidor">Distribuidor</option>
+                                <option value="Ideo">Ideo</option>
+				<option value="Ferias">Ferias</option>
+                                <option value="Asesor">Asesor</option>
+ <option value="Doblacero">Doblacero</option>
+
+                                <option value="Otro">Otro</option>
+                            </select>
 
                         </div>
+ 			
+                                <div id="modal-otro" class="modal fade" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Ingresar otro valor</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="text" id="input-origen-otro" class="form-control"
+                                                    placeholder="Ingresar otro valor">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cancelar</button>
+                                                <button id="btn-guardar-modal" type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                     </div>
+                    <div class="col">
+                        <label for="Asesor_id">Asesor</label>
+                        <select name="Asesor_id" class="form-control" id="Asesor_id">
+                            <option value="">Seleccione un asesor</option>
+                            @foreach ($Asesor as $asesor)
+                            <option value="{{ $asesor->id }}"
+                                {{ old('Asesor_id', $vorte->Asesor_id) == $asesor->id ? 'selected' : '' }}>
+                                {{ $asesor->Nombre_Asesor }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+		<div class="col">
+                        <label for="Pais">pais</label>
+                          <select name="Pais" class="form-control" id="" required>
+                            @foreach ($pais as $p)
+                            <option value="{{ $p->id }}"
+                                {{ old('Pais') == $p->id || $vorte->Pais == $p->id ? 'selected' : '' }}>
+                                {{ $p->countryName }}
+                            </option>
+                            @endforeach
+                        </select>
+
+                    </div>
+					
+					<div class="col-4">
+                        <label for="Fecha de venta">Fecha de venta</label>
+                        <input type="date" name="Fecha_Venta" class="form-control"
+                            value="{{$vorte->Fecha_Venta}}"></input>
+                    </div>
                     <br>
+                    <br>
+
+
 
 
 
@@ -201,5 +286,25 @@ $('.formulario-editar').submit(function(e) {
 
     })
 });
+</script>
+<script>
+  // JavaScript
+  function checkOrigen(selectElement) {
+    var selectedValue = selectElement.value;
+    if (selectedValue === "Otro") {
+      $('#modal-otro').modal('show'); // Abre el modal
+    }
+  }
+
+  $('#btn-guardar-modal').click(function() {
+    var otroValor = $('#input-origen-otro').val();
+
+    if (otroValor.trim() !== "") {
+      var selectOrigen = $('select[name="Origen"]');
+      var option = '<option value="' + otroValor + '">' + otroValor + '</option>';
+      selectOrigen.append(option);
+      selectOrigen.val(otroValor);
+    }
+  });
 </script>
 @endsection

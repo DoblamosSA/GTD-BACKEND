@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
 @section('template_title')
 Seguimiento Cotizaciones Estructura
@@ -12,19 +12,14 @@ Seguimiento Cotizaciones Estructura
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" >
                     <div style="display: flex; justify-content: space-between; align-items: center;">
 
-                        <span id="card_title">
+                        <span id="card_title" >
                             {{ __('Seguimiento Cotizaciones Formaletas') }}
                         </span>
 
-                        <div class="float-right">
-                            <a href="{{route('cotizacion.create')}}" class="btn btn-primary btn-sm float-right"
-                                data-placement="left">
-                                {{ __('Crear Nuevo') }}
-                            </a>
-                        </div>
+
 
                     </div>
 
@@ -34,21 +29,26 @@ Seguimiento Cotizaciones Estructura
                 <br>
                 <div class="d-md-flex justify-content-md-end">
                     <div class="col">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                             data-whatever="@mdo">Registro Clientes</button>
                         <a class="btn btn-sm btn-primary" href="" target="_blank"><i
-                                class="fas fa-file-pdf"></i>Exportar PDF </a>
-                        <a href="{{route('export.export')}}" class="btn btn-sm btn-success"><i
-                                class="fas fa-file-export"></i> Exportar Excel
+                                class="fas fa-file-pdf"></i>Exportar PDF </a> -->
+                        <a href="{{route('export.export')}}" class="btn  btn-success"><i class="fas fa-file-export"></i>
+                            Exportar Excel
 
                         </a>
 
-                        <a href="{{route('cotizacion.import')}}" class="btn btn-sm btn-success"><i
+                        <!-- <a href="{{route('estructurasMetalicas.import')}}" class="btn  btn-success"><i
                                 class="fas fa-file-import"></i>
                             Importar
 
-                        </a>
+                        </a> -->
+                        <a href="{{route('cotizacion.create')}}" class="btn btn-primary"><i></i>
+                            Crear Nuevo
 
+                        </a>
+                        <a href="" class="btn btn-warning"><i></i> Indicadores
+                        </a>
 
                     </div>
 
@@ -91,7 +91,7 @@ Seguimiento Cotizaciones Estructura
                             @endif
                             <div class="modal-body">
 
-                                <form action="{{route('clientes.store')}}" method="post">
+                                <form action="" method="post">
 
                                     @csrf
                                     <fieldset>
@@ -188,25 +188,21 @@ Seguimiento Cotizaciones Estructura
                             <td>${{number_format($row->Valor_Antes_Iva)}}</td>
                             <td>${{number_format($row->Valor_Adjudicado)}}</td>
                             <td>{{$row->Tipologia}}</td>
-
-                            <td>
-                                @if($row->Estado == 'Perdida')
-                                <b> <span style="color:red;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'Seguimiento')
-                                <b> <span style="color:#ff7514;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'Vendida')
-                                <b> <span style="color:green;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'Pendiente')
-                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'Cerrada')
-                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'Adjudicada')
-                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
-                                @elseif($row->Estado == 'No cotizada')
-                                <b> <span style="color:black;">{{$row->Estado}}</span></b>
-                                @endif
-
-                            </td>
+                            @if($row->Estado == 'Perdida')
+                            <td class="btn btn-danger btn-estado">{{$row->Estado}}</td>
+                            @elseif($row->Estado == 'Seguimiento')
+                            <td class="btn btn-sm btn-danger bg-warning btn-estado"> {{$row->Estado}}</td>
+                            @elseif($row->Estado == 'Vendida')
+                            <td class="btn btn-sm btn-success btn-estado"> {{$row->Estado}}</td>
+                            @elseif($row->Estado == 'Pendiente')
+                            <td class="btn btn-sm btn-danger btn-estado">{{$row->Estado}}</td>
+                            @elseif($row->Estado == 'Cerrada')
+                            <td class="btn btn-light btn-estado">{{$row->Estado}}</td>
+                            @elseif($row->Estado == 'Adjudicada')
+                            <td class="btn btn-light btn-estado">{{$row->Estado}}</td>
+                            @elseif($row->Estado == 'No cotizada')
+                            <td class="btn btn-light btn-estado">{{$row->Estado}}</td>
+                            @endif
 
 
 

@@ -21,4 +21,8 @@ class ClientesSAP extends Model
     {
         return $this->hasMany(CotizacionEstructuras::class);
     }
+ public function Asesor()
+    {
+        return $this->hasMany(Vorte::class);
+    }
 }

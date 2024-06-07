@@ -19,15 +19,16 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'nombres',
-        'apellidos',
-        'cedula',
-        'cargo',
+   protected $fillable = [
         'name',
-        'email',
         'password',
-        'Area'
+        'Nombre_Empleado',
+        'role_id',
+		 'usersap',
+        'usersappassword',
+		'EsAprobador',
+		'email',
+        'usuarioaprobador'
     ];
 public $timestamps = false;
 protected $perPage = 20;
@@ -55,15 +56,25 @@ protected $perPage = 20;
         return  $this->name . " " . $this->lastname;
     }
 
-    public function getRol()
+  
+    public function roles()
     {
-        $res = "";
-        $roles = $this->getRoleNames();
+        return $this->belongsToMany(Role::class, 'user_roles'); // Utiliza el nombre de la tabla personalizado
+    }
+    
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id'); // Utiliza el nombre de la tabla y las columnas personalizadas
+    }
+    
 
-        foreach ($roles as $item) {
-            $res .= strtoupper($item) .  " ";
-        }
-        $res=trim($res);
-        return  $res;
+    public function costonocalidad()
+    {
+        return $this->hasMany(CostoNocalidad::class);
+    }
+
+    public function usuarioAprobador()
+    {
+        return $this->belongsTo(User::class, 'usuarioaprobador');
     }
 }

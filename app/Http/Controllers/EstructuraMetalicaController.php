@@ -12,6 +12,7 @@ use App\Http\Controllers\ClientesSAPController;
 use App\Models\ClientesSAP;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Models\Estructuras\EstructurasSeguimientosCRM;
 class EstructuraMetalicaController extends Controller
 {
     /**
@@ -33,11 +34,18 @@ class EstructuraMetalicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $query = $request->input('query');
+        $clientesSAP = ClientesSAP::when($query, function($q) use ($query) {
+            return $q->where('CardName', 'like', "%$query%")
+                     ->orWhere('CardCode', 'like', "%$query%")
+                     ->orWhere('Phone1', 'like', "%$query%");
+        })->paginate(10);
+
         $estructuraMelalica = new EstructuraMelalica();
-        $clientes = ClientesSAP::all();
-        return view('EstructrasMetalicas.create',compact('estructuraMelalica','clientes'));
+       
+        return view('EstructrasMetalicas.create',compact('estructuraMelalica','clientesSAP'));
     }
 
     /**
@@ -49,16 +57,16 @@ class EstructuraMetalicaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Numero_Obra' => 'required',
+            
             'Nombre_Obra' => 'required',
             'Lugar_Obra' =>'required',
             'Fecha_Recibido' => 'nullable|date',
             'Fecha_Cotizada' => 'nullable|date',
-            'Valor_Antes_Iva' => 'required | numeric',
+            
             'Tipologia' => 'required',
             'Estado' => 'required',
-            'Peso_Cotizado'  => 'required',
-            'Area_Cotizada' => 'required ', 
+            
+            
             'clientes_id' => 'required|numeric',
         ]);
         $estructuraMelalica = new EstructuraMelalica();
@@ -183,5 +191,43 @@ class EstructuraMetalicaController extends Controller
         //    return  Excel::toCollection(new  CotizacionImport, $file );
 
         return 'exitoso';
+    }
+	 public function GenerarSeguimientoCotizacion(Request $request, $idseguimiento)
+    {
+        try {
+            // Busca el seguimiento existente por su ID
+            $seguimiento = new EstructurasSeguimientosCRM();
+
+            // Actualiza los campos del seguimiento con los datos del formulario
+            $seguimiento->estructuras_id = $idseguimiento;
+            $seguimiento->Fecha_Seguimiento = $request->input('Fecha_Seguimiento');
+            $seguimiento->Fecha_Nuevo_Seguimiento = $request->input('Fecha_Nuevo_Seguimiento');
+            $seguimiento->Evento = $request->input('Evento');
+            $seguimiento->Observaciones = $request->input('Observaciones');
+
+            // Guarda los cambios
+            $seguimiento->save();
+
+            // Devuelve una respuesta exitosa
+            return response()->json(['message' => 'Seguimiento actualizado correctamente']);
+        } catch (\Exception $e) {
+            // Maneja el caso en que ocurra un error
+            return response()->json(['error' => 'Error al actualizar el seguimiento: ' . $e->getMessage()], 500);
+        }
+    }
+
+
+
+    public function obtenerseguimientos($id)
+    {
+
+        // Obtener los seguimientos asociados a la solicitud de seguimiento
+        $seguimientos = EstructurasSeguimientosCRM::where('estructuras_id', $id)->get();
+
+        // Devolver los seguimientos en formato JSON
+        return response()->json([
+            'id_solicitud' => $id,
+            'seguimientos' => $seguimientos,
+        ], 200);
     }
 }

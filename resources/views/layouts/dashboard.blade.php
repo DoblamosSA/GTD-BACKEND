@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    @yield('css')
-    <title>DOBLAMOS S.A</title>
+    <title>GTD-DOBLAMOS</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -25,10 +24,14 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+ <link rel="icon" href="{{asset('images\Fondo.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('images\Fondo.png')}}" type="image/x-icon">
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
     <script>
-    var currentRol = '{{ App\Models\User::find(Auth::user()->id)->getRol() }}';
-    var accion = "";
+    ;
     </script>
 
     <!-- datatables -->
@@ -36,16 +39,11 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
-
 </head>
 
 <style>
 .modulosst {
     background-color: #005BAA;
-}
-
-.sidebar {
-    background-color: thite;
 }
 </style>
 
@@ -53,105 +51,22 @@
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #fff">
-            <!-- Left navbar links -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top">
+
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"
-                            style="color: rgba(0,0,0,.5)"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: rgba(0,0,0,.5)"></i></a>
                 </li>
             </ul>
 
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown" tyle="color: #818a91">
-
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ asset('dist/img/user8-128x128.jpg') }}" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ asset('dist/img/user3-128x128.jpg') }}" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
 
 
-                <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
 
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-th-large"></i>
-                        <span class="hidden-md-down"><b>{{ Auth::user()->name }}</b></span>
+                        <i class="fas fa-user-circle"></i>
+                        <span class="hidden-md-down"><b>{{ Auth::user()->Nombre_Empleado }}</b></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -164,53 +79,46 @@
                             Cambiar password
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-                            class="dropdown-item">
+                        <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">
                             Salir
                         </a>
                     </div>
                 </li>
             </ul>
+
+
         </nav>
-        <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="{{ route('informe-partes-magneticas.index') }}" class="brand-link"
-                style="background-color: #005BAA">
-                <img src="https://www.doblamos.com/wp-content/uploads/2019/10/simbolo.png" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light" style="font-size: small;">DOBLAMOS S.A</span>
+        <aside class="main-sidebar  elevation-4" >
+             <a href="#" class="brand-link">
+                <img src="data:image/jpeg;base64,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" alt="GTD Financiero Logo" class="brand-image img-circle">
+                <span class="brand-text font-weight-light" style="color:black"><b>GTD DOBLAMOS</b></span>
             </a>
+            <!-- Línea horizontal personalizada -->
+            <hr class="mt-0 mb-3" style="border-color: BLACK; border-width: 2px; border-style: solid;">
 
-            <!-- Sidebar -->
+
+            <br><br>
             <div class="sidebar">
-                <!-- Sidebar user (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="https://www.doblamos.com/wp-content/uploads/2019/10/simbolo.png"
-                            class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-
-                        <span style="color: white">{{ Auth::user()->name }}</span>
-                    </div>
-                </div>
-
-
-
-                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false" style="color: white">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{url('/home')}}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
 
+                            @if(auth()->user()->can('Modulo_Usuarios'))
+                            <a href="#" class="nav-link">
+                                <b>
+                                    <i class="nav-icon fas fa-user"></i>
+                                </b>
                                 <p>
                                     Usuarios
                                     <i class="fas fa-angle-left right"></i>
@@ -218,219 +126,472 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <div class="modulosst">
-
-                                    @can('admin.list_users',Model::class)
+                                    @if(auth()->user()->can('Listado_usuarios'))
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.list_users') }}" class="nav-link">
+                                        <a href="{{ url('Usuarios') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Listado Usuarios</p>
                                         </a>
                                     </li>
-                                    @endcan
+                                    @endif
+                                    @if(auth()->user()->can('Vista_Roles'))
+                                    <a href="{{url('Roles') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Roles</p>
+                                    </a>
+                                    @endif
+
+                                    @if(auth()->user()->can('Vista_Permisos'))
+                                    <a href="{{url('Permisos')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Permisos</p>
+                                    </a>
+                                    @endif
+                                </div>
                             </ul>
+
+
+                            @endif
                         </li>
-                      
+
+                        <!-- Menú de Modulo Calidad -->
                         <li class="nav-item">
-                            <a href="{{route('ClientesSap.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
-
-                                <p>
-                                    Clientes 
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-
-                        </li>
-                        <li class="nav-item" class="nav nav-treeview">
+                            @if(auth()->user()->can('Modulo_Calidad'))
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-book"></i>
+                                <i class="nav-icon fas fa-gem"></i>
                                 <p>
-                                    Calidad
+                                    Modulo Calidad
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <div class="modulosst">
+                                    @if(auth()->user()->can('Vista_Costos_calidad'))
                                     <li class="nav-item">
+                                        <a href="{{route('Costo-No-Calidad.index')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Costos doblamos</p>
+                                        </a>
+                                    </li>
+                                    @endif
+                                    <!-- Otros elementos del submenú de Modulo Calidad aquí -->
+                                </div>
+                            </ul>
+                            @endif
+                        </li>
+
+                        <!-- Menú de Modulo Producción -->
+                        <li class="nav-item">
+                            @if(auth()->user()->can('Modulo_Produccion'))
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-gem"></i>
+                                <p>
+                                    Modulo Producción
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                    @if(auth()->user()->can('Modulo_clientes'))
                                     <li class="nav-item">
-                                        @can('informe-partes-magneticas.index',Model::class)
-                                        <a href="{{route('informe-partes-magneticas.index')}}" class="nav-link">
+                                        <a href="{{route('ClientesSap.index')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Clientes</p>
+                                        </a>
+                                    </li>
+                                    @endif
+                                    @if(auth()->user()->can('Vista_Formaletas'))
+                                    <li class="nav-item">
+                                        <a href="{{route('cotizaciones-formaletas.index')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Formaletas</p>
+                                        </a>
+                                    </li>
+                                    @endif
+
+                                    @if(auth()->user()->can('Modulo_Estructuras'))
+                                    <a href="{{route('estructurasMetalicas.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Estructuras Metalicas
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+
+                                    @if(auth()->user()->can('Modulo_fachadas'))
+                                    <a href="{{route('vortexDoblamos.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Fachadas
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+                                </div>
+
+                            </ul>
+
+                            @endif
+                        </li>
+                      
+
+                        <li class="nav-item">
+                            @if(auth()->user()->can('Modulo_Finanzas'))
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-gem"></i>
+                                <p>
+                                    Módulo Contable
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                    <a href="{{ url('Modulo-finanzas') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-file-invoice"></i>
+                                        <p>
+                                            Facture
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <!-- Agrega las opciones específicas de "Facture" aquí -->
+                                         <li class="nav-item">
+                                            <a href="{{ url('Ordenes-Compra-SAP') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-credit-card"></i>
+                                                <p>
+                                                Ordenes-Compra SAP
+                                                </p>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                                <div class="modulosst">
+                                    <a href="{{ url('Modulo-cartera') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-credit-card"></i>
+                                        <p>
+                                            Cartera Doblamos
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ url('Gestion-Cartera') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-credit-card"></i>
+                                                <p>
+                                                    Gestión Cartera
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('Informes-doblamos-cartera') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-credit-card"></i>
+                                                <p>
+                                                    Informes Cartera
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('Solicitudes-creditos') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-circle"></i>
+                                                <p>
+                                                    Creditos nuevos
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('Solicitudes-creditos-rechazadas') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-circle"></i>
+                                                <p>
+                                                    Creditos Rechazados
+                                                </p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ url('Solicitudes-creditos-aprobadas') }}" class="nav-link">
+                                                <i class="nav-icon fas fa-circle"></i>
+                                                <p>
+                                                    Creditos Aprobados
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ul>
+                            @endif
+                        </li>
+                        <!-- Otros menús y submenús -->
+
+                        <li class="nav-item">
+
+                            @if(auth()->user()->can('Modulo_Logistica'))
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-gem"></i>
+                                <p>
+                                    Modulo Logistica
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            @endif
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                    @if(auth()->user()->can('Logistica_Vista_costeo_Art'))
+                                    <li class="nav-item">
+                                        <a href="{{ url('Logistica') }}" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Partes Magneticas
-                                                </i>
+                                                Costeo de artículos
                                             </p>
                                         </a>
-                                        @endcan
+                                    </li>
+                                    @endif
 
-                                        @can('informe-liquidos-penetrante.index',Model::class)
-                                        <a href="{{ route('informe-liquidos-penetrante.index') }}" class="nav-link">
+                                    @if(auth()->user()->can('Logistica_Log_revalorizacion'))
+                                    <li class="nav-item">
+                                        <a href="{{ url('Log_revalorizaciones_sap') }}" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Liquidos penetrantes
-                                                </i>
+                                                Log Revalorizaciones
                                             </p>
                                         </a>
-                                        @endcan
+                                    </li>
+                                    @endif
 
-                                        @can('informe-ultrasonido.index',Model::class)
-                                        <a href="{{ route('informe-ultrasonido.index') }}" class="nav-link">
+ 				                    <li class="nav-item">
+                                        <a href="{{ url('Abastecimiento_MRP_SAP') }}" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Ultrasonido
-                                                </i>
+                                                   MRP Matria Prima
                                             </p>
                                         </a>
-                                        @endcan
-
-                                        @can('informe-vert-metalica.index',Model::class)
-                                        <a href="{{ route('informe-vert-metalica.index') }}" class="nav-link">
+                                    </li>
+                                        <li class="nav-item">
+                                        <a href="{{ url('Abastecimiento_MRP_SAP_ALMACEN') }}" class="nav-link">
                                             <i class="nav-icon fas fa-book"></i>
                                             <p>
-                                                Vert Metalica
-                                                </i>
+                                                MRP Almacen
                                             </p>
                                         </a>
-                                        @endcan
-
                                     </li>
 
+
+                                </div>
+                            </ul>
+
                         </li>
+						<li class="nav-item">
+
+                          
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-gem"></i>
+                                <p>
+                                    Modulo Compras
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                  
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                @if(auth()->user()->can('Vista_Aprobaciones'))
+                                    <li class="nav-item">
+                                        <a href="{{url('Solicitudes-compra-aprobar')}}" class="nav-link">
+                                            <i class="nav-icon fas fa-book"></i>
+                                            <p>
+                                                Aprobaciones
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endif
+                                    @if(auth()->user()->can('vista_solicitudes_compra'))
+                                    <li class="nav-item">
+                                        <a href="{{url('Solicitud-Compras-aplicativo')}}" class="nav-link">
+                                            <i class="nav-icon fas fa-book"></i>
+                                            <p>
+                                                Solicitud de compra
+                                            </p>
+                                        </a>
+                                    </li>
+                                    @endif
+
+                                    
+
+
+
+
+
+                                </div>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item">
+
+                            @if(auth()->user()->can('Modulo_Maestros'))
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    Configuración
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            @endif
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                    @if(auth()->user()->can('Vista_Materiales'))
+                                    <a href="{{route('Materiales.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Materiales
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+                                    @if(auth()->user()->can('Vista_calibres'))
+                                    <a href="{{route('Calibres.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Calibres
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+                                    @if(auth()->user()->can('Vista_Laminas'))
+                                    <a href="{{route('Laminas.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Laminas
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+                                    @if(auth()->user()->can('Vista_Recursos'))
+                                    <a href="{{url('Recursos')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Recursos
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+                                    @if(auth()->user()->can('Vista_Areas'))
+                                    <a href="{{route('Areas.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Areas
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+                                    @if(auth()->user()->can('Vista_Asesores'))
+                                    <a href="{{route('Asesores.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Asesores
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+                                    @if(auth()->user()->can('Vista_Transportes'))
+                                    <a href="{{route('Transaporte.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Trasporte Logistica
+                                            </i>
+                                        </p>
+                                    </a>
+                                    @endif
+
+                                </div>
+                            </ul>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            @if(auth()->user()->can('Modulo_TI'))
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                   Modulo T.I
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            @endif
+                            <ul class="nav nav-treeview">
+                                <div class="modulosst">
+                                   
+                                    <a href="{{url('checkList')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Tareas
+                                            </i>
+                                        </p>
+                                    </a>
+                                   
+                                    <a href="{{url('Inventario-TI')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Inventario
+                                            </i>
+                                        </p>
+                                    </a>
+                                    <a href="{{url('Licencias')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-book"></i>
+                                        <p>
+                                            Licencias
+                                            </i>
+                                        </p>
+                                    </a>
+
+
+                                 
+                                </div>
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </nav>
             </div>
-            </ul>
-            </li>
 
-            </li>
-            <li class="nav-item" class="nav nav-treeview">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p>
-                        Formaletas
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <div class="modulosst">
-                        <li class="nav-item">
-                        <li class="nav-item">
-
-                            @can('cotizacion.index',Model::class)
-                            <a href="{{route('cotizacion.index')}}" class="nav-link">
-                                </i>
-                                <p>
-                                    Seguimiento Cotizacion
-                                    </i>
-                                </p>
-                            </a>
-                            @endcan
-
-
-                        </li>
-
-                </ul>
-
-            </li>
-
-            <li class="nav-item" class="nav nav-treeview">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p>
-                        Vortex
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <div class="modulosst">
-                        <li class="nav-item">
-                        <li class="nav-item">
-
-                            @can('vortexDoblamos.index',Model::class)
-                            <a href="{{route('vortexDoblamos.index')}}" class="nav-link">
-                                </i>
-                                <p>
-                                    Seguimiento Cotizacion
-                                    </i>
-                                </p>
-                            </a>
-                            @endcan
-
-
-
-                        </li>
-
-                </ul>
-
-            </li>
-
-            <li class="nav-item" class="nav nav-treeview">
-                @can('estructurasMetalicas.index',Model::class)
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p>
-                        EstructurasMetalicas
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                @endcan
-                <ul class="nav nav-treeview">
-                    <div class="modulosst">
-                        <li class="nav-item">
-                        <li class="nav-item">
-
-
-                            <a href="{{route('estructurasMetalicas.index')}}" class="nav-link">
-                                </i>
-                                <p>
-                                    Seguimiento Cotizacion
-                                    </i>
-                                </p>
-                            </a>
-
-
-
-
-                        </li>
-
-                </ul>
-
-            </li>
-            </nav>
-            <!-- /.sidebar-menu -->
-    </div>
-
-    <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-        @yield('content')
-
-    </div>
-    <!-- /.content-wrapper -->
-
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-
-            <b>Version</b> 3.2.0
+        </aside>
+        <!-- Contenido principal -->
+        <div class="content-wrapper">
+            <section class="container-fluid">
+                @yield('content')
+            </section>
+            
         </div>
-        <strong>
-            Sistema Gestion Doblamos S.A © - <?php echo date('Y'); ?>
-    </footer>
+        <br><br> <br>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        <footer class="main-footer" style="background-color:#000000a8">
+            <div class="container">
+                <div class="float-right">
+                    <b>Versión</b> 3.1.0
+                </div>
+                <strong>GTD Doblamos &copy; 2023</strong> <a href="http://www.doblamos.com"
+                    target="_blank">doblamos.com</a>
+
+
+            </div>
+        </footer>
+
     </div>
-    <!-- ./wrapper -->
 
-    <!-- jQuery -->
+
+
+
+
+
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -455,6 +616,7 @@
     <script src="{{ asset('js/control-roles-js') }}"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
     $(function() {
         $('#datatableinfo').DataTable({
@@ -465,15 +627,21 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Buscar...",
+            },
+            "dom": '<"top"f>rt<"bottom"lip>',
         });
     });
     </script>
 
-<script>
+
+    <script>
     $(document).ready(function() {
-    $('#clientes_id').select2();
-});
-</script>
+        $('#clientes_ids').select2();
+    });
+    </script>
 
     @yield('scripts')
     <script src="{{ asset('js/utilidadesAggrid.js') }}"></script>
@@ -483,7 +651,174 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+
     @yield('js')
 </body>
 
 </html>
+
+
+<style>
+/* Estilos globales */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilos para la barra de navegación */
+.main-header {
+    background-color: #fff;
+    /* Cambia el color de fondo */
+    color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Estilos para la barra lateral */
+.main-sidebar {
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    /* Agrega una sombra */
+}
+
+.main-sidebar .brand-link img {
+    opacity: .8;
+}
+
+/* Añade un efecto de transición suave */
+.nav-sidebar .nav-item .nav-link {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Cambia el color de fondo y el color del texto al pasar el cursor */
+.nav-sidebar .nav-item .nav-link:hover {
+    background-color: #333;
+    /* Cambia el color de fondo al pasar el cursor */
+    color: #fff;
+    /* Cambia el color del texto al pasar el cursor */
+}
+
+/* Ajustes de estilo para el contenido principal */
+.content-wrapper {
+    padding: 20px;
+}
+
+/* Estilos para el pie de página */
+.main-footer {
+    background-color: #1c2a48;
+    /* Cambia el color de fondo */
+    color: #fff;
+    padding: 10px 0;
+}
+
+.float-right {
+    float: right;
+}
+
+/* Ajustes de estilo para botones y otros elementos */
+.btn {
+    margin: 0;
+}
+
+/* Ajustes de estilo para tablas */
+.table {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #1c2a48;
+    /* Cambia el color de fondo de las cabeceras de tabla */
+    color: #fff;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Ajustes de estilo para íconos */
+.nav-icon {
+    font-size: 16px;
+}
+
+/* Estilo para los elementos de la barra de navegación al pasar el cursor */
+.navbar-nav .nav-item:hover .nav-link {
+    background-color: #ddd;
+    /* Cambia el color de fondo al pasar el cursor */
+    color: #333;
+    /* Cambia el color del texto al pasar el cursor */
+}
+
+.modulosst {
+    background-color: #131487;
+}
+
+/* Estilos personalizados para el campo de búsqueda con icono */
+.dataTables_filter input {
+    position: relative;
+    padding-left: 30px;
+}
+
+.dataTables_filter:before {
+    content: "\f002";
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.dataTables_filter input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: none;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    width: 300px;
+}
+
+.dataTables_filter label {
+    font-weight: bold;
+    font-size: 16px;
+}
+</style>

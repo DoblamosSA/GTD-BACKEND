@@ -1,11 +1,9 @@
 <table>
     <thead>
         <tr>
-            <th>Empresa o Cliente</th>
-            <th>Contacto</th>
-            <th>Correo</th>
+        <th>Cliente</th>
+            <th>Nombres</th>
             <th>Telefono</th>
-            <th>Nit</th>
             <th>#Obra</th>
             <th>Nombre Obra</th>
             <th>Lugar Obra</th>
@@ -25,11 +23,9 @@
         @foreach($estructuraMelalica as $row)
         <tr>
 
-            <td>{{$row->clientes->Empresa}}</td>
-            <td>{{$row->clientes->Contacto}}</td>
-            <td>{{$row->clientes->Correo}}</td>
-            <td>{{$row->clientes->Telefono}}</td>
-            <td>{{$row->clientes->Nit}}</td>
+            <td>{{$row->clientes->CardCode}}</td>
+            <td>{{$row->clientes->CardName}}</td>
+            <td>{{$row->clientes->Phone1}}</td>
             <td>{{$row->Numero_Obra}}</td>
             <td>{{$row->Nombre_Obra}}</td>
             <td>{{$row->Lugar_Obra}}</td>

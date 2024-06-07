@@ -14,17 +14,22 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->change();
             $table->string('name');
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('Area')->nullable();
+            $table->string('Nombre_Empleado')->nullable();
+			 $table->string('usersap')->nullable();
+            $table->string('usersappassword')->nullable();
+ $table->boolean('EsAprobador')->nullable();
+            $table->integer('usuarioaprobador')->nullable();
             $table->timestamps();
         });
     }
 
+  
     /**
      * Reverse the migrations.
      *

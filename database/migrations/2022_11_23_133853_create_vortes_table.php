@@ -17,6 +17,7 @@ class CreateVortesTable extends Migration
             $table->id();
             $table->string('Numero_Obra');
             $table->string('Nombre_Obra');
+            $table->integer('consecutive')->default(1)->nullable();
             $table->string('Lugar_Obra');
             $table->date('Fecha_Recibido')->nullable();
             $table->date('Fecha_Cotizada')->nullable();
@@ -28,8 +29,12 @@ class CreateVortesTable extends Migration
             $table->string('Incluye_Montaje');
             $table->string('Origen');
             $table->unsignedBigInteger('clientes_id')->unsigned()->index();
+            $table->unsignedBigInteger('Asesor_id')->unsigned()->index();
             $table->foreign('clientes_id')->references('id')->on('clientes_s_a_p_s');
-           
+            $table->foreign('Asesor_id')->references('id')->on('asesores');
+            $table->float('Metros_Cuadrados')->nullable();
+            $table->string('Total_Asesor')->nullable();
+   	$table->date('Fecha_Venta')->nullable();
             $table->timestamps();
         });
     }

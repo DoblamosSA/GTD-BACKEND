@@ -13,8 +13,8 @@ Nueva cotizacion
         <div class="col-md-12">
 
             <div class="card card-default">
-                <div class="card-header" style="background-color:#005BAA;  ">
-                    <span class="card-title" style="margin-left: 40%; color:aqua">Registro Clientes SAP</span>
+                <div class="card-header" style="background-color:#343a40;  ">
+                    <span class="card-title" style="margin-left: 40%; color:white">Registro Clientes SAP</span>
                 </div>
 
                 <div class="card-body">
@@ -152,4 +152,5 @@ $('.guardadosap').submit(function(e) {
     })
 });
 </script>
+
 @endsection

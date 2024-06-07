@@ -91,6 +91,24 @@ return [
             'prefix_indexes' => true,
 			 'trust_server_certificate' => true,
         ],
+'hana' => [
+    'driver' => 'odbc',
+    'dsn' => 'HANA', // La DSN debe coincidir con la que has configurado en el ODBC de Windows
+    'host' => '52.252.0.194',
+    'database' => 'HBT_DOBLAMOS',
+    'username' => 'UDOBLAMOS',
+    'password' => 'D06l43D9A57$',
+    'charset'   => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    
+    'prefix' => '',
+],
+
+
+
+
+
+
 
     ],
 

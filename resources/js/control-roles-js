@@ -1,0 +1,29 @@
+var urlActual = window.location.href
+
+if (urlActual.includes("/create")) {
+    sessionStorage.setItem("control-roles", "digitar");
+}
+
+if (urlActual.includes("/index")) {
+    sessionStorage.setItem("control-roles", "");
+}
+
+var accion = sessionStorage.getItem("control-roles");
+
+if (accion == "digitar" || currentRol == "ADMINISTRADOR") {
+
+} else {
+    var elementos = document.getElementsByClassName("btnEnviar");
+
+    if(elementos.length>0)
+    {
+        Array.from(elementos).forEach((el) => {
+            el.remove();
+        });
+    
+        var elementos=document.getElementsByTagName("input");
+        Array.from(elementos).forEach((el) => {
+            el.disabled = true;
+        });
+    }
+}

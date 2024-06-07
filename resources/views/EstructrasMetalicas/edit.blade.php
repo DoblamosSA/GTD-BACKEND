@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
 @section('template_title')
 Editar Seguimiento
@@ -23,11 +23,9 @@ Editar Seguimiento
                     
                     <div class="form-row">
 
-                        <div class="col">
-                            <label>Numero Obra</label>
-                            <input type="text" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$estructuraMelalica->Numero_Obra}}">
+                            <input type="hidden" class="form-control" placeholder="Numero Obra " name="Numero_Obra" value="{{$estructuraMelalica->Numero_Obra}}">
 
-                        </div>
+                      
                         <div class="col">
                             <label>Nombre Obra</label>
                             <input type="text" class="form-control" placeholder="Nombre Obra" name="Nombre_Obra" value="{{$estructuraMelalica->Nombre_Obra}}">

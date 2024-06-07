@@ -1,0 +1,437 @@
+
+
+.timeline-cell {
+    display: flex;
+    align-items: center;
+}
+
+.timeline {
+    display: flex;
+    gap: 10px;
+   
+}
+
+.timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #E0E0E0;
+
+    position: relative;
+    transition: background-color 0.3s ease;
+
+    cursor: pointer;
+
+}
+
+.circle-inner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.timeline-circle:hover {
+    background-color: #00cc00;
+    
+}
+
+
+.timeline-circle.approved .circle-inner {
+    background-color: #00cc00;
+   
+}
+
+.timeline-circle.rejected .circle-inner {
+    background-color: #ff0000;
+}
+
+.timeline-content {
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+}
+
+
+/* 
+/////////////////////////////////////////////////////////////////////// */
+
+/* notificaciones cuando llega una nueva solicitud de credito */
+
+.notification-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f39c12;
+
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    z-index: 9999;
+    display: none;
+    transition: top 0.5s;
+
+}
+
+.notification-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-content {
+    flex-grow: 1;
+    margin: 0;
+    font-weight: bold;
+    /* Agrega negrita al contenido */
+    font-size: 16px;
+    /* Ajusta el tamaño del texto según tus preferencias */
+}
+
+.close-notification {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* Agrega una transición al color del botón */
+}
+
+.close-notification:hover {
+    background-color: #c0392b;
+    /* Cambia el color al pasar el cursor sobre el botón */
+}
+
+
+
+
+
+
+
+
+
+
+/* Estilos para la notificación en tiempo real */
+.notification-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #a54700;
+    ;
+    ;
+    /* Cambia el color de fondo según tus preferencias */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    display: none;
+    z-index: 9999;
+    animation-duration: 0.5s;
+}
+
+.notification-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-content {
+    flex-grow: 1;
+    margin: 0;
+    font-weight: bold;
+    /* Agrega negrita al contenido */
+    font-size: 16px;
+    /* Ajusta el tamaño del texto según tus preferencias */
+}
+
+.close-notification {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* Agrega una transición al color del botón */
+}
+
+.close-notification:hover {
+    background-color: #c0392b;
+    /* Cambia el color al pasar el cursor sobre el botón */
+}
+
+/* Animación de entrada */
+@keyframes slide-in {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/* Animación de salida */
+@keyframes slide-out {
+    from {
+        top: 0;
+        opacity: 1;
+    }
+
+    to {
+        top: -50px;
+        opacity: 0;
+    }
+}
+
+/* Estilos para la capa de carga y el spinner */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Fondo semitransparente negro */
+    z-index: 1000;
+    /* Coloca la capa de carga encima de todo */
+}
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 4px;
+}
+
+.loading-spinner span {
+    display: block;
+    font-size: 18px;
+    margin-top: 10px;
+    color: #004170;
+    /* Color del texto */
+}
+
+/* Estilos generales para la tabla */
+.table {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+}
+
+.table th,
+.table td {
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    /* Línea superior de las celdas */
+}
+
+/* Estilos para las cabeceras de la tabla (thead) */
+.table thead {
+    background-color: #004170;
+    color: #fff;
+}
+
+.table thead th {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Estilos para las celdas de datos */
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Fondo de filas pares */
+}
+
+.table tbody tr:hover {
+    background-color: #e0e0e0;
+    /* Color de fondo al pasar el mouse sobre la fila */
+}
+
+/* Estilos para los botones dentro de las celdas */
+.table .btn {
+    padding: 6px 12px;
+    font-size: px;
+}
+
+/* Estilos para el enlace de descarga */
+.download-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.11);
+    /* Cambia el valor de 0.7 según la transparencia deseada */
+
+    color: gray;
+    padding: 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.download-link:hover {
+    background-color: #004170;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el ícono de descarga */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 6px;
+    transition: transform 0.2s ease;
+}
+
+.download-link:hover .icon {
+    transform: rotate(45deg);
+}
+
+.aprobar-btn {
+    background-color: #00cc00;
+}
+
+.btn-danger {
+    background-color: #c0392b;
+}
+
+/* Estilos para la lista de comentarios */
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.comment-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.comment-item .comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilos para el modal */
+#verComentariosModal .modal-dialog {
+    max-width: 800px;
+    /* Ancho máximo del modal */
+}
+
+#verComentariosModal .modal-content {
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#verComentariosModal .modal-header {
+    background-color: #004170;
+    /* Color de fondo del encabezado */
+    color: #fff;
+    border: none;
+    border-radius: 5px 5px 0 0;
+}
+
+#verComentariosModal .modal-footer {
+    border: none;
+    border-radius: 0 0 5px 5px;
+}
+
+#verComentariosModal .btn-secondary {
+    background-color: #ccc;
+    /* Color de fondo del botón Cerrar */
+    color: #333;
+}
+
+#verComentariosModal .btn-secondary:hover {
+    background-color: #fff;
+    /* Color de fondo del botón Cerrar al pasar el mouse */
+    color: #fff;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 200px;
+}
+
+.dropdown.active .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f8f8;
+}
+
+.dropdown-item.text-danger {
+    color: #dc3545;
+}
+
+.btn-secondary {
+    background-color: #007bff;
+    /* Color de fondo principal */
+    border-color: #007bff;
+    /* Color del borde */
+    color: #fff;
+    /* Color del texto */
+}
+
+.btn i {
+    margin-right: 5px;
+}

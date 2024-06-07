@@ -35,11 +35,17 @@ class CotizacionEstructuraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+       $query = $request->input('query');
+        $clientesSAP = ClientesSAP::when($query, function($q) use ($query) {
+            return $q->where('CardName', 'like', "%$query%")
+                     ->orWhere('CardCode', 'like', "%$query%")
+                     ->orWhere('Phone1', 'like', "%$query%");
+        })->paginate(10);
+
         $cotizacionEstructuras = new CotizacionEstructuras();
-     $clientes = ClientesSAP::all();
-        return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras','clientes'));
+        return view('Ingenieria.CotizacionesEstructura.create', compact('cotizacionEstructuras','clientesSAP'));
     }
 
     /**
@@ -52,7 +58,7 @@ class CotizacionEstructuraController extends Controller
     {
 
         $request->validate([
-            'Numero_Obra' => 'required',
+         
             'Nombre_Obra' => 'required',
             'Lugar_Obra' =>'required',
             'Fecha_Recibido' => 'nullable|date',

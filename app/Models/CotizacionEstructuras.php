@@ -20,5 +20,22 @@ public function clientes()
     return $this->belongsTo(ClientesSAP::class, 'clientes_id');
 }
 
+public static function boot() {
+    parent::boot();
+
+    static::creating(function ( $cotizacionEstructuras) {
+        $cotizacionEstructuras->Numero_Obra = self::generateObraNumber();
+    });
+}
+
+public static function generateObraNumber() {
+    $year = date('Y');
+    $ultimaRegistro = self::where('Numero_Obra', 'like', "$year-%")->latest()->first();
+    if ($ultimaRegistro) {
+        $lastSequence = explode('-', $ultimaRegistro->Numero_Obra)[1];
+        return "$year-" . ($lastSequence + 1);
+    }
+    return "$year-1";
+}
 
 }

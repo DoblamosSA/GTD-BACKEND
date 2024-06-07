@@ -21,4 +21,22 @@ public function clientes()
 }
 
 
+public static function boot() {
+    parent::boot();
+
+    static::creating(function ( $estructuraMelalica) {
+        $estructuraMelalica->Numero_Obra = self::generateObraNumber();
+    });
+}
+
+public static function generateObraNumber() {
+    $year = date('Y');
+    $ultimaRegistro = self::where('Numero_Obra', 'like', "$year-%")->latest()->first();
+    if ($ultimaRegistro) {
+        $lastSequence = explode('-', $ultimaRegistro->Numero_Obra)[1];
+        return "$year-" . ($lastSequence + 1);
+    }
+    return "$year-1";
+}
+
 }

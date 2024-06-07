@@ -113,6 +113,19 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+  'costo_productos' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/costo_productos.log'),
+            'level' => 'info',
+        ],
+
+ 'solcompraalmacen' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/solcompraalmacen.log'),
+            'level' => 'info',
+        ],
     ],
+
+
 
 ];
