@@ -3,37 +3,36 @@
 namespace App\Http\Controllers\Logistica\AbastecimientoMRPSAP;
 
 use App\Http\Controllers\Controller;
-use App\Models\Logistica\AbastecimientoAlmacene;
-use App\Models\Logistica\SolicitudesCompraHistorialeAlmacene;
+use App\Models\Logistica\Abastesimiento;
+use App\Models\Logistica\SolicitudesComprahistoriale;
+use App\Models\TrasferenciaStock\TransferenciaStock;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
-
-class Abastecimiento_MRP_ALMACENController extends Controller
+class AbastecimientoController extends Controller
 {
-
-
-    public function Abastecimiento_MRP_SAP_Almacen()
+    public function Abastecimiento_MRP_SAP()
     {
-
-        $abastecimientoalmacen = AbastecimientoAlmacene::all();
-        return view('Logistica.AbastecimientoMRP.MRP-ALMCEN', compact('abastecimientoalmacen'));
+        $abastecimientos = Abastesimiento::all();
+        $transferenciastock = TransferenciaStock::all();
+        return view('Logistica.AbastecimientoMRP.index', compact('abastecimientos','transferenciastock'));
     }
 
 
 
 
-    public function consumirpromedioventaSAPalmacen(Request $request)
+    public function consumirpromedioventaSAP(Request $request,)
     {
         try {
             // Configuración de SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle
             $client = new Client();
@@ -54,15 +53,45 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             $sessionId = $data['SessionId'];
             $cookie = 'B1SESSION=' . $sessionId . '; ROUTEID=.node4';
 
+            // Llamada a la función para consultar la transferencia de stock
+            $transferenciaStockResponse = $this->ConsultarTrasferenciaStockSAP();
+            $transferenciaStock = json_decode($transferenciaStockResponse->getContent(), true);
+
+
+            $calcularSugerido = $request->input('calcularSugerido');
+            // Convertir el valor a booleano
+            $calcularSugerido = ($calcularSugerido === "Si") ? true : false;
+
+
             $fechaInicio = $request->input('FechaInicio');
             $fechaFin = $request->input('FechaFin');
             $bodegaCompleta = $request->input('bodega');
 
+            // Separar los valores usando el delimitador (|) para obtener la bodega principal y la otra bodega
+            list($almacen, $otraBodega) = explode('|', $bodegaCompleta);
+
             // Eliminar registros existentes 
-            AbastecimientoAlmacene::truncate();
+            TransferenciaStock::truncate();
+            Abastesimiento::truncate();
+
+            // Lógica de filtrado basada en la bodega principal seleccionada
+            $campoControlEx = '';
+            if ($almacen === 'RIONEGRO') {
+                $campoControlEx = 'U_DOB_ControlEx';
+            } elseif ($almacen === 'LA 33') {
+                $campoControlEx = 'U_DOB_ControlEx33';
+            } elseif ($almacen === 'COPACABANA') {
+                $campoControlEx = 'U_DOB_ControlExCop';
+            }
+
+            // Verificar que se haya asignado un valor válido para el campo U_DOB_ControlEx
+            if (empty($campoControlEx)) {
+                // Manejar el caso en que no se haya asignado un valor válido
+                return response()->json(['error' => 'Bodega no válida'], 400);
+            }
 
             // Construir la URL de la consulta con ambos valores de bodegas
-            $ventasUrl = $sapBaseUrl . "/sml.svc/MRP_CONSUMIBLES?\$filter=Almacen eq '{$bodegaCompleta}'&\$select=ItemCode,Dscription,SWeight1,SubGrupo,Almacen,Stock,Comprometido,Pedido,Cantidad,id__";
+            $ventasUrl = $sapBaseUrl . "/sml.svc/PRM_VENTAS?\$filter={$campoControlEx} eq 'Si' and (Almacen eq '{$almacen}' or Almacen eq '{$otraBodega}')&\$select=ItemCode,Dscription,SWeight1,SubGrupo,Almacen,Stock,Comprometido,Pedido,Pventa,id__";
             $response = $client->get($ventasUrl, [
                 'headers' => [
                     'Cookie' => $cookie,
@@ -73,62 +102,129 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             $body = $response->getBody();
             $data = json_decode($body, true);
 
+            $filteredItems = [];
+
+            // Iterar sobre los datos de los artículos obtenidos
+            foreach ($data['value'] as &$item) {
+                // Iterar sobre los datos de transferencia de stock para encontrar información correspondiente al ItemCode actual
+                foreach ($transferenciaStock['value'] as $transferItem) {
+                    if ($transferItem['COD_ARTI'] === $item['ItemCode']) {
+                        // Agregar la cantidad de transferencia al artículo actual
+                        $item['CANTIDAD_TRASLADO'] = $transferItem['CANTIDAD_TRASLADO'];
+                        // Agregar el artículo al array de artículos filtrados
+                        $filteredItems[] = $item;
+
+                        // Definir un array de mapeo para traducir los valores de $almacen
+                        $mapeoAlmacenes = [
+                            'LA 33' => '12',
+                            'COPACABANA' => '15',
+                            'RIONEGRO' => '08'
+                        ];
+
+                        // Obtener el valor correspondiente a $almacen del array de mapeo
+                        $valorAlmacenFinal = $mapeoAlmacenes[$almacen] ?? null;
+
+                        // Verificar si el almacén final coincide con la bodega principal
+                        if ($transferItem['ALMACEN_FINAL'] == $valorAlmacenFinal) {
+                            // Guardar en la tabla transferencia_stocks
+                            \App\Models\TrasferenciaStock\TransferenciaStock::create([
+                                'SOLICITUD_TRASLADO' => $transferItem['SOLICITUD_TRASLADO'],
+                                'COD_ARTI' => $transferItem['COD_ARTI'],
+                                'BODEGA_ORIGEN' => $transferItem['BODEGA_ORIGEN'],
+                                'BODEGA_TRANSITO' => $transferItem['BODEGA_TRANSITO'],
+                                'ALMACEN_FINAL' => $transferItem['ALMACEN_FINAL'],
+                                'CANTIDAD_TRASLADO' => $transferItem['CANTIDAD_TRASLADO'],
+                            ]);
+
+                            // Loggear el artículo encontrado, la cantidad de transferencia y el almacén final
+                            // Log::info('Artículo encontrado: ' . json_encode($item) . ', SOLICITUD_TRASLADO' . $transferItem['SOLICITUD_TRASLADO'] . ', COD_ARTI' . $transferItem['COD_ARTI'] . ', BODEGA_ORIGEN' . $transferItem['BODEGA_ORIGEN'] . ', BODEGA_TRANSITO' . $transferItem['BODEGA_TRANSITO'] . ', ALMACEN_FINAL ' . $transferItem['ALMACEN_FINAL'] . ', CANTIDAD_TRASLADO ' . $transferItem['CANTIDAD_TRASLADO']);
+                        }
+
+                        break; // Salir del bucle interno una vez encontrado el artículo correspondiente
+                    }
+                }
+            }
+
+
             // Nuevo array para almacenar los artículos filtrados
             $filteredItems = [];
 
+            // Log para los artículos excluidos y los ItemCode de los artículos que pasan a la vista
+            $excludedItemsLog = [];
+
+            // Nuevo array para almacenar los Pventa excluidos
+            $excludedItemsPventa = [];
+
             // Calcular el campo "Disponible" y "Sugerido" para cada artículo
             foreach ($data['value'] as &$item) {
-                // Filtrar artículos con "PROMO" o "REMASQUE"
-                if (strpos($item['Almacen'], 'PROMO') !== false || strpos($item['Almacen'], 'REMASQUE') !== false) {
+                // Filtrar artículos con "PROMO" o "REMASQUE" solo si se debe calcular el Sugerido
+                if ($calcularSugerido && (strpos($item['Almacen'], 'PROMO') !== false || strpos($item['Almacen'], 'REMASQUE') !== false)) {
                     // Loggear los artículos excluidos
-                    Log::channel('solcompraalmacen')->info('Artículo excluido: ' . json_encode($item));
+                    // Log::info('Artículo excluido: ' . json_encode($item));
 
                     // Almacenar el Pventa del artículo excluido para sumarlo después
-                    $excludedItemsPventa[$item['ItemCode']] = $item['Cantidad'];
+                    $excludedItemsPventa[$item['ItemCode']] = $item['Pventa'];
 
                     // Loggear información adicional sobre el Pventa excluido
-                    Log::channel('solcompraalmacen')->info('Pventa excluido para ItemCode ' . $item['ItemCode'] . ': ' . $excludedItemsPventa[$item['ItemCode']]);
+                    // Log::info('Pventa excluido para ItemCode ' . $item['ItemCode'] . ': ' . $excludedItemsPventa[$item['ItemCode']]);
                 } else {
+                    // Loggear información adicional sobre el artículo que pasa a la vista
+                    // Log::info('ItemCode del artículo que pasa a la vista: ' . json_encode($item));
+
                     // Verificar si hay Pventa excluido para este ItemCode y sumarlo al Pventa del artículo que pasa a la vista
                     if (isset($excludedItemsPventa[$item['ItemCode']])) {
-                        // Sumar el Pventa del artículo excluido al Pventa del artículo que pasa a la vista
-                        $item['Cantidad'] += $excludedItemsPventa[$item['ItemCode']];
+                        // Loggear información antes de la actualización
+                        // Log::info('ItemCode ' . $item['ItemCode'] . ': Pventa antes de la actualización: ' . $item['Pventa']);
 
-                        // Dividir el Pventa resultante por 3
-                        $item['Cantidad'] = intval($item['Cantidad'] / 3);
+                        // Sumar el Pventa del artículo excluido al Pventa del artículo que pasa a la vista
+                        $item['Pventa'] = $item['Pventa'] + $excludedItemsPventa[$item['ItemCode']];
+
+                        // Loggear información después de la actualización
+                        // Log::info('ItemCode ' . $item['ItemCode'] . ': Pventa después de la actualización: ' . $item['Pventa']);
+
+                        // Dividir el Pventa resultante por 6
+                        $item['Pventa'] = intval($item['Pventa'] / 6);
 
                         // Verificar si el resultado no es un número entero y redondear hacia arriba o hacia abajo según tus necesidades
-                        if (!is_int($item['Cantidad'])) {
-                            $item['Cantidad'] = round($item['Pventa']); // Puedes ajustar esto según tus necesidades
+                        if (!is_int($item['Pventa'])) {
+                            $item['Pventa'] = round($item['Pventa']); // Puedes ajustar esto según tus necesidades
                         }
 
                         // Loggear información adicional sobre el artículo que pasa a la vista con Pventa actualizado
-                        Log::channel('solcompraalmacen')->info('ItemCode ' . $item['ItemCode'] . ': Pventa después de la división por 3: ' . $item['Cantidad']);
+                        // Log::info('ItemCode ' . $item['ItemCode'] . ': Pventa después de la división por 6: ' . $item['Pventa']);
                     } else {
-                        // Si no hay Pventa excluido, simplemente dividir el Pventa por 3
-                        $item['Cantidad'] = intval($item['Cantidad'] / 3);
+                        // Si no hay Pventa excluido, simplemente dividir el Pventa por 6
+                        $item['Pventa'] = intval($item['Pventa'] / 6);
 
                         // Verificar si el resultado no es un número entero y redondear hacia arriba o hacia abajo según tus necesidades
-                        if (!is_int($item['Cantidad'])) {
-                            $item['Cantidad'] = round($item['Pventa']); // Puedes ajustar esto según tus necesidades
+                        if (!is_int($item['Pventa'])) {
+                            $item['Pventa'] = round($item['Pventa']); // Puedes ajustar esto según tus necesidades
                         }
 
                         // Loggear información después de la actualización
-                        Log::channel('solcompraalmacen')->info('ItemCode ' . $item['ItemCode'] . ': Pventa después de la actualización: ' . $item['Cantidad']);
+                        // Log::info('ItemCode ' . $item['ItemCode'] . ': Pventa después de la actualización: ' . $item['Pventa']);
 
                         // Establecer la clave "Disponible" en el array
                         $item['Disponible'] = $item['Stock'] + $item['Pedido'] - $item['Comprometido'];
 
-                        // Verificar si el Disponible es inferior o igual al Pventa después de la actualización
-                        $porcentajeLimite = 0.5; // 50%
-                        $limiteSugerido = $porcentajeLimite * $item['Cantidad'];
-                        $item['Sugerido'] = ($item['Disponible'] <= $limiteSugerido) ? $item['Cantidad'] : 0;
+                        // Calcular el "Sugerido" solo si se debe calcular
+                        if ($calcularSugerido) {
+                            $porcentajeLimite = 0.5; // 50%
+                            $limiteSugerido = $porcentajeLimite * $item['Pventa'];
+                            $item['Sugerido'] = ($item['Disponible'] <= $limiteSugerido) ? $item['Pventa'] : 0;
 
-                        // Loggear información adicional sobre el Sugerido
-                        Log::channel('solcompraalmacen')->info('ItemCode ' . $item['ItemCode'] . ': Sugerido: ' . $item['Sugerido']);
+                            // Loggear información adicional sobre el Sugerido
+                            // Log::info('ItemCode ' . $item['ItemCode'] . ': Sugerido: ' . $item['Sugerido']);
 
-                        // Agregar el artículo al array de artículos filtrados solo si cumple con la condición
-                        if (isset($item['Sugerido']) && $item['Sugerido'] !== 0) {
+                            // Agregar el artículo al array de artículos filtrados solo si cumple con la condición
+                            if (isset($item['Sugerido']) && $item['Sugerido'] !== 0) {
+                                $filteredItems[] = $item;
+                            }
+                        } else {
+                            // Si no se calcula el Sugerido, simplemente asignamos el Pventa como Sugerido
+                            $item['Sugerido'] = $item['Pventa'];
+
+                            // Agregar el artículo al array de artículos filtrados
                             $filteredItems[] = $item;
                         }
                     }
@@ -136,22 +232,19 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             }
 
             // Eliminar elementos con Sugerido igual a 0 o no definido
-            $filteredItems = array_filter($filteredItems, function ($item) {
-                return isset($item['Sugerido']) && $item['Sugerido'] !== 0;
-            });
+            foreach ($filteredItems as $key => $item) {
+                if ($item['Sugerido'] === 0 || !isset($item['Sugerido'])) {
+                    unset($filteredItems[$key]);
+                }
+            }
 
-            // Almacenar en la base de datos
             $this->almacenarEnBD($filteredItems);
-
-            // Retornar la respuesta en formato JSON
             return response()->json(['value' => array_values($filteredItems)]);
         } catch (\Exception $e) {
-            // Manejar errores y loggearlos
-            Log::channel('solcompraalmacen')->info('Error en consumirpromedioventaSAP: ' . $e->getMessage());
+            Log::error('Error en consumirpromedioventaSAP: ' . $e->getMessage());
             return response()->json(['error' => 'Ups, ocurrió un error: ' . $e->getMessage()], 500);
         }
     }
-
 
 
 
@@ -167,11 +260,10 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             $sugerido = str_replace(',', '.', $item['Sugerido']);
 
             // Verificar y asignar un valor específico para el campo 'Almacen'
-            $almacen = ($item['Almacen'] == 'MEDELLIN') ? '01' : (($item['Almacen'] == 'SABANETA') ? '04' : (($item['Almacen'] == 'RIONEGRO') ? '08' : (($item['Almacen'] == 'COPACABANA') ? '15' : $item['Almacen'])));
-
+            $almacen = ($item['Almacen'] == 'LA 33') ? '12' : (($item['Almacen'] == 'RIONEGRO') ? '08' : (($item['Almacen'] == 'COPACABANA') ? '15' : $item['Almacen']));
 
             // Verificar si el artículo ya existe en la tabla historial y el almacén es igual
-            $existingItem = SolicitudesCompraHistorialeAlmacene::where('item_id', $item['ItemCode'])
+            $existingItem = SolicitudesCompraHistoriale::where('item_id', $item['ItemCode'])
                 ->where('WarehouseCode', $almacen)
                 ->first();
 
@@ -185,7 +277,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                     'Almacen' => $almacen,
                     'DocEntry' => $docEntry,
                 ];
-                Log::channel('solcompraalmacen')->info("Artículo ya existe en el historial con el mismo almacén. Detalles: " . json_encode($logDetails));
+                // Log::info("Artículo ya existe en el historial con el mismo almacén. Detalles: " . json_encode($logDetails));
 
                 // Almacenar $docEntry en el array
                 $docEntriesToVerify[] = [
@@ -206,11 +298,11 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                 'Pedido' => $item['Pedido'],
                 'Disponible' => $disponible,
                 'Sugerido' => $sugerido,
-                'Cantidad' => $item['Cantidad'],
+                'Pventa' => $item['Pventa'],
                 'id__' => $item['id__'],
             ];
 
-            AbastecimientoAlmacene::create($abastecimientoData);
+            Abastesimiento::create($abastecimientoData);
         }
 
         // Llamar a verificarSolicitud para cada $docEntry válido
@@ -229,7 +321,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                     $documentStatus = $lineItem['DocumentStatus'] ?? null;
 
                     // Buscar el registro en la base de datos por ItemCode
-                    $existingRecord = SolicitudesCompraHistorialeAlmacene::where('item_id', $itemCode)
+                    $existingRecord = SolicitudesComprahistoriale::where('item_id', $itemCode)
                         ->where('WareHouseCode', $bodega)
                         ->first();
 
@@ -239,29 +331,80 @@ class Abastecimiento_MRP_ALMACENController extends Controller
 
                         // Verificar si DocumentStatus es 'bost_Open' y actualizar existencia_arti_historial en Abastesimiento
                         if ($documentStatus === 'bost_Open') {
-                            $abastecimientoRecord = AbastecimientoAlmacene::where('ItemCode', $existingRecord->item_id)->first();
+                            $abastecimientoRecord = Abastesimiento::where('ItemCode', $existingRecord->item_id)->first();
 
                             if ($abastecimientoRecord) {
                                 $abastecimientoRecord->update(['existencia_arti_historial' => true]);
                                 // Registrar en el log la actualización de existencia_arti_historial en Abastesimiento
-                                Log::channel('solcompraalmacen')->info("Se actualizó existencia_arti_historial para ItemCode $itemCode en la tabla Abastesimiento.");
+                                // Log::info("Se actualizó existencia_arti_historial para ItemCode $itemCode en la tabla Abastesimiento.");
                             } else {
                                 // Agregar un log si no se encontró el registro en la tabla Abastesimiento
-                                Log::channel('solcompraalmacen')->info("No se encontró registro en la tabla Abastesimiento para ItemCode $itemCode.");
+                                // Log::warning("No se encontró registro en la tabla Abastesimiento para ItemCode $itemCode.");
                             }
                         }
 
                         // Registrar en el log la actualización
-                        Log::channel('solcompraalmacen')->info("Se actualizó DocumentStatus para ItemCode $itemCode y WareHouseCode $bodega. Nuevo valor: " . ($documentStatus ?? 'N/A'));
+                        // Log::info("Se actualizó DocumentStatus para ItemCode $itemCode y WareHouseCode $bodega. Nuevo valor: " . ($documentStatus ?? 'N/A'));
                     } else {
                         // Registrar en el log si no se encontró ningún registro en la base de datos
-                        Log::channel('solcompraalmacen')->info("No se encontró registro en la base de datos para ItemCode $itemCode y WareHouseCode $bodega");
+                        // Log::warning("No se encontró registro en la base de datos para ItemCode $itemCode y WareHouseCode $bodega");
                     }
                 }
             } else {
                 // Agregar un log si la respuesta no contiene 'DocumentLines'
-                Log::channel('solcompraalmacen')->info("La respuesta no contiene la clave 'DocumentLines'");
+                // Log::warning("La respuesta no contiene la clave 'DocumentLines'");
             }
+        }
+    }
+
+
+
+
+    public function ConsultarTrasferenciaStockSAP()
+    {
+
+        try {
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
+
+            $client = new Client();
+
+            // Login
+            $loginUrl = $sapBaseUrl . '/Login';
+            $loginBody = [
+                'CompanyDB' => $sapCompanyDB,
+                'Password' => $sapPassword,
+                'UserName' => $sapUsername,
+            ];
+
+            $response = $client->post($loginUrl, [
+                'json' => $loginBody,
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+            $sessionId = $data['SessionId'];
+
+            $cookie = 'B1SESSION=' . $sessionId . '; ROUTEID=.node4';
+
+            // Consulta con filtro por DocEntry específico
+            $ventasUrl = $sapBaseUrl . "/sml.svc/SOLICITUDES_TRASLADO";
+
+            $response = $client->get($ventasUrl, [
+                'headers' => [
+                    'Cookie' => $cookie,
+                    'Content-Type' => 'application/json',
+                    'Expect' => '',
+                ],
+            ]);
+
+            $body = $response->getBody();
+            $data = json_decode($body, true);
+
+            return response()->json($data);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Se produjo un error al hacer la petición SAP: ' . $e->getMessage()]);
         }
     }
 
@@ -270,13 +413,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
 
 
 
-
-
-
-
-
-
-    public function generarSolicitudCompraAPIalmacen(Request $request)
+    public function generarSolicitudCompraAPI(Request $request)
     {
         try {
             // Obtener el usuario autenticado y las credenciales SAP del usuario
@@ -285,8 +422,8 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             $sapPassword = $user->usersappassword;
 
             // Configuración de SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
@@ -318,20 +455,19 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             // Estructura de datos para la solicitud de compra
             $purchaseRequestData = [
                 "RequriedDate" => $fechaRequerida,
-                "Comments" => "MRP-Almacen, Ejecutado por sistema GTD",
+                "Comments" => "MRP ejecutado por sistema GTD",
                 "Document_ApprovalRequests" => [],
                 "DocumentLines" => [],
             ];
 
             // Mapeo de valores para la bodega, sede y departamento
             $bodegaValues = [
-                'SABANETA' => '04',
-                'MEDELLIN' => '01',
-                'COPACABANA' => '15',
-                'RIONEGRO' => '08',
+                'RIONEGRO|PROMO Y REMASQUE RIONEGRO' => '08',
+                'LA 33|PROMO Y REMASQUE LA 33' => '12',
+                'COPACABANA|PROMO Y REMASQUE COPACABANA' => '15',
             ];
-            $sedeValues = ['04' => 'SAB', '01' => 'MED', '15' => 'COP' , '08' => 'RIO'];
-            $departamentoValues = ['SAB' => 'ALMA', 'MED' => 'ALMA', 'COP' => 'ALMA', 'RIO'=> 'ALMA'];
+            $sedeValues = ['08' => 'RIO', '12' => 'LA33', '15' => 'COP'];
+            $departamentoValues = ['RIO' => 'RION', 'LA33' => 'SD33', 'COP' => 'COPA'];
 
             // Mapear valores de bodega, sede y departamento
             $bodega = is_numeric($bodega) ? $bodega : ($bodegaValues[$bodega] ?? $bodega);
@@ -340,13 +476,12 @@ class Abastecimiento_MRP_ALMACENController extends Controller
 
             $errors = [];
             $articulosConSolicitudesAbiertas = [];
-            Log::channel('solcompraalmacen')->info('Inicio de la función generarSolicitudCompraAPI');
-
+            Log::info('Inicio de la función generarSolicitudCompraAPI');
 
             // Procesar cada elemento seleccionado
             foreach ($selectedItems as $itemId) {
-                Log::channel('solcompraalmacen')->info('Procesando elemento con ID: ' . $itemId);
-                $abastecimiento = AbastecimientoAlmacene::find($itemId);
+                Log::info('Procesando elemento con ID: ' . $itemId);
+                $abastecimiento = Abastesimiento::find($itemId);
 
                 // Validar si se encontró información para el elemento seleccionado
                 if (!$abastecimiento) {
@@ -354,7 +489,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                 }
 
                 // Verificar si el ItemCode validado está presente en solicitudes_comprahistoriales
-                $existingHistoriales = SolicitudesCompraHistorialeAlmacene::where('item_id', $abastecimiento->ItemCode)
+                $existingHistoriales = SolicitudesCompraHistoriale::where('item_id', $abastecimiento->ItemCode)
                     ->where('WareHouseCode', $bodega)
                     ->get();
 
@@ -370,13 +505,13 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                         "CostingCode4" => $departamento,
                         "ProjectCode" => $sede,
                         "CostingCode" => $sede,
-                        "CostingCode3" => "CMS",
+                        "CostingCode3" => "PDS",
                         "TaxCode" => "IVAD01",
                         "WarehouseCode" => $bodega,
-                        "TaxLiable"=> "Y",
+                        "TaxLiable" => "Y",
                     ];
 
-                    // Continuar con el siguiente elemento en el bucle
+            
                     continue;
                 }
 
@@ -394,7 +529,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                 $responseContent = json_decode($verificationResult['response']->getBody(), true);
 
                 // Agregar un log para registrar la ejecución de la segunda consulta
-                Log::channel('solcompraalmacen')->info('Ejecución de la segunda consulta para DocEntry ' . $latestDocEntry);
+                Log::info('Ejecución de la segunda consulta para DocEntry ' . $latestDocEntry);
 
                 // Verificar si la respuesta contiene la clave 'DocumentLines'
                 if (isset($responseContent['DocumentLines'])) {
@@ -405,7 +540,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                         $documentStatus = $lineItem['LineStatus'] ?? null;
 
                         // Buscar el registro en la base de datos por ItemCode
-                        $existingRecord = SolicitudesCompraHistorialeAlmacene::where('item_id', $itemCode)
+                        $existingRecord = SolicitudesComprahistoriale::where('item_id', $itemCode)
                             ->where('WareHouseCode', $bodega)
                             ->first();
 
@@ -413,31 +548,31 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                             // Actualizar DocumentStatus si el registro existe
                             $existingRecord->update(['DocumentStatus' => $documentStatus]);
                             if ($documentStatus === 'bost_Open') {
-                                AbastecimientoAlmacene::where('ItemCode', $existingRecord->item_id)
+                                Abastesimiento::where('ItemCode', $existingRecord->item_id)
                                     ->update(['existencia_arti_historial' => true]);
                             }
 
 
                             // Registrar en el log la actualización
-                            Log::channel('solcompraalmacen')->info("Se actualizó DocumentStatus para ItemCode $itemCode y WareHouseCode $bodega. Nuevo valor: " . ($documentStatus ?? 'N/A'));
+                            Log::info("Se actualizó DocumentStatus para ItemCode $itemCode y WareHouseCode $bodega. Nuevo valor: " . ($documentStatus ?? 'N/A'));
                             // Registrar en el log la actualización de existencia_arti_historial
-                            Log::channel('solcompraalmacen')->info("Se actualizó existencia_arti_historial para ItemCode $itemCode.");
+                            Log::info("Se actualizó existencia_arti_historial para ItemCode $itemCode.");
                         } else {
                             // Registrar en el log si no se encontró ningún registro en la base de datos
-                            Log::channel('solcompraalmacen')->info("La respuesta no contiene la clave 'DocumentLines'");
+                            Log::warning("La respuesta no contiene la clave 'DocumentLines'");
                         }
                     }
                 } else {
                     // Agregar un log si la respuesta no contiene 'DocumentLines'
-                    Log::channel('solcompraalmacen')->info("La respuesta no contiene la clave 'DocumentLines'");
+                    Log::warning("La respuesta no contiene la clave 'DocumentLines'");
                 }
 
                 if ($latestDocEntry !== null) {
-                    Log::channel('solcompraalmacen')->info('El último doc_entry para el ItemCode ' . $abastecimiento->ItemCode . ' es: ' . $latestDocEntry);
+                    Log::info('El último doc_entry para el ItemCode ' . $abastecimiento->ItemCode . ' es: ' . $latestDocEntry);
                 }
 
                 // Agregar esta línea para registrar el ItemCode
-                Log::channel('solcompraalmacen')->info('ItemCode validado: ' . $abastecimiento->ItemCode);
+                Log::info('ItemCode validado: ' . $abastecimiento->ItemCode);
 
                 $sugeridoIndex = array_search($itemId, $selectedItems);
                 $sugerido = isset($sugeridos[$sugeridoIndex]) ? $sugeridos[$sugeridoIndex] : $abastecimiento->Sugerido;
@@ -471,6 +606,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                     "CostingCode3" => "PDS",
                     "TaxCode" => "IVAD01",
                     "WarehouseCode" => $bodega,
+                    "TaxRelev" => 'Y'
                 ];
             }
 
@@ -479,7 +615,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                 return response()->json(['success' => false, 'error' => $errors, 'articulosConSolicitudesAbiertas' => $articulosConSolicitudesAbiertas], 400);
             }
 
-            Log::channel('solcompraalmacen')->info('Datos enviados a SAP:', $purchaseRequestData);
+            Log::info('Datos enviados a SAP:', $purchaseRequestData);
 
             // Enviar la solicitud de compra a SAP
             $apiUrl = $sapBaseUrl . '/PurchaseRequests';
@@ -511,10 +647,10 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                     ];
                 }
 
-                Log::channel('solcompraalmacen')->info("Operación exitosa. DocNum: " . $responseBody['DocNum']);
+                Log::info("Operación exitosa. DocNum: " . $responseBody['DocNum']);
                 // Guardar en la tabla de historial
-                SolicitudesCompraHistorialeAlmacene::insert($solicitudesCompraData);
-                AbastecimientoAlmacene::truncate();
+                SolicitudesCompraHistoriale::insert($solicitudesCompraData);
+                Abastesimiento::truncate();
                 return response()->json(['success' => true, 'DocNum' => $responseBody['DocNum']]);
             } else {
                 // La operación no fue exitosa
@@ -530,7 +666,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             $body = $response->getBody()->getContents();
 
             // Loguea la respuesta completa del servidor
-            Log::channel('solcompraalmacen')->info("Error en la solicitud: Status Code: $statusCode, Reason: $reasonPhrase, Body: $body");
+            Log::error("Error en la solicitud: Status Code: $statusCode, Reason: $reasonPhrase, Body: $body");
 
             // Decodifica el cuerpo de la respuesta si es JSON
             $errorBody = json_decode($body, true);
@@ -553,14 +689,17 @@ class Abastecimiento_MRP_ALMACENController extends Controller
 
 
 
+
+
+
     public function verificarSolicitud($sapDocEntry)
     {
         try {
             // Configuración de conexión a SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 
@@ -614,44 +753,21 @@ class Abastecimiento_MRP_ALMACENController extends Controller
             return ['solicitudLineItems' => $solicitudLineItems, 'response' => $response];
         } catch (\Exception $e) {
             // Manejo de excepciones
-            Log::channel('solcompraalmacen')->info('Error en verificarSolicitud: ' . $e->getMessage());
+            Log::error('Error en verificarSolicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Ups, ocurrió un error: ' . $e->getMessage()], 500);
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function consultarstockarticulosSAPAlmacen(Request $request)
+    public function consultarStockArticulosSAP(Request $request)
     {
         $client = new Client();
 
         // Autenticación y obtención de SessionId
-        $response = $client->post('https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login', [
+        $response = $client->post(env('URI') . '/Login', [
             'json' => [
-                'CompanyDB' => 'HBT_DOBLAMOS',
-                'Password' => 'DOB890',
-                'UserName' => 'manager',
+                'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+                'Password' => env('PASSWORD'),
+                'UserName' => env('USER'),
             ]
         ]);
 
@@ -663,9 +779,9 @@ class Abastecimiento_MRP_ALMACENController extends Controller
         $codigoArticulo = $request->input('codigoArticuloSAP');
 
         // Consulta de Items
-        $response = $client->get('https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Items', [
+        $response = $client->get(env('URI') . '/Items', [
             'query' => [
-                '$filter' => "ItemCode eq '$codigoArticulo'",
+                '$filter' => "ItemCode eq '$codigoArticulo' and U_DOB_Grupo eq '04'",
             ],
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -696,7 +812,7 @@ class Abastecimiento_MRP_ALMACENController extends Controller
                     $Committed = $warehouseInfo['Committed'];
 
                     // Solo agregar al resultado para almacenes '08', '12', '15'
-                    if (in_array($warehouseCode, ['08', '01', '15','04'])) {
+                    if (in_array($warehouseCode, ['08', '12', '15'])) {
                         // Calcular el disponible
                         $disponible = $inStock + $Ordered - $Committed;
 

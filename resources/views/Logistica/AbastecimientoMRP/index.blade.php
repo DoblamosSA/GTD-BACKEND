@@ -285,7 +285,7 @@
                     $("#loading-overlays").show();
 
                     // Realizar la solicitud fetch con el método POST y parámetros en el cuerpo
-                    fetch('https://rdpd.sagerp.co:59881/gestioncalidad/public/api/consumirpromedioventaSAP', {
+                    fetch('{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/consumirpromedioventaSAP', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -303,7 +303,6 @@
 
                             // Limpia el contenido actual de la tabla
                             $("#datatable tbody").empty();
-
                             // Recargar la página después de la ejecución
                            
                         })
@@ -313,6 +312,9 @@
 
                             console.error('Error en la solicitud:', error);
                         });
+
+                        location.reload();
+
                 }
             });
         });
@@ -367,7 +369,7 @@
                 var fechaRequerida = document.getElementById('fecharequerida').value;
 
                 // Realizar la solicitud fetch con el método POST y parámetros en el cuerpo
-                fetch('https://rdpd.sagerp.co:59881/gestioncalidad/public/api/generar-solicitud-compra', {
+                fetch('{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/generar-solicitud-compra', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -486,7 +488,7 @@
 
             // Realizar la solicitud Ajax con el método GET para enviar el valor a tu API
             $.ajax({
-                url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/consultar-stock-bodega-articuloSAP', // Asegúrate de actualizar la URL
+                url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/consultar-stock-bodega-articuloSAP', // Asegúrate de actualizar la URL
                 method: 'GET', // Cambia a 'POST' si es necesario
                 data: {
                     codigoArticuloSAP: itemCode,

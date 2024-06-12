@@ -28,6 +28,7 @@ class AbastecimientoController extends Controller
     public function consumirpromedioventaSAP(Request $request,)
     {
         try {
+            Log::info('se ejecuto funcion');
             // Configuración de SAP
             $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
             $sapCompanyDB = 'HBT_DOBLAMOS';
