@@ -69,11 +69,11 @@ public function ConsultarClienteSAPPrueba(Request $request)
     $client = new Client();
 
     // Realizar la solicitud de inicio de sesión
-    $loginUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login';
+    $loginUrl = env('URI') . '/Login';
     $loginBody = [
-        'CompanyDB' => 'HBT_DOBLAMOS',
-        'Password' => 'DOB890',
-        'UserName' => 'manager',
+        'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+        'Password' => env('PASSWORD'),
+        'UserName' => env('USER'),
     ];
 
     $response = $client->post($loginUrl, [
@@ -87,7 +87,7 @@ public function ConsultarClienteSAPPrueba(Request $request)
     $cookie = 'B1SESSION=' . $sessionId . '; ROUTEID=.node4';
 
     // Realizar la consulta de BusinessPartners
-    $businessPartnersUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/BusinessPartners(\'' . $query . '\')';
+    $businessPartnersUrl = env('URI') . '/BusinessPartners(\'' . $query . '\')';
     $queryParameters = [
         '$select' => 'CardCode,CardName,Cellular,Phone1,CardType,Currency',
     ];
@@ -144,11 +144,11 @@ public function ConsultarProveedoresSAP(Request $request)
         $client = new Client();
     
         // Realizar la solicitud de inicio de sesión
-        $loginUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login';
+        $loginUrl = env('URI') . '/Login';
         $loginBody = [
-            'CompanyDB' => 'HBT_DOBLAMOS',
-            'Password' => 'DOB890',
-            'UserName' => 'manager',
+            'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+            'Password' => env('PASSWORD'),
+            'UserName' => env('USER'),
         ];
     
         $response = $client->post($loginUrl, [
@@ -162,7 +162,7 @@ public function ConsultarProveedoresSAP(Request $request)
         $cookie = 'B1SESSION=' . $sessionId . '; ROUTEID=.node4';
     
         // Realizar la consulta de BusinessPartners
-        $businessPartnersUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/BusinessPartners';
+        $businessPartnersUrl = env('URI') . '/BusinessPartners';
         $queryParameters = [
             '$filter' => "CardType eq 'cSupplier' and (substringof('$query', CardName) or substringof('$query', CardCode))",
             '$select' => 'CardCode,CardName,Cellular,Phone1,CardType,Currency',

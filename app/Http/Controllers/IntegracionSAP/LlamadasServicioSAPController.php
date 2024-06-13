@@ -12,7 +12,7 @@ class LlamadasServicioSAPController extends Controller
     
     curl_setopt_array($curl, [
         CURLOPT_PORT => "50000",
-        CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+        CURLOPT_URL => env('URI') . "/Login",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -47,7 +47,7 @@ class LlamadasServicioSAPController extends Controller
     $cadenados = '$select';
     curl_setopt_array($curl, [
         CURLOPT_PORT => "50000",
-        CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/ServiceCalls",
+        CURLOPT_URL => env('URI') . "/ServiceCalls",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -85,7 +85,7 @@ class LlamadasServicioSAPController extends Controller
     
     curl_setopt_array($curl, [
         CURLOPT_PORT => "50000",
-        CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+        CURLOPT_URL => env('URI') . "/Login",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -122,7 +122,7 @@ class LlamadasServicioSAPController extends Controller
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-CURLOPT_URL => 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/ServiceCalls',
+CURLOPT_URL => env('URI') . '/ServiceCalls',
 CURLOPT_RETURNTRANSFER => true,
 CURLOPT_ENCODING => '',
 CURLOPT_MAXREDIRS => 10,

@@ -13,11 +13,11 @@ class CostoProductosController extends Controller
     public function ConsultaCostoProductosSAP(Request $request)
     {
         try {
-            $sapAuthUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login';
-            $sapApiBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/sml.svc';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapAuthUrl = env('URI') . '/Login';
+            $sapApiBaseUrl = env('URI') . '/sml.svc';
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 
@@ -102,7 +102,7 @@ class CostoProductosController extends Controller
     public function sendRevaluation($calculatedData, $sessionId)
     {
         try {
-            $apiUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/MaterialRevaluation';
+            $apiUrl = env('URI') . '/MaterialRevaluation';
 
             $revaluationData = [
                 "DocDate" => now()->format('Y-m-d'),

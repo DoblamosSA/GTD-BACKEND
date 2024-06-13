@@ -31,7 +31,7 @@ class RecursosSAPController extends Controller
     
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+                CURLOPT_URL => env('URI') . "/Login",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -66,7 +66,7 @@ class RecursosSAPController extends Controller
             $cadenados = '$select';
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Resources?".$cadenados."=Code,Name,Cost1,UnitOfMeasure",
+                CURLOPT_URL => env('URI') . "/Resources?".$cadenados."=Code,Name,Cost1,UnitOfMeasure",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,

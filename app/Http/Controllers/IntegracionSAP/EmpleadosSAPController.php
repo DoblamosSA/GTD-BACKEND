@@ -16,7 +16,7 @@ class EmpleadosSAPController extends Controller
     
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+                CURLOPT_URL => env('URI') . "/Login",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -51,7 +51,7 @@ class EmpleadosSAPController extends Controller
             $cadenados = '$select';
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/BusinessPartners?".$cadenados."=CardCode,CardName,Cellular,Phone1,CardType,Currency".$cadena."=GroupCode+eq+111",
+                CURLOPT_URL => env('URI') . "/BusinessPartners?".$cadenados."=CardCode,CardName,Cellular,Phone1,CardType,Currency".$cadena."=GroupCode+eq+111",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,

@@ -167,12 +167,12 @@ class ClientesSAPController extends Controller
     {
         // Iniciar sesión y obtener SessionId
         $client = new Client();
-        $loginUrl = "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login";
+        $loginUrl = env('URI') . "/Login";
         $loginResponse = $client->post($loginUrl, [
             'json' => [
-                'CompanyDB' => 'HBT_DOBLAMOS',
-                'Password' => 'DOB890',
-                'UserName' => 'manager',
+                'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+                'Password' => env('PASSWORD'),
+                'UserName' => env('USER'),
             ],
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -186,7 +186,7 @@ class ClientesSAPController extends Controller
         $cookie = "B1SESSION=" . $sessionId . "; ROUTEID=.node4";
     
         // Consultar Business Partners
-        $businessPartnersUrl = "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/BusinessPartners";
+        $businessPartnersUrl = env('URI') . "/BusinessPartners";
         $response = $client->get($businessPartnersUrl, [
             'query' => [
                 '$select' => 'CardCode,CardName,Cellular,Phone1,CardType,Currency',
@@ -254,7 +254,7 @@ class ClientesSAPController extends Controller
 
         curl_setopt_array($curl, [
             CURLOPT_PORT => "50000",
-            CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+            CURLOPT_URL => env('URI') . "/Login",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -289,7 +289,7 @@ class ClientesSAPController extends Controller
         $cadenados = '$select=CardCode,CardName,Cellular,Phone1,CardType,Currency';
         curl_setopt_array($curl, [
             CURLOPT_PORT => "50000",
-            CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/BusinessPartners('" . $CardCode . "')?" . $cadenados,
+            CURLOPT_URL => env('URI') . "/BusinessPartners('" . $CardCode . "')?" . $cadenados,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,

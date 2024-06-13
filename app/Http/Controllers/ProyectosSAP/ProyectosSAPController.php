@@ -18,11 +18,11 @@ class ProyectosSAPController extends Controller
             $client = new Client();
         
             // Realizar la solicitud de inicio de sesión
-            $loginUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login';
+            $loginUrl = env('URI') . '/Login';
             $loginBody = [
-                'CompanyDB' => 'HBT_DOBLAMOS',
-                'Password' => 'DOB890',
-                'UserName' => 'manager',
+                'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+                'Password' => env('PASSWORD'),
+                'UserName' => env('USER'),
             ];
         
             $response = $client->post($loginUrl, [
@@ -36,7 +36,7 @@ class ProyectosSAPController extends Controller
             $cookie = 'B1SESSION=' . $sessionId . '; ROUTEID=.node4';
         
             // Realizar la consulta de projects
-            $businessPartnersUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Projects';
+            $businessPartnersUrl = env('URI') . '/Projects';
          
             $response = $client->get($businessPartnersUrl, [
                 'headers' => [

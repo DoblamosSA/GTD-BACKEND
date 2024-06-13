@@ -38,7 +38,7 @@ class MaterialesController extends Controller
     
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL => "https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login",
+                CURLOPT_URL => env('URI') . "/Login",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -73,7 +73,7 @@ class MaterialesController extends Controller
             $cadenados = '$select';
             curl_setopt_array($curl, [
                 CURLOPT_PORT => "50000",
-                CURLOPT_URL =>"https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Items?".$cadenados."=ItemCode,ItemName,SalesUnitWeight,ItemWarehouseInfoCollection".$cadena."=U_DOB_Grupo+eq+'04'",
+                CURLOPT_URL => env('URI') . "/Items?".$cadenados."=ItemCode,ItemName,SalesUnitWeight,ItemWarehouseInfoCollection".$cadena."=U_DOB_Grupo+eq+'04'",
                 CURLOPT_RETURNTRANSFER => true,
                 ini_set('memory_limit', '1024M'),
                 CURLOPT_ENCODING => "",

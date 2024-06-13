@@ -35,11 +35,11 @@ class ConsumiblesController extends Controller
         $client = new Client();
 
         // Realizar la solicitud de inicio de sesión
-        $response = $client->post("https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login", [
+        $response = $client->post(env('URI') . "/Login", [
             'json' => [
-                'CompanyDB' => 'HBT_DOBLAMOS',
-                'Password' => 'DOB890',
-                'UserName' => 'manager',
+                'CompanyDB' => env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV'),
+                'Password' => env('PASSWORD'),
+                'UserName' => env('USER'),
             ],
             'headers' => ['Content-Type' => 'application/json'],
         ]);
@@ -52,7 +52,7 @@ class ConsumiblesController extends Controller
         $cookie = "B1SESSION=" . $sessionId . "; ROUTEID=.node4";
 
         // Realizar la consulta de materiales
-        $response = $client->get("https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Items", [
+        $response = $client->get(env('URI') . "/Items", [
             'query' => [
                 '$select' => 'ItemCode,ItemName',
                 '$filter' => "(U_DOB_Grupo eq '02' or U_DOB_Grupo eq '03' or U_DOB_Grupo eq '01' or (U_DOB_Grupo eq '09' and ItemsGroupCode eq 218) or (U_DOB_Grupo eq '02' and ItemsGroupCode eq 242))",
