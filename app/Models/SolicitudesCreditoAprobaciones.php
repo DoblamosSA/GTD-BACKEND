@@ -22,7 +22,6 @@ class SolicitudesCreditoAprobaciones extends Model
         'RefDocNumOrder',
         'DocEntryOrdenVenta',
         'Price'
-    
     ];
 
     // Relación con el usuario solicitante

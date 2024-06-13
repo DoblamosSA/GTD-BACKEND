@@ -178,7 +178,11 @@ Seguimiento Cotizaciones Estructura
                                                             <th style="font-size: 9px;">ALMACEN</th>
                                                             <th style="font-size: 9px;">CENTRO OPERACIONES</th>
                                                             <th style="font-size: 9px;">CENTRO COSTOS</th>
-                                                            <th style="font-size: 9px;">DEPARTAMENTOS</th>
+                                                            <th style="font-size: 9px;">DEPARTAMENTO</th>
+                                                            <th style="font-size: 9px;">DESCRIPCIÓN ADICIONAL</th>
+                                                            <th style="font-size: 9px;">PRECIO</th>
+                                                            <th style="font-size: 9px;">INDICADOR IVA</th>
+                                                            <th style="font-size: 9px;">PROVEEDOR</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tablaDetalleSolicitudCompra"></tbody>
@@ -1183,8 +1187,22 @@ Seguimiento Cotizaciones Estructura
 
                             response = response['success'];
                             response.forEach(function(item) {
-                                $('#tablaDetalleSolicitudCompra').append('<tr><td style="font-size: 11px;">' + item['id'] + '</td><td style="font-size: 11px;">' + item['Descripcion'] + '</td><td style="font-size: 11px;">' + item['TextoLibre'] + '</td><td style="font-size: 11px;">' + item['Cantidad'] + '</td><td style="font-size: 11px;">' + item['Proyecto'] + '</td><td style="font-size: 11px;">' + item['Almacen'] + '</td><td style="font-size: 11px;">' + item['CentroOperaciones'] + '</td><td style="font-size: 11px;">' + item['CentroCostos'] + '</td><td style="font-size: 11px;">' + item['Departamento'] + '</td></tr>');
+                                var id = item['id'] || '';
+                                var descripcion = item['Descripcion'] || '';
+                                var textoLibre = item['TextoLibre'] || '';
+                                var cantidad = item['Cantidad'] !== null ? item['Cantidad'] : 0;
+                                var proyecto = item['Proyecto'] || '';
+                                var almacen = item['Almacen'] || '';
+                                var centroOperaciones = item['CentroOperaciones'] || '';
+                                var centroCostos = item['CentroCostos'] || '';
+                                var departamento = item['Departamento'] || '';
+                                var u_dob_DescripcionAdicional = item['U_DOB_DescripcionAdicional'] || '';
+                                var price = item['Price'] !== null ? item['Price'] : 0;
+                                var taxCode = item['TaxCode'] || '';
+                                var lineVendor = item['LineVendor'] || '';
+                                $('#tablaDetalleSolicitudCompra').append('<tr><td style="font-size: 11px;">' + id + '</td><td style="font-size: 11px;">' + descripcion + '</td><td style="font-size: 11px;">' + textoLibre + '</td><td style="font-size: 11px;">' + cantidad + '</td><td style="font-size: 11px;">' + proyecto + '</td><td style="font-size: 11px;">' + almacen + '</td><td style="font-size: 11px;">' + centroOperaciones + '</td><td style="font-size: 11px;">' + centroCostos + '</td><td style="font-size: 11px;">' + departamento + '</td><td style="font-size: 11px;">' + u_dob_DescripcionAdicional + '</td><td style="font-size: 11px;">' + price + '</td><td style="font-size: 11px;">' + taxCode + '</td><td style="font-size: 11px;">' + lineVendor + '</td></tr>');
                             });
+
 
                             
                                 // // Muestra SweetAlert2 con el mensaje de error y detalles si disponibles

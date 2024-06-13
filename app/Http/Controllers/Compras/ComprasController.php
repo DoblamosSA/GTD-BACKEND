@@ -457,7 +457,8 @@ class ComprasController extends Controller
     public function detallesolicitudcompraseleccionado($id){
         try {
             $detallesSolicitud = SolicitudesCreditoAprobaciones::join('detalle_solicitud_compra as d', 'solicitudes_compra_aprobaciones.id', '=', 'd.id_solicitud_compra')
-            ->select('d.id', 'd.Descripcion', 'd.TextoLibre', 'd.Cantidad', 'd.Proyecto', 'd.Almacen', 'd.CentroOperaciones', 'd.CentroCostos', 'd.Departamento')
+            ->select('d.id', 'd.Descripcion', 'd.TextoLibre', 'd.Cantidad', 'd.Proyecto', 'd.Almacen', 'd.CentroOperaciones', 'd.CentroCostos', 'd.Departamento',
+            'd.U_DOB_DescripcionAdicional', 'solicitudes_compra_aprobaciones.Price', 'd.TaxCode', 'd.LineVendor')
             ->where('d.id_solicitud_compra', $id)
             ->get();
             
