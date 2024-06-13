@@ -73,8 +73,6 @@ class ComprasController extends Controller
         try {
             $detallesSolicitud = DetalleSolicitudesCreditoAprobaciones::with('material')->where('id_solicitud_compra', $id)->get();
 
-
-
             return response()->json(['sucess' => $detallesSolicitud]);
         } catch (\Exception $e) {
             // Manejar cualquier excepción que pueda ocurrir durante el proceso
@@ -456,6 +454,21 @@ class ComprasController extends Controller
         }
     }
 
+    public function detallesolicitudcompraseleccionado($id){
+        try {
+            $detallesSolicitud = SolicitudesCreditoAprobaciones::join('detalle_solicitud_compra as d', 'solicitudes_compra_aprobaciones.id', '=', 'd.id_solicitud_compra')
+            ->select('d.id', 'd.Descripcion', 'd.TextoLibre', 'd.Cantidad', 'd.Proyecto', 'd.Almacen', 'd.CentroOperaciones', 'd.CentroCostos', 'd.Departamento')
+            ->where('d.id_solicitud_compra', $id)
+            ->get();
+            
+            // $detallesSolicitud = DetalleSolicitudesCreditoAprobaciones::where('id_solicitud_compra', $id)->get();
+
+            return response()->json(['success' => $detallesSolicitud]);
+        }catch (\Exception $e) {
+            // Manejar errores al enviar el correo electrónico
+            Log::error('Error al enviar correo electrónico de solicitud de aprobación: ' . $e->getMessage());
+        }
+    }
 
 
     public function Aprbacionessolicitudescompra($id, $usergerencia)

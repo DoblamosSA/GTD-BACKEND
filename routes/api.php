@@ -144,7 +144,7 @@ Route::post('/solicitud-compra-comentarios/{id}/actualizar-comentario', [Compras
 Route::any('/rechazar-solicitudcompragerencia/{id}/{usergerencia}', [ComprasController::class, 'rechazarsolicitudescompra']);
 Route::get('consultarDocEntryordenesVSAP/{ordenventarelacionada}', [ComprasController::class, 'consultarDocEntryordenesVSAP']);
 Route::get('pruebaconsumoodbc', [ComprasController::class, 'pruebaconsumoodbc']);
-
+Route::get('/detalle-solicitud-compra-seleccionado/{id}',[ComprasController::class,'detallesolicitudcompraseleccionado']);
 
 
 //Modulo inventario departamento t.i

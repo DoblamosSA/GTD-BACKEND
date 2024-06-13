@@ -121,7 +121,7 @@ Seguimiento Cotizaciones Estructura
 
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 x-scroll">
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -145,6 +145,55 @@ Seguimiento Cotizaciones Estructura
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="solicitudescompraSubmodal" tabindex="-1" role="dialog" aria-labelledby="solicitudescompraSubmodalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: #1c2a48;">
+                                        <h5 class="modal-title" id="solicitudescompraSubmodalLabel" style="color:#ffffff">Detalle solicitud de compra</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #FFff;">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div id="loading-overlaysestados" class="loading-overlay">
+                                        <div class="loading-spinner">
+                                            <i class="fas fa-spinner fa-pulse"></i>
+                                            <span>Procesando....</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="x-scroll container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered x-scroll">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="font-size: 9px;">ID</th>
+                                                            <th style="font-size: 9px;">DESCRIPCIÓN</th>
+                                                            <th style="font-size: 9px;">TEXTO LIBRE</th>
+                                                            <th style="font-size: 9px;">CANTIDAD</th>
+                                                            <th style="font-size: 9px;">PROYECTO</th>
+                                                            <th style="font-size: 9px;">ALMACEN</th>
+                                                            <th style="font-size: 9px;">CENTRO OPERACIONES</th>
+                                                            <th style="font-size: 9px;">CENTRO COSTOS</th>
+                                                            <th style="font-size: 9px;">DEPARTAMENTOS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tablaDetalleSolicitudCompra"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                 </div>
                 <div class="modal fade" id="proveedorModal" tabindex="-1" role="dialog" aria-labelledby="proveedorModalLabel" aria-hidden="true">
@@ -744,7 +793,7 @@ Seguimiento Cotizaciones Estructura
 
             // Realiza la solicitud AJAX
             $.ajax({
-                url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/obtener-nombre-articulo/' + selectedValue,
+                url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/obtener-nombre-articulo/' + selectedValue,
                 method: 'GET',
                 success: function(response) {
                     // Actualiza la celda de descripción con la respuesta obtenida
@@ -843,7 +892,7 @@ Seguimiento Cotizaciones Estructura
                     });
 
                     $.ajax({
-                            url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/generarSolicitudCompraAplicativo',
+                            url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/generarSolicitudCompraAplicativo',
                             method: 'POST',
                             data: formData,
                             processData: false,
@@ -959,7 +1008,7 @@ Seguimiento Cotizaciones Estructura
 
                 // Realizar la solicitud Ajax
                 $.ajax({
-                    url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/Solicitudes-compra-consultar',
+                    url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/Solicitudes-compra-consultar',
                     type: 'GET',
                     dataType: 'json',
                     data: $(this).serialize(), // Enviar los datos del formulario
@@ -979,7 +1028,7 @@ Seguimiento Cotizaciones Estructura
                                 var docEntryValue = solicitud.DocEntry ?? 'Pendiente en SAP';
                                 var sapButton = '';
                                 // Convierte el ID en un enlace (link)
-                                var idLink = '<a href="/detalle-solicitud/' + solicitud.id + '">' + solicitud.id + '</a>';
+                                var idLink = '<a href="#">' + solicitud.id + '</a>';
 
                                 // Agrega un botón adicional con el icono de Font Awesome solo si DocNum o DocEntry son nulos
                                 if (solicitud.estado !== 'Rechazado') {
@@ -991,8 +1040,7 @@ Seguimiento Cotizaciones Estructura
                                     sapButton = '';
                                 }
 
-                                $('#tablaSolicitudes').append('<tr><td style="font-size: 11px;">' + idLink + '</td><td style="font-size: 11px;">' + solicitud.RequriedDate + '</td><td style="font-size: 11px;" class="' + estadoClass + '">' + solicitud.estado + '</td><td style="font-size: 11px;">' + docNumValue + '<td style="font-size: 11px;">' + (solicitud.Comments ? solicitud.Comments : 'Sin comentarios') + '</td><td style="font-size: 11px;">' + sapButton + '</td></tr>');
-
+                                $('#tablaSolicitudes').append('<tr><td onclick="abrirSubmodalSolicitudCompra(' + solicitud.id + ');" data-toggle="modal" data-target="#solicitudescompraSubmodal" style="font-size: 11px;">' + idLink + '</td><td style="font-size: 11px;">' + solicitud.RequriedDate + '</td><td style="font-size: 11px;" class="' + estadoClass + '">' + solicitud.estado + '</td><td style="font-size: 11px;">' + docNumValue + '<td style="font-size: 11px;">' + (solicitud.Comments ? solicitud.Comments : 'Sin comentarios') + '</td><td style="font-size: 11px;">' + sapButton + '</td></tr>');
                             });
                         } else {
                             console.error('No se encontraron solicitudes de compra.');
@@ -1036,7 +1084,7 @@ Seguimiento Cotizaciones Estructura
 
                 // Realizar la solicitud Ajax para enviar el ID a la ruta correspondiente
                 $.ajax({
-                    url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/generarSolicitudCompradesdeAplicativo/' + id,
+                    url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/generarSolicitudCompradesdeAplicativo/' + id,
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -1105,6 +1153,89 @@ Seguimiento Cotizaciones Estructura
         });
     </script>
 
+    <script>
+        // Función para abrir el modal de SAP
+        $(document).ready(function() {
+            window.abrirSubmodalSolicitudCompra = function(id) {
+                // REVISAR ESTE
+                // Lógica para abrir el modal de SAP
+                    console.log('ACA:Abrir modal de SAP para la solicitud con ID: ' + id);
+                    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    // Realizar la solicitud Ajax para enviar el ID a la ruta correspondiente
+                    // Muestra el div de carga mientras se realiza la solicitud
+                    mostrarDivDeCargaestados();
+
+                    // Realizar la solicitud Ajax para enviar el ID a la ruta correspondiente
+                    $.ajax({
+                        url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/detalle-solicitud-compra-seleccionado/' + id,
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            _token: csrfToken
+                        },
+                        success: function(response) {
+                            // Oculta el div de carga al finalizar la solicitud
+                            ocultarDivDeCargaestados();
+
+                            // Maneja la respuesta de la API
+                            $('#tablaDetalleSolicitudCompra').empty();
+
+                            response = response['success'];
+                            response.forEach(function(item) {
+                                $('#tablaDetalleSolicitudCompra').append('<tr><td style="font-size: 11px;">' + item['id'] + '</td><td style="font-size: 11px;">' + item['Descripcion'] + '</td><td style="font-size: 11px;">' + item['TextoLibre'] + '</td><td style="font-size: 11px;">' + item['Cantidad'] + '</td><td style="font-size: 11px;">' + item['Proyecto'] + '</td><td style="font-size: 11px;">' + item['Almacen'] + '</td><td style="font-size: 11px;">' + item['CentroOperaciones'] + '</td><td style="font-size: 11px;">' + item['CentroCostos'] + '</td><td style="font-size: 11px;">' + item['Departamento'] + '</td></tr>');
+                            });
+
+                            
+                                // // Muestra SweetAlert2 con el mensaje de error y detalles si disponibles
+                                // var errorMessage = 'Error en la solicitud a la API';
+
+                                // if (response.error) {
+                                //     errorMessage = response.error;
+                                // }
+
+                                // // Verifica si hay detalles en la respuesta
+                                // if (response.details) {
+                                //     errorMessage += '<br><strong>Detalles:</strong> ' + JSON.stringify(response.details, null, 2);
+                                // }
+
+                                // Swal.fire({
+                                //     icon: 'error',
+                                //     title: 'Error',
+                                //     html: errorMessage,
+                                // });
+                            
+                        },
+                        error: function(error) {
+                            $('#tablaDetalleSolicitudCompra').empty();
+
+                            ocultarDivDeCargaestados();
+
+                            // Maneja los errores de la API
+                            console.error('Error en la solicitud a la API:', error);
+
+                            // Muestra SweetAlert2 con un mensaje de error genérico
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Respuesta SAP: ' + error.responseJSON.error,
+                            });
+                            $('#solicitudescompraSubmodal').modal('hide');
+
+
+                            // Accede a los detalles del error proporcionados por el controlador
+                            if (error.responseJSON && error.responseJSON.error) {
+                                console.log('Mensaje de error:', error.responseJSON.error);
+                            }
+                            if (error.responseJSON && error.responseJSON.details) {
+                                console.log('Detalles del error:', error.responseJSON.details);
+                            }
+                        }
+                    });
+                };
+            });
+    </script>
+
 
     <script>
         $(document).ready(function() {
@@ -1131,7 +1262,7 @@ Seguimiento Cotizaciones Estructura
 
                     // Realiza la solicitud Ajax
                     $.ajax({
-                        url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/consultarDocEntryordenesVSAP/' + ordenVentaRelacionada,
+                        url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/consultarDocEntryordenesVSAP/' + ordenVentaRelacionada,
                         type: 'GET',
                         // Antes de enviar la petición
                         beforeSend: function() {
@@ -1230,7 +1361,7 @@ Seguimiento Cotizaciones Estructura
 
             function buscarCliente(cliente) {
                 $.ajax({
-                    url: 'https://rdpd.sagerp.co:59881/gestioncalidad/public/api/buscar-proveedor-SAP',
+                    url: '{{ env('APP_ENV') === 'production' ? env('URI_PROD') : env('URI_DEV') }}/api/buscar-proveedor-SAP',
                     type: 'GET',
                     data: {
                         cliente: cliente
@@ -1374,6 +1505,11 @@ Seguimiento Cotizaciones Estructura
 
 
     <style>
+        .x-scroll{
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
         #resultadoTabla,
         #resultadoTablas {
             display: none;
