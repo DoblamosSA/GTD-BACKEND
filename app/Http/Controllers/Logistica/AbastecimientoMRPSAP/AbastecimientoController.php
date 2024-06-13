@@ -30,10 +30,10 @@ class AbastecimientoController extends Controller
         try {
             Log::info('se ejecuto funcion');
             // Configuración de SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle
             $client = new Client();
@@ -365,10 +365,10 @@ class AbastecimientoController extends Controller
     {
 
         try {
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 
@@ -423,8 +423,9 @@ class AbastecimientoController extends Controller
             $sapPassword = $user->usersappassword;
 
             // Configuración de SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
@@ -697,10 +698,10 @@ class AbastecimientoController extends Controller
     {
         try {
             // Configuración de conexión a SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 
@@ -785,13 +786,17 @@ class AbastecimientoController extends Controller
     public function consultarStockArticulosSAP(Request $request)
     {
         $client = new Client();
+        $sapBaseUrl = env('URI');
+        $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+        $sapUsername = env('USER');
+        $sapPassword = env('PASSWORD');
 
         // Autenticación y obtención de SessionId
-        $response = $client->post('https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Login', [
+        $response = $client->post($sapBaseUrl . '/Login', [
             'json' => [
-                'CompanyDB' => 'HBT_DOBLAMOS',
-                'Password' => 'DOB890',
-                'UserName' => 'manager',
+                'CompanyDB' => $sapCompanyDB,
+                'Password' => $sapUsername,
+                'UserName' => $sapPassword,
             ]
         ]);
 
@@ -803,7 +808,7 @@ class AbastecimientoController extends Controller
         $codigoArticulo = $request->input('codigoArticuloSAP');
 
         // Consulta de Items
-        $response = $client->get('https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1/Items', [
+        $response = $client->get($sapBaseUrl . '/Items', [
             'query' => [
                 '$filter' => "ItemCode eq '$codigoArticulo' and U_DOB_Grupo eq '04'",
             ],

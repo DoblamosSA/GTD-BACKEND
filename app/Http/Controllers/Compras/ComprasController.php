@@ -310,10 +310,10 @@ class ComprasController extends Controller
     public function consultarDocEntryordenesVSAP($ordenventarelacionada)
     {
         try {
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 
@@ -576,10 +576,10 @@ class ComprasController extends Controller
     {
         try {
             // Configuración de SAP
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
 
             // Cliente Guzzle para realizar solicitudes HTTP
@@ -720,10 +720,10 @@ class ComprasController extends Controller
     {
         try {
             // Configuración de SAP
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
@@ -912,10 +912,10 @@ class ComprasController extends Controller
                 return response()->json(['success' => false, 'error' => 'La solicitud no se puede generar en SAP porque esta rechazada']);
             }
             // Configuración de SAP
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
@@ -1136,10 +1136,10 @@ class ComprasController extends Controller
     {
         try {
             // Configuración de SAP
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
@@ -1253,10 +1253,10 @@ class ComprasController extends Controller
     public function ConsultarSolicitudCompra(Request $request)
     {
         try {
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             $client = new Client();
 

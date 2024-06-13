@@ -312,9 +312,6 @@
 
                             console.error('Error en la solicitud:', error);
                         });
-
-                        location.reload();
-
                 }
             });
         });

@@ -58,10 +58,10 @@ class ClientesSAPController extends Controller
     {
         try {
             // Configuración de SAP
-            $sapBaseUrl = 'https://vm-hbt-hm7.heinsohncloud.com.co:50000/b1s/v1';
-            $sapCompanyDB = 'HBT_DOBLAMOS';
-            $sapUsername = 'manager';
-            $sapPassword = 'DOB890';
+            $sapBaseUrl = env('URI');
+            $sapCompanyDB = env('APP_ENV') === 'production' ? env('COMPANYDB_PROD') : env('COMPANYDB_DEV');
+            $sapUsername = env('USER');
+            $sapPassword = env('PASSWORD');
 
             // Cliente Guzzle para realizar solicitudes HTTP
             $client = new Client();
