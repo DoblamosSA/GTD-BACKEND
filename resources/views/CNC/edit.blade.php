@@ -100,6 +100,7 @@ CNC
                                 <label>Subproceso</label>
                                 <select name="SubprocesoCNC" class="form-control" id="subproceso">
                                     <option class="form-control">{{$costonocalidad->SubprocesoCNC}}</option>
+                                    <option value="Laser">Laser</option>
                                     <option value="Cizalla">Cizalla</option>
                                     <option value="Pantografo">Pant�grafo</option>
                                     <option value="Doblez">Doblez</option>
