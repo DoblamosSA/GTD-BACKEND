@@ -656,6 +656,9 @@ class ComprasController extends Controller
                         "TaxCode" => "IVAD01",
                         "WarehouseCode" => $detalle['Almacen'],
                         "FreeText" => $detalle['TextoLibre'],
+                        "Price" => $detalle['Price'],
+                        "LineVendor" => $detalle['LineVendor'],
+
                     ];
 
                     // Agregar log para verificar cada detalle antes de enviar a SAP
@@ -1005,7 +1008,9 @@ class ComprasController extends Controller
                     'TaxCode' => $detalle['TaxCode'],
                     "WarehouseCode" => $detalle['Almacen'],
                     "FreeText" => $detalle['TextoLibre'],
-                ];
+                    "Price" =>  $detalle['Price'],
+                    "LineVendor" =>  $detalle['LineVendor'],
+                 ];
 
                 // Agregar log para verificar cada detalle antes de enviar a SAP
                 Log::info("Detalle de Solicitud: " . json_encode(end($purchaseRequestData['DocumentLines'])));
