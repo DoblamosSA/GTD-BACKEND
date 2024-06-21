@@ -110,7 +110,7 @@ CNC
                                 <select name="SubprocesoCNC" class="form-control" id="subproceso">
                                     <option class="form-control">Subproceso CNC</option>
                                     <option class="form-control">{{old('Estado')}}</option>
-                                    <option value="Laser">Laser</option>
+                                    <option value="Laser">Láser</option>
                                     <option value="Cizalla">Cizalla</option>
                                     <option value="Pantografo">Pantógrafo</option>
                                     <option value="Doblez">Doblez</option>
