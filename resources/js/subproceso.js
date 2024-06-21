@@ -9,7 +9,6 @@ $(document).ready(function() {
 
         if(subproceso && subproceso != 'Subproceso CNC'){
             $('#causa_raiz').prop('disabled', false);
-            $('#causa_raiz').append('<option value="Corte especificado fuera de las tolerancias del proceso">Corte especificado fuera de las tolerancias del proceso</option>');
 
         }
         if (subproceso == 'Laser') {
