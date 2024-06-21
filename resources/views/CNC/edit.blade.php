@@ -142,17 +142,17 @@ CNC
                             </div>
                             <div class="col-md-6 mt-2">
                                 <LABEl>Por que #1?</LABEl>
-                                <input type="text" class="form-control" placeholder="�Porque #1?" name="Porque1"
+                                <input type="text" class="form-control" placeholder="¿Por qué #1?" name="Porque1"
                                     value="{{$costonocalidad->Porque1}}">
                             </div>
                             <div class="col-md-6 mt-2">
                                 <LABEl>Por que #2?</LABEl>
-                                <input type="text" class="form-control" placeholder="�Porque#2?" name="Porque2"
+                                <input type="text" class="form-control" placeholder="¿Por qué #2?" name="Porque2"
                                     value="{{$costonocalidad->Porque2}}">
                             </div>
                             <div class="col-md-6 mt-2">
                                 <LABEl>Por que #3?</LABEl>
-                                <input type="text" class="form-control" placeholder="�Porque #3?" name="Porque3"
+                                <input type="text" class="form-control" placeholder="¿Por qué #3?" name="Porque3"
                                     value="{{$costonocalidad->Porque3}}">
 
                             </div>

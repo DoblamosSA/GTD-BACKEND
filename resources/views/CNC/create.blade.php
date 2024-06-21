@@ -153,15 +153,15 @@ CNC
                                 </select>
                             </div>
                             <div class="col-md-6 ">
-                                <input type="text" class="form-control" placeholder="¿Porque #1?" name="Porque1"
+                                <input type="text" class="form-control" placeholder="¿Por qué #1?" name="Porque1"
                                     value="{{old('Porque1')}}">
                             </div>
                             <div class="col-md-6 ">
-                                <input type="text" class="form-control" placeholder="¿Porque#2?" name="Porque2"
+                                <input type="text" class="form-control" placeholder="¿Por qué #2?" name="Porque2"
                                     value="{{old('Porque2')}}">
                             </div>
                             <div class="col-md-6 ">
-                                <input type="text" class="form-control" placeholder="¿Porque #3?" name="Porque3"
+                                <input type="text" class="form-control" placeholder="¿Por qué #3?" name="Porque3"
                                     value="{{old('Porque3')}}">
 
                             </div>
