@@ -29,7 +29,7 @@ CNC
 
                         <div class="row">
                             <div class="col-md-6 ">
-                                <label>sede</label>
+                                <label>Sede</label>
                                 <select class="form-control" name="sede">
                                     <option>{{old('sede')}}</option>
                                     <option value="Estructuras Sabaneta">Estructuras Sabaneta</option>
@@ -206,10 +206,11 @@ CNC
                                 <label>Proceso Detecta</label>
                                 <select class="form-control" name="ProcesoDetecta">
                                     <option class="form-control">{{old('ProcesoDetecta')}}</option>
+                                    <option value="Compras">Compras</option>
                                     <option value="Logistica">Logistica</option>
                                     <option value="Gestion Humana">Gestión Humana</option>
                                     <option value="Estructuras Sabaneta">Estructuras Sabaneta</option>
- 				<option value="Estructuras Copacabana">Estructuras Copacabana</option>
+ 				                    <option value="Estructuras Copacabana">Estructuras Copacabana</option>
                                     <option value="Estructuras Medellin">Estructuras Medellin</option>
                                     <option value="Produccion Medellin">Produccion Medellin</option>
                                     <option value="Produccion Sabaneta">Produccion Sabaneta</option>
@@ -299,23 +300,21 @@ CNC
                             </div>
                             <div class="col-md-6 ">
                                 <select class="form-control" name="QuienCostea" style="background-color:#ffd7008c" required>
-                                    <option class="form-control" value="">Quien Costea</option>
-                                   
+                                    <option class="form-control" value="" selected disabled>Quien Costea</option>
+                                    <option value="Adriana Cano">Adriana Cano</option>
+                                    <option value="Andrea González">Andrea González</option>
                                     <option value="Camila Villada">Camila Villada</option>
-                                    <option value="Santiago Agudelo">Santiago Agudelo</option>
-                                    <option value="Elymar Gamboa">Elymar Gamboa</option>
+                                    <option value="Daniel Builes">Daniel Builes</option>
                                     <option value="Elias Ciro">Elias Ciro</option>
-                                    <option value="Juan Camilo Giraldo">Juan Camilo Giraldo</option>
-     				<option value="Richard Ruiz">Richard Ruiz</option>
-				<option value="Fredy Castro">Fredy Castro</option>
-				<option value="Adriana Cano">Adriana Cano</option>
-				<option value="Sonia Olaya Lopez">Sonia Olaya Lopez</option>
-                <option value="Elmer Uribe ">Elmer Uribe</option>
-
-
-
+                                    <option value="Elmer Uribe">Elmer Uribe</option>
+                                    <option value="Elmer Uribe ">Elmer Uribe</option>
+                                    <option value="Elymar Gamboa">Elymar Gamboa</option>
+                                    <option value="Fredy Castro">Fredy Castro</option>
+                                    <option value="Fredy Quintero">Fredy Quintero</option>
+                                    <option value="Richard Ruiz">Richard Ruiz</option>
+                                    <option value="Santiago Agudelo">Santiago Agudelo</option>
+                                    <option value="Sonia Olaya Lopez">Sonia Olaya Lopez</option>
                                 </select>
-
                             </div>
 
                         </div>

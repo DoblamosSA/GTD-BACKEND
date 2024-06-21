@@ -82,17 +82,20 @@ Seguimiento Cotizaciones Estructura
                         <div class="btn-group">
                             <div class="col-md-6 ">
                                 <select class="form-control" name="QuienCostea">
-                                    <option class="form-control" value="">Quien Costea</option>
-
+                                    <option class="form-control" value="" selected disabled>Quien Costea</option>
+                                    <option value="Andrea González">Andrea González</option>
+                                    <option value="Fredy Quintero">Fredy Quintero</option>
+                                    <option value="Daniel Builes">Daniel Builes</option>
+                                    <option value="Elmer Uribe">Elmer Uribe</option>
                                     <option value="Camila Villada">Camila Villada</option>
                                     <option value="Santiago Agudelo">Santiago Agudelo</option>
                                     <option value="Elymar Gamboa">Elymar Gamboa</option>
                                     <option value="Elias Ciro">Elias Ciro</option>
-                                    <option value="Juan Camilo Giraldo">Juan Camilo Giraldo</option>
                                     <option value="Richard Ruiz">Richard Ruiz</option>
                                     <option value="Fredy Castro">Fredy Castro</option>
                                     <option value="Adriana Cano">Adriana Cano</option>
                                     <option value="Sonia Olaya Lopez">Sonia Olaya Lopez</option>
+                                    <option value="Elmer Uribe ">Elmer Uribe</option>
 
 
                                 </select>
